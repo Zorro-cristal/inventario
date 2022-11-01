@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Lista productos de ventas</title>
+        <script type="text/javascript" src="../js_scripts/listarVentas.js"></script>
+        <script type="text/javascript" src="../js_scripts/jquery.js"></script>
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    </head>
+    <body onload="paginaCargada()">
+        <!-- Dialogo que muestra informacion de la venta -->
+        <dialog  class="bg-dark bg-gradient" id="detalle_ventaDialog">
+            <div class="form group">
+                <label for="nro_fact">Numero factura</label>
+                <input id="nro_fact" readonly />
+            </div>
+            </br>
+            <div class="form group">
+                <label for="client">Cliente</label>
+                <input id="client" readonly />
+            </div>
+            </br>
+            <div class="form group">
+                <label for="ruc">Ruc</label>
+                <input id="ruc" readonly />
+            </div>
+            </br>
+            <table class="table table-hover table-dark m-3" style="width: 98%;">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 10%;">Cantidad</th>
+                        <th scope="col" style="width: 50%;">Producto</th>
+                        <th scope="col" style="width: 20%;">Descuento</th>
+                        <th scope="col" style="width: 20%;">SubTotal</th>
+                    </tr>
+                </thead>
+                <tbody id="detalle_ventas">
+                    <!-- Informacion de la venta seleccionada -->
+                </tbody>
+                <tfoot>
+                    <th id="cantidad_total"></th>
+                    <th></th>
+                    <th id="descuento_total"></th>
+                    <th id="subTotal_total"></th>
+                </tfoot>
+            </table>
+        </dialog>
+        <main class="bg-secondary bg-gradient">
+            <div>
+                <div class="d-flex justify-content-center ms-3 me-3">
+                    <h1 class="h1 text-light p-3">Lista de ventas</h1>
+                </div>
+                </br>
+            </div>
+            <div class="form-control">
+                <label for="nombre_client" class="text-light">Ingrese el nombre o apellido del cliente:</label>
+                <input id="nombre_client" class="form-control" placeholder="Nombre o apellido del cliente"/>
+            </div>
+            </br>
+            <div class="form-control">
+                <label for="fech_vent" class="text-light">Ingrese la fecha:</label>
+                <input id="fech_vent" class="form-control" placeholder="fecha de ventas" type="date"/>
+            </div>
+            </br>
+            <table class="table table-holder table-dark m-3" style="width: 98%;">
+                <thead>
+                    <th scope="col" style="width: 25%;">Nro Factura</th>
+                    <th scope="col" style="width: 45%;">Cliente</th>
+                    <th scope="col" style="width: 20%;">Fecha</th>
+                    <th scope="col" style="width: 20%;">Total</th>
+                </thead>
+                <tbody>
+                    <!-- Lista de ventas -->
+                </tbody>
+                <tfoot>
+                    <th colspan="3" style="text-align: right;">Total ingreso:</th>
+                    <th id="monto_total"></th>
+                </tfoot>
+            </table>
+            </br>
+            <div class="d-flex justify-content-around">
+                <button class="btn btn-primary" onclick='location.href= "../index.html"'>Volver al menu</button>
+            </div>
+            </br>
+        </main>
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 bg-dark bg-gradient mt-0 mb-0">
+            <div class="col-md-4 d-flex align-items-center ms-3">  
+                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                    <i class="bi bi-bootstrap-fill"></i>
+                </a>
+                <span class="mb-3 mb-md-0 text-muted">© 2022 By Zorro Cristal</span>
+            </div>
+            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex me-3">
+                <li class="ms-3"><a class="text-muted" href="https://www.facebook.com/Zorro.cristal">
+                    <i class="bi bi-facebook"></i>
+                </a></li>
+                <li class="ms-3"><a class="text-muted" href="https://www.instagram.com/ale_guaitenho/">
+                    <i class="bi bi-instagram"></i>
+                </a></li>
+                <li class="ms-3"><a class="text-muted" href="https://wa.me/595983510916">
+                    <i class="bi bi-whatsapp"></i>
+                </a></li>
+                <li class="ms-3"><a class="text-muted" href="https://github.com/Zorro-cristal">
+                    <i class="bi bi-github"></i>
+                </a></li>
+            </ul>
+        </footer>
+    </body>
+</html>
