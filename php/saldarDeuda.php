@@ -5,4 +5,5 @@
     $cedula= $_POST['cedula'];
     $comando= "UPDATE clientes SET deuda= " . $deuda - $pago . " WHERE cedula=" . $cedula;
     modificarBdd($comando);
+    header('Location: ../index.html');
 ?>

@@ -24,4 +24,5 @@
         $comando= 'UPDATE clientes SET deuda= ' . $total . ' WHERE cedula=' . $cedula;
         modificarBdd($comando);
     }
+    header('Location: ../index.html');
 ?>

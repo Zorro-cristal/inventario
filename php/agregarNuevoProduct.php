@@ -1,4 +1,5 @@
 <?php
+    include './funcionesbdd.php';
     //Extraemos las variables necesarias
     $nombre= $_POST['nombre'];
     $descripcion= $_POST['descripcion'];
