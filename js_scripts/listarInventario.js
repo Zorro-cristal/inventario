@@ -27,9 +27,10 @@ function paginaCargada() {
 
 //Filtrar Inventario
 function filtrar(valor) {
-    var filtro = valor.toUpperCase();
+    var filtro = valor.toLowerCase();
     if (filtro != "") {
-        inventario.filter(
+        console.log("filtrando: " + filtro);
+        inventario= inventario.filter(
             obj => obj['nombre'].includes(filtro)
         );
         cargarLista();
