@@ -1,11 +1,17 @@
 <?php
     include './funcionesbdd.php';
     //Extraemos las variables necesarias
-    $nombre= $_POST['nombre'];
+    $nombre= $_POST['nombre_prov'];
     $telefono= $_POST['telefono'];
 
+    //Generamos el comando de acuerdo a los datos recibidos
+    if ($telefono == "" || $telefono == null) {
+        $comando= 'INSERT INTO proveedores(nombre) VALUES ("' . $nombre . '")';
+    } else {
+        $comando= 'INSERT INTO proveedores(nombre, telefono) VALUES ("' . $nombre . '", "' . $telefono . '")';
+    }
+
     //Guardamos los datos en la base de datos
-    $comando= 'INSERT INTO Proveedores(nombre, telefono) VALUES (' . $nombre . ', ' . $telefono . ')';
     modificarBdd($comando);
 
     //Redireccionamos y finalizamos

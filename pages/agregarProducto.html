@@ -16,13 +16,13 @@
         <dialog class="bg-dark bg-gradient" id="nuevoProductoDialog">
             <form action="../php/agregarNuevoProduct.php" method="post">
                 <div class="form-group">
-                    <label for="nombre" class="text-light">Nombre del producto:</label>
-                    <input id="nombre" class="form-control" placeholder="Ingrese el nombre del producto" required/>
+                    <label for="nombre_prod" class="text-light">Nombre del producto:</label>
+                    <input id="nombre_prod" class="form-control" placeholder="Ingrese el nombre del producto" required name="nombre_prod"/>
                 </div>
                 <br/>
                 <div class="form-group">
                     <label for="descripcion" class="text-light">Descripcion del producto:</label>
-                    <input id="descripcion" class="form-control" placeholder="Ingrese la descripcion del producto"/>
+                    <input id="descripcion" class="form-control" placeholder="Ingrese la descripcion del producto" name="descripcion"/>
                 </div>
                 <br/>
                 <div class="mt-3 d-flex justify-content-around">
@@ -32,16 +32,16 @@
             </form>
         </dialog>
         <!-- Ventana para agregar un nuevo proveedor a la base de datos -->
-        <dialog class="bg-dark bg-gradient" id="nuevoproveedorDialog">
+        <dialog class="bg-dark bg-gradient" id="nuevoProveedorDialog">
             <form action="../php/agregarNuevoProveedor.php" method="post">
                 <div class="form-group">
-                    <label for="nombre" class="text-light">Nombre del proveedor:</label>
-                    <input id="nombre" class="form-control" placeholder="Ingrese el nombre del producto" required/>
+                    <label for="nombre_prov" class="text-light">Nombre del proveedor:</label>
+                    <input id="nombre_prov" class="form-control" placeholder="Ingrese el nombre del producto" required name="nombre_prov"/>
                 </div>
                 <br/>
                 <div class="form-group">
                     <label for="telefono" class="text-light">Telefono del proveedor:</label>
-                    <input id="telefono" class="form-control" placeholder="Ingrese la descripcion del producto"/>
+                    <input id="telefono" class="form-control" placeholder="Ingrese la descripcion del producto" name="telefono"/>
                 </div>
                 <br/>
                 <div class="mt-3 d-flex justify-content-around">
@@ -52,7 +52,7 @@
         </dialog>
         <main class="bg-secondary bg-gradient">
             <div class="p-3">
-                <form method="POST" action="actualizarStock.php">
+                <form method="POST" action="../php/registrarEntradaProducto.php">
                     <div class="form-group">
                         <label for="producto" class="text-light">Ingrese el nombre del producto:</label>
                     </div>
@@ -61,11 +61,13 @@
                             <input id="producto" class="form-control" placeholder="Ingrese un nombre para filtrar" onkeyup="actualizacionProductos(this.value)" oninput="actualizacionProductos(this.value)"/>
                         </div>
                         <div class="col-md-5">
-                            <button class="btn btn-primary" id="nuevoProducto">Agregar nuevo producto</button>>
+                            <button class="btn btn-primary" id="nuevoProducto" onclick="mostrarNuevoProductoDialog(event)">Agregar nuevo producto</button>>
                         </div>
                     </div>
                     <!-- Buscador producto por nombre -->
-                    <select class="form-select mt-3 mb-3" size="5" id="lista_producto" required>
+                    <select class="form-select mt-3 mb-3" size="5" 
+                        id="lista_producto" required name="lista_producto"
+                    >
                         <option>Cargando productos...</option>
                     </select>
                     <div class="form-row">
@@ -73,7 +75,7 @@
                             <label for="precio" class="text-light">Ingrese el precio unitario:</label>
                         </div>
                         <div class="col-md-4">
-                            <input id="precio" class="form-control" placeholder="Precio unitario" type="number" />
+                            <input id="precio" class="form-control" placeholder="Precio unitario" type="number" name="precio"/>
                         </div>
                     </div>
                     </br>
@@ -82,7 +84,7 @@
                             <label for="stock" class="text-light">Cantidad de stock actual:</label>
                         </div>
                         <div class="col-md-4">
-                            <input id="stock" class="form-control" readonly value="Stock Actual" />
+                            <input id="stock" class="form-control" readonly value="0" name="stock"/>
                         </div>
                     </div>
                     </br>
@@ -91,7 +93,7 @@
                             <label for="sumar" class="text-light">Ingrese la cantidad a sumar:</label>
                         </div>
                         <div class="col-md-4">
-                            <input id="sumar" class="form-control" placeholder="Cantidad" type="number"/>
+                            <input id="sumar" class="form-control" placeholder="Cantidad" type="number" name="sumar"/>
                         </div>
                     </div>
                     </br>
@@ -103,11 +105,11 @@
                             <input id="proveedor" class="form-control" placeholder="Ingrese un proveedor para filtrar" onkeyup="actualizacionProveedor(this.value)" oninput="actualizacionProveedor(this.value)"/>
                         </div>
                         <div class="col-md-5">
-                            <button class="btn btn-primary" id="nuevoProveedor">Agregar nuevo proveedor</button>>
+                            <button class="btn btn-primary" id="nuevoProveedor" onclick="mostrarNuevoProveedorDialog(event)">Agregar nuevo proveedor</button>>
                         </div>
                     </div>
                     <!-- Buscador proveedor por nombre -->
-                    <select class="form-select mt-3 mb-3" size="2" id="lista_proveedor" required>
+                    <select class="form-select mt-3 mb-3" size="2" id="lista_proveedor" required name="lista_proveedor">
                         <option>Cargando proveedores...</option>
                     </select>
                     <div class="form-row">
@@ -115,7 +117,7 @@
                             <label for="fecha" class="text-light">Ingrese la fecha de ingreso:</label>
                         </div>
                         <div class="col-md-4">
-                            <input id="fecha" class="form-control" type="date" value=""/>
+                            <input id="fecha" class="form-control" type="date" value="" name="fecha"/>
                         </div>
                     </div>
                     <div class="mt-3 d-flex justify-content-around">
