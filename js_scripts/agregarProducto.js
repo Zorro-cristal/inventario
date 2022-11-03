@@ -102,6 +102,7 @@ function cargaProductos() {
   //Creamos una nueva seleccion
   var new_seleccion= document.createElement('select');
   new_seleccion.id= "lista_producto";
+  new_seleccion.name= "lista_producto";
   //Funcion para obtener stock actual
   new_seleccion.addEventListener('change', (event) => {
     var stock= document.getElementById('stock');

@@ -4,9 +4,9 @@
     $stock_actual= (int)$_POST['stock'];
     $stock= (int)$_POST['sumar'];
     $precio= $_POST['precio'];
-    echo ("<script>alert(id_product: " . $id_product . ")</script>");
     $stock= $stock_actual + $stock;
-    $comando= "UPDATE productos SET stock= " . $stock . ", precio= " . $precio . " WHERE id=" $id_product;
+    $comando= "UPDATE productos SET stock= " . $stock . ", precio_venta= " . $precio . " WHERE id=" . $id_product . ";";
+    echo($comando);
     modificarBdd($comando);
     header('Location: ../index.html');
     exit();
