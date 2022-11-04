@@ -87,12 +87,14 @@
         <main class="bg-secondary bg-gradient">
             <form method="post" action="../php/registrarNuevaVenta.php">
                 <div class="ms-3 me-3">
-                    <h1>Datos del cliente</h1>
+                    <h1 class="h1 d-flex justify-content-center">Datos del cliente</h1>
+                    <br/>
                     <div class="form-group">
+                        <label for="cedula">Ingrese la cedula del cliente:</label>
                         <div class="col-md-7">
                             <input id="cedula" class="form-control" placeholder="Ingrese la cedula del cliente" required/>
                         </div>
-                        <button class="btn btn-primary" id="select_client" onclick="obtenerCliente()">Seleccionar cliente</button>
+                        <button type="button" class="btn btn-primary" id="select_client" onclick="obtenerCliente()">Seleccionar cliente</button>
                     </div>
                     </br>
                     <table class="table table-hover table-dark">
@@ -103,13 +105,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th id="nombre" style="width: 40%;"></th>
-                                <th id="ruc" style="width: 20%;"></th>
+                            <tr id="clienteInfo">
+                                <td style="width: 40%;"></td>
+                                <td style="width: 20%;"></td>
                             </tr>
                         </tbody>
                     </table>
-                    </br>
                     <div class="form-group">
                         <label for="fecha">Ingrese la fecha de la venta:</label>
                         <input type="date" id="fecha" class="form-control col-md-4"/>
@@ -140,7 +141,7 @@
                         </tfoot>
                     </table>
                 </div>
-                <div class="form-control">
+                <div class="form-control d-flex justify-content-around ms-3" style="width: 250px;">
                     <label for="deuda">¿El cliente generara deuda?</label>
                     <input id="deuda" type="checkbox"/>
                 </div>

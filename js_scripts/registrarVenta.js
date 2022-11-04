@@ -57,17 +57,19 @@ function obtenerCliente() {
         dialog= document.getElementById('clienteDialog');
         //Mostramos el dialg
         dialog.showDialog();
-        // showDialog.addEventListener('click', (e) => {
-        //     dialog.showModal();
-        //     e.preventDefault();
-        // });
+        showDialog.addEventListener('click', (e) => {
+            dialog.showModal();
+            e.preventDefault();
+        });
         cerrarDialog(dialog);
     }
-    document.getElementById('nombre').textContent(cliente['nombre']);
+    tabla_cliente= document.getElementById('clienteInfo').cells;
+    console.log(tabla_cliente);
+    tabla_cliente[0].innerHTML= cliente['nombre'];
     if (cliente['ruc'] == "" || cliente['ruc'] == null) {
-        document.getElementById('ruc').textContent(cliente['cedula']);
+        tabla_cliente[1].innerHTML= cliente['cedula'];
     } else {
-        document.getElementById('ruc').textContent(cliente['cedula'].toString() + '-' + cliente['ruc'].toString());
+        tabla_cliente[1].innerHTML= cliente['cedula'] + '-' + cliente['ruc'];
     }
 }
 
