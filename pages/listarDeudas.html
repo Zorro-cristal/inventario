@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Lista productos de ventas</title>
+        <title>Lista de pagos pendientes</title>
         <script type="text/javascript" src="../js_scripts/listarDeudas.js"></script>
         <script type="text/javascript" src="../js_scripts/jquery.js"></script>
         <!-- CSS only -->
@@ -28,14 +28,14 @@
                 </br>
                 <div class="d-flex justify-content-around">
                     <button type="submit" id="enviar" class="btn btn-primary">Guardar pago</button>
-                    <button type="button" class="btn btn-primary" onclick="dialog.close()">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="document.getElementById('saldarDeudaDialog').close()">Cancelar</button>
                 </div>
             </form>
         </dialog>
         <main class="bg-secondary bg-gradient">
             <div>
                 <div class="d-flex justify-content-center ms-3 me-3">
-                    <h1 class="h1 text-light p-3">Lista de deudores</h1>
+                    <h1 class="h1 p-3">Lista de deudores</h1>
                 </div>
                 </br>
                 <!-- Filtros para la tabla -->

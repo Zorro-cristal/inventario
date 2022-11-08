@@ -100,8 +100,8 @@ function actualizarTabla() {
   }
   tbody_content= tbody_content + "</tbody>";
   new_tbody.innerHTML= tbody_content;
-  document.querySelector('tbody').parentNode.replaceChild(new_tbody, tbody);
-  document.getElementById('total').innerHTML= total;
+  document.querySelector('tbody').parentNode.replaceChild(new_tbody, document.querySelector('tbody'));
+  document.getElementById('total').textContent= total.toString();
 }
 
 //Funcion para reducir deuda
