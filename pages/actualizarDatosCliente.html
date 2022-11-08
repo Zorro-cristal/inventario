@@ -31,9 +31,13 @@
                 </div>
             </form>
         </dialog>
-        <main class="bg-secondary bg-gradient">
-            <div>
+        <main style="background-image: url('../assets/fondo_secundario_claro.jpg'); background-size: cover;">
+            <div class="p-2">
                 <form method="post" action="../php/actualizarCliente.php">
+                    <div class="d-flex justify-content-around">
+                        <h2 class="h2">Datos del cliente</h2>
+                    </div>
+                    </br>
                     <input type="hidden" id="ced" name="cedula" />
                     <div class="form-group">
                         <label for="nombre" class="col-md-4">Nombre del cliente:</label>

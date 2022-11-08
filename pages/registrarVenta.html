@@ -62,6 +62,10 @@
         </dialog>
         <!-- Dialog para agregar un producto al canasto -->
         <dialog class="bg-dark bg-gradient" id="productoDialog">
+            <div class="d-flex justify-content-around">
+                <h3 class="h3">Agregar producto a la lista</h3>
+            </div>
+            </br>
             <div class="form-group">
                 <label for="nombre_product" class="text-light">Nombre para filtrar:</label>
                 <input id="nombre_product" class="form-control" placeholder="Ingrese el nombre del producto" onkeyup="actualizarSelect()" onchange="actualizarSelect()" />
@@ -98,7 +102,7 @@
                 <button class="btn btn-primary" onclick="document.getElementById('productoDialog').close()">Cancelar</button>
             </div>
         </dialog>
-        <main class="bg-secondary bg-gradient">
+        <main style="background-image: url('../assets/fondo_secundario_claro.jpg'); background-size: cover;">
             <form method="post" action="../php/registrarNuevaVenta.php">
                 <div class="ms-3 me-3">
                     <h1 class="h1 d-flex justify-content-center">Datos del cliente</h1>

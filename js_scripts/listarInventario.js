@@ -8,7 +8,6 @@ function paginaCargada() {
 
     //Obtenemos la lista de inventario
     obtenerPHP();
-    console.log(inventarioAux);
     inventarios= inventarioAux;    
 
     // dialogBoton.addEventListener('click', (e) => {
@@ -58,6 +57,7 @@ function cargarLista() {
       tbody_content= tbody_content + tr;
   }
   tbody_content= tbody_content + "</tbody>";
+  console.log(tbody_content);
   new_tbody.innerHTML= tbody_content;
   //Reemplazamos el cuerpo viejo con el nuevo
   document.querySelector('tbody').parentNode.replaceChild(new_tbody, tbody);
@@ -101,7 +101,6 @@ function obtenerPHP() {
         return
       },
       success: function (datos) {
-        console.log(datos)
         inventarioAux= JSON.parse(datos);
         inventario= inventarioAux;
       }
