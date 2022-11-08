@@ -1,7 +1,7 @@
 <?php
     include './funcionesbdd.php';
     $id= $_POST['id_proveedor'];
-    $nombre= $_POST['nombre'];
+    $nombre= strtolower($_POST['nombre']);
     $telefono= $_POST['telefono'];
     if ($telefono == "" || $telefono == null) {
         $comando= 'UPDATE proveedores SET nombre= "' . $nombre . '" WHERE id= ' . $id . ';';

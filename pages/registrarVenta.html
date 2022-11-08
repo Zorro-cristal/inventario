@@ -14,70 +14,84 @@
     <body onload="cargarPagina()">
         <!-- Dialog para redirigir a deuda -->
         <dialog class="bg-dark bg-gradient" id="deudaDialog">
-            <h3 class="h3">El cliente tiene una deuda pendiente</h3>
+            <div class="d-flex justify-content-around">
+                <h3 class="h3 text-danger">El cliente tiene una deuda pendiente</h3>
+            </div>
             <div class="mt-3 d-flex justify-content-around">
-                <button class="btn btn-primary" onclick='location.href= "./listarDeudas.html";'>Redirigir a pago de deudas</button>
-                <button class="btn btn-primary" onclick="document.getElementById('deudaDialog').close();">Cancelar venta</button>
+                <button type="button" class="btn btn-primary" onclick='location.href= "./listarDeudas.html";'>Redirigir a pago de deudas</button>
+                <button type="button" class="btn btn-primary" onclick="location.href= '../index.html';">Cancelar venta</button>
             </div>
         </dialog>
         <!-- Dialog para agregar un cliente nuevo -->
         <dialog class="bg-dark bg-gradient" id="clienteDialog">
-            <h3 class="h3">El cliente no existe</h3>
-            <h4 class="h4">Ingrese los datos para agregarlo</h4>
-            <div class="form-group">
-                <label for="nombre_client" class="text-light">Nombre:</label>
-                <input id="nombre_client" class="form-control" placeholder="Ingrese el nombre del cliente" required/>
+            <div class="d-flex justify-content-around">
+                <h3 class="h3 text-danger">El cliente no existe</h3>
             </div>
-            </br>
-            <div class="form-group">
-                <label for="apellido" class="text-light">Apellido:</label>
-                <input id="apellido" class="form-control" placeholder="Ingrese el apellido del cliente" required/>
-            </div>
-            </br>
-            <div class="form-group">
-                <label for="ruc" class="text-light">Ruc:</label>
-                <input id="ruc" class="form-control" placeholder="Ingrese el ruc del cliente" type="number" required/>
-            </div>
-            </br>
-            <div class="form-group">
-                <label for="direccion" class="text-light">Direccion:</label>
-                <input id="direccion" class="form-control" placeholder="Ingrese la direccion del cliente" required/>
-            </div>
-            </br>
-            <div class="form-group">
-                <label for="fech_nac" class="text-light">Fecha de nacimiento:</label>
-                <input id="fech_nac" class="form-control" placeholder="Ingrese la fecha de nacimiento del cliente" type="date" required/>
-            </div>
-            </br>
-            <div class="mt-3 d-flex justify-content-around">
-                <button class="btn btn-primary" id="guardarCliente" onclick="registrarCliente()">Guardar cliente</button>
-                <button class="btn btn-primary" id="limpiarCliente" onclick="limpiarDatosCliente()">Limpiar datos</button>
-            </div>
+            <h4 class="h4 text-light">Ingrese los datos para agregarlo</h4>
+            <form method="dialog">
+                <div class="form-group">
+                    <label for="nombre_client" class="text-light">Nombre:</label>
+                    <input id="nombre_client" class="form-control" placeholder="Ingrese el nombre del cliente" required/>
+                </div>
+                </br>
+                <div class="form-group">
+                    <label for="apellido" class="text-light">Apellido:</label>
+                    <input id="apellido" class="form-control" placeholder="Ingrese el apellido del cliente" required/>
+                </div>
+                </br>
+                <div class="form-group">
+                    <label for="ruc" class="text-light">Ruc:</label>
+                    <input id="ruc" class="form-control" placeholder="Ingrese el ruc del cliente" type="number" maxlength="1" />
+                </div>
+                </br>
+                <div class="form-group">
+                    <label for="direccion" class="text-light">Direccion:</label>
+                    <input id="direccion" class="form-control" placeholder="Ingrese la direccion del cliente" />
+                </div>
+                </br>
+                <div class="form-group">
+                    <label for="fech_nac" class="text-light">Fecha de nacimiento:</label>
+                    <input id="fech_nac" class="form-control" placeholder="Ingrese la fecha de nacimiento del cliente" type="date"/>
+                </div>
+                </br>
+                <div class="mt-3 d-flex justify-content-around">
+                    <button class="btn btn-primary" id="guardarCliente" onclick="registrarCliente()">Guardar cliente</button>
+                    <button class="btn btn-primary" id="limpiarCliente" onclick="limpiarDatosCliente()">Limpiar datos</button>
+                </div>
+            </form>
         </dialog>
         <!-- Dialog para agregar un producto al canasto -->
         <dialog class="bg-dark bg-gradient" id="productoDialog">
             <div class="form-group">
-                <label for="nombre_product" class="text-light">Nombre:</label>
-                <input id="nombre_product" class="form-control" placeholder="Ingrese el nombre del cliente"/>
+                <label for="nombre_product" class="text-light">Nombre para filtrar:</label>
+                <input id="nombre_product" class="form-control" placeholder="Ingrese el nombre del producto" onkeyup="actualizarSelect()" onchange="actualizarSelect()" />
             </div>
             <select class="form-select mt-3 mb-3" size="5" id="lista_producto" required>
                 <option>Cargando productos...</option>
             </select>
             <div class="form-group">
-                <label for="cant" class="text-light col-md-5">Ingrese la cantidad comprada:</label>
-                <input id="cant" class="form-control col-md-7" placeholder="Ingrese la cantidad comprada" type="number" required/>
+                <label for="cant" class="text-light">Ingrese la cantidad comprada:</label>
+                <input id="cant" class="form-control col-md-7" placeholder="Ingrese la cantidad comprada" type="number" required onkeyup="calcularDescuento();calcularCosto();" onchange="calcularCosto();calcularDescuento();calcularSubtotal()"/>
             </div>
+            </br>
             <div class="form-group">
-                <label for="descuento" class="text-light col-md-5">Ingrese el descuento por unidad:</label>
-                <input id="descuento" class="form-control col-md-7" placeholder="Ingrese el descuento por unidad" type="number" value="0"/>
+                <label for="descuento" class="text-light">Ingrese el descuento por unidad:</label>
+                <input id="descuento" class="form-control col-md-7" placeholder="Ingrese el descuento por unidad" type="number" value="0" onkeyup="calcularDescuento();calcularSubtotal()" onchange="calcularDescuento()"/>
             </div>
+            </br>
             <div class="form-group">
-                <label class="text-light col-md-5">Total del descuento:</label>
-                <label id="total_desc" class="col-md-7"></label>
+                <label class="text-light col-md-5" for="total_desc">Total del descuento:</label>
+                <input id="total_desc" class="col-md-7" value="0" type="number" readonly />
             </div>
+            </br>
             <div class="form-group">
                 <label class="text-light col-md-5">Total costo:</label>
-                <label id="total_prec" class="col-md-7"></label>
+                <input id="total_prec" class="col-md-7" type="number" readonly value="0" />
+            </div>
+            </br>
+            <div class="form-group">
+                <label class="text-light col-md-5" for="sub_total">SubTotal:</label>
+                <input id="sub_total" class="col-md-7" type="number" readonly value="0"/>
             </div>
             <div class="mt-3 d-flex justify-content-around">
                 <button class="btn btn-primary" onclick="anhadirProducto()">Agregar producto</button>
@@ -92,7 +106,7 @@
                     <div class="form-group">
                         <label for="cedula">Ingrese la cedula del cliente:</label>
                         <div class="col-md-7">
-                            <input id="cedula" class="form-control" placeholder="Ingrese la cedula del cliente" required/>
+                            <input id="cedula" class="form-control" placeholder="Ingrese la cedula del cliente" required name="cedula"/>
                         </div>
                         <button type="button" class="btn btn-primary" id="select_client" onclick="obtenerCliente()">Seleccionar cliente</button>
                     </div>
@@ -113,7 +127,7 @@
                     </table>
                     <div class="form-group">
                         <label for="fecha">Ingrese la fecha de la venta:</label>
-                        <input type="date" id="fecha" class="form-control col-md-4"/>
+                        <input type="date" id="fecha" class="form-control col-md-4" name="fecha" />
                     </div>
                 </div>
                 <div class="ms-3 me-3">
@@ -134,7 +148,7 @@
                         <tfoot>
                             <tr>
                                 <!--Resultado de los productos-->
-                                <th id="cant" style="width: 10%;"></th>
+                                <th id="cant_total" style="width: 10%;"></th>
                                 <th style="text-align: right;" colspan="2">Total:</th>
                                 <th id="total" colspan="2"></th>
                             </tr>
@@ -147,11 +161,12 @@
                 </div>
                 <!-- Ocultamos el valor de la canasta para que reciba el php -->
                 <div>
-                    <input type="hidden" id="canasta"/>
+                    <input type="hidden" id="canasta" name="canasta" />
                 </div>
                 <div class="mt-3 d-flex justify-content-around">
+                    <button type="button" class="btn btn-primary" onclick='cargarProducto()'>Agregar producto</button>
                     <button type="submit" class="btn btn-primary">Registrar Venta</button>
-                    <button class="btn btn-primary" onclick='location.href= "../index.html";'>Cancelar Venta</button>
+                    <button type="button" class="btn btn-primary" onclick='location.href= "../index.html";'>Cancelar Venta</button>
                 </div>
             </form>
         </main>

@@ -73,6 +73,7 @@ function cargaProveedor() {
   //Creamos una nueva lista de seleccion
   var new_seleccion= document.createElement('select');
   new_seleccion.id= "lista_proveedor";
+  new_seleccion.name= "lista_proveedor";
   //Cargamos todos los productos al select
   agregarOpcion({id: '0', nombre: "Seleccione una opcion"}, new_seleccion);
   proveedor.forEach(prov => agregarOpcion(prov, new_seleccion));

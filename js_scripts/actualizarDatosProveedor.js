@@ -27,9 +27,15 @@ function obtenerProveedor(nombre_prov) {
         success: function (datos) {
             proveedor= JSON.parse(datos)[0];
             console.log(proveedor);
-            document.getElementById('nombre').value= proveedor.nombre;
-            document.getElementById('telefono').value= proveedor.telefono;
-            document.getElementById('id_proveedor').value= proveedor.id;
+            if (proveedor != undefined) {
+                document.getElementById('nombre').value= proveedor.nombre;
+                document.getElementById('telefono').value= proveedor.telefono;
+                document.getElementById('id_proveedor').value= proveedor.id;
+            } else {
+                var mensaje= document.getElementById('mensaje');
+                mensaje.value= "Proveedor no encontrado";
+                document.getElementById('modificarClienteDialog').showModal();
+            }
         }
     });
 }

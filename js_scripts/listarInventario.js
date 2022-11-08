@@ -1,4 +1,4 @@
-var inventario;
+var inventarios;
 var inventarioAux;
 var tbody;
 
@@ -9,7 +9,7 @@ function paginaCargada() {
     //Obtenemos la lista de inventario
     obtenerPHP();
     console.log(inventarioAux);
-    inventario= inventarioAux;    
+    inventarios= inventarioAux;    
 
     // dialogBoton.addEventListener('click', (e) => {
     //   dialog.showModal();
@@ -29,55 +29,59 @@ function paginaCargada() {
 function filtrar(valor) {
     var filtro = valor.toLowerCase();
     if (filtro != "") {
-        inventario= inventario.filter(
+        inventarios= inventarios.filter(
             obj => obj['nombre'].includes(filtro)
         );
         cargarLista();
     } else {
-        inventario= inventarioAux;
+        inventarios= inventarioAux;
         cargarLista();
     }
 }
 
 //Carga lista de inventario
 function cargarLista() {
-    const tbody= document.querySelector('tbody');
-    //Creamos un nuevo cuerpo de la tabla
-    var new_tbody= document.createElement('tbody');
-    //populate_with_new_rows(new_tbody);
+  var new_tbody= document.querySelector('tbody');
+  //var new_tbody= document.createElement('tbody');
+  var tbody_content= "<tbody>";
+  //populate_with_new_rows(new_tbody);
+  for (i= 0; i < inventarios.length; i++) {
+      var nombre= inventarios[i].nombre;
+      var descripcion= inventarios[i].descripcion;
+      if (descripcion == null) {
+        descripcion= "";
+      }
+      var stock= inventarios[i].stock;
+      var precio= inventarios[i].precio_venta;
+      var id= inventarios[i].id;
+      var tr= '<tr onclick= "modificarDatos(event, this.attributes.id.nodeValue)" id="'+ id +'"><td style="width: 30%;">'+ nombre +'</td><td style="width: 45%;">'+ descripcion +'</td><td style="width: 10%;">'+ stock +'</td><td style="width: 15%;">'+ precio +'</td></tr>';
+      tbody_content= tbody_content + tr;
+  }
+  tbody_content= tbody_content + "</tbody>";
+  new_tbody.innerHTML= tbody_content;
+  //Reemplazamos el cuerpo viejo con el nuevo
+  document.querySelector('tbody').parentNode.replaceChild(new_tbody, tbody);
+}
 
-    //Agregamos los productos a la tabla
-    for (i= inventario.length - 1; i >= 0; i--) {
-        var tr= document.createElement('tr');
-        tr.id=inventario[i]['id'];
-        //Creamos las columnas
-        var nombre= document.createElement('td');
-        var descripcion= document.createElement('td');
-        var stock= document.createElement('td');
-        var precio= document.createElement('td');
-        //Les asignamos sus propiedades
-        nombre.innerHTML= inventario[i]['nombre'];
-        //nombre.textContent(inventario[i]['nombre']);
-        nombre.style.width= "30%";
-        //descripcion.textContent(inventario[i]['descripcion']);
-        descripcion.innerHTML= inventario[i]['descripcion'];
-        descripcion.style.width= "45%"
-        //stock.textContent(inventario[i]['stock']);
-        stock.innerHTML= inventario[i]['stock'];
-        stock.style.width= "10%";
-        precio.innerHTML= inventario[i]['precio_venta'];
-        //precio.textContent(inventario[i]['precio']);
-        precio.style.width= "15%";
-        //Le agregamos los hijos al tr
-        tr.appendChild(nombre);
-        tr.appendChild(descripcion);
-        tr.appendChild(stock);
-        tr.appendChild(precio);
-        //Agregamos el hijo al tbody
-        new_tbody.appendChild(tr);
+
+//Funcion para modificar datos
+function modificarDatos(evento, id) {
+  //Muestra el dialog saldarDeuda
+  var dialog= document.getElementById('modificarProductoDialog');
+  dialog.addEventListener("click", (e) => {
+    if (e.target === dialog) {
+      dialog.close();
     }
-    //Reemplazamos el cuerpo viejo con el nuevo
-    tbody.parentNode.replaceChild(new_tbody, tbody);
+  });
+  //Asigna los valores en el dialog
+  document.getElementById('id').value= id;
+  var inventario= inventarios.filter(element => element['id'] == id)[0];
+  console.log(inventario);
+  document.getElementById('nombre').value= inventario.nombre;
+  document.getElementById('descripcion').value= inventario.descripcion;
+  document.getElementById('precio_vent').value= inventario.precio_venta;
+  dialog.showModal();
+  evento.preventDefault();
 }
 
 //Funcion para obtener los datos del php

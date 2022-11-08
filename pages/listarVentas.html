@@ -5,8 +5,6 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Lista productos de ventas</title>
-        <script type="text/javascript" src="../js_scripts/listarVentas.js"></script>
-        <script type="text/javascript" src="../js_scripts/jquery.js"></script>
         <!-- CSS only -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
@@ -14,6 +12,7 @@
     <body onload="paginaCargada()">
         <!-- Dialogo que muestra informacion de la venta -->
         <dialog  class="bg-dark bg-gradient" id="detalle_ventaDialog">
+            <input type="hidden" id="id_venta"/>
             <div class="form group">
                 <label for="nro_fact">Numero factura</label>
                 <input id="nro_fact" readonly />
@@ -48,22 +47,31 @@
                     <th id="subTotal_total"></th>
                 </tfoot>
             </table>
+            <div class="d-flex justify-content-around">
+                <button class="btn btn-primary" onclick="eliminarVenta()">Eliminar venta</button>
+                <button class="btn btn-primary" onclick="document.getElementById('detalle_ventaDialog').close()">Atras</button>
+            </div>
         </dialog>
         <main class="bg-secondary bg-gradient">
             <div>
                 <div class="d-flex justify-content-center ms-3 me-3">
-                    <h1 class="h1 text-light p-3">Lista de ventas</h1>
+                    <h1 class="h1 p-3">Lista de ventas</h1>
                 </div>
                 </br>
             </div>
             <div class="form-control">
-                <label for="nombre_client" class="text-light">Ingrese el nombre o apellido del cliente:</label>
-                <input id="nombre_client" class="form-control" placeholder="Nombre o apellido del cliente"/>
+                <label for="ced_busc" >Ingrese la cedula del cliente:</label>
+                <input id="ced_busc" class="form-control" placeholder="Cedula del cliente" type="number" onkeyup="filtraCed(this.value)" onchange="filtraCed(this.value)"/>
             </div>
             </br>
             <div class="form-control">
-                <label for="fech_vent" class="text-light">Ingrese la fecha:</label>
-                <input id="fech_vent" class="form-control" placeholder="fecha de ventas" type="date"/>
+                <label for="nombre_client">Ingrese el nombre o apellido del cliente:</label>
+                <input id="nombre_client" class="form-control" placeholder="Nombre o apellido del cliente" onkeyup="filtraNombre(this.value)" onchange="filtraNombre(this.value)"/>
+            </div>
+            </br>
+            <div class="form-control">
+                <label for="fech_vent" >Ingrese la fecha de la venta:</label>
+                <input id="fech_vent" class="form-control" placeholder="fecha de ventas" type="date" onkeyup="filtraFech(this.value)" onchange="filtraFech(this.value)"/>
             </div>
             </br>
             <table class="table table-holder table-dark m-3" style="width: 98%;">
@@ -73,7 +81,7 @@
                     <th scope="col" style="width: 20%;">Fecha</th>
                     <th scope="col" style="width: 20%;">Total</th>
                 </thead>
-                <tbody>
+                <tbody id="lista_ventas">
                     <!-- Lista de ventas -->
                 </tbody>
                 <tfoot>
@@ -109,5 +117,7 @@
                 </a></li>
             </ul>
         </footer>
+        <script type="text/javascript" src="../js_scripts/jquery.js"></script>
+        <script type="text/javascript" src="../js_scripts/listarVentas.js"></script>
     </body>
 </html>

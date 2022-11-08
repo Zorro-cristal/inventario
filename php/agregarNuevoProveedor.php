@@ -1,7 +1,7 @@
 <?php
     include './funcionesbdd.php';
     //Extraemos las variables necesarias
-    $nombre= $_POST['nombre_prov'];
+    $nombre= strtolower($_POST['nombre_prov']);
     $telefono= $_POST['telefono'];
 
     //Generamos el comando de acuerdo a los datos recibidos

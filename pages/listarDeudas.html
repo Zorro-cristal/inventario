@@ -15,12 +15,21 @@
         <!-- Dialogo para reducir la deuda -->
         <dialog id="saldarDeudaDialog" class="bg-dark bg-gradient">
             <form method="post" action="../php/saldarDeuda.php">
-                <input type="hidden" id="cedula" />
-                <label for="deuda">Deuda pendiente: </label>
-                <input id="deuda" class="col-md-8" readonly/>
-                <label for="pago">Pago realizado: </label>
-                <input id="pago" class="col-md-8" type="number" required />
-                <button type="submit" id="enviar">Guardar pago</button>
+                <input type="hidden" id="cedula" name="cedula" />
+                <div class="form-group">
+                    <label for="deuda" class="text-light">Deuda pendiente: </label>
+                    <input id="deuda" class="col-md-8 form-control" readonly name="deuda"/>
+                </div>
+                </br>
+                <div class="form-group">
+                    <label for="pago" class="text-light">Pago realizado: </label>
+                    <input id="pago" class="col-md-8" type="number" required name="pago" />
+                </div>
+                </br>
+                <div class="d-flex justify-content-around">
+                    <button type="submit" id="enviar" class="btn btn-primary">Guardar pago</button>
+                    <button type="button" class="btn btn-primary" onclick="dialog.close()">Cancelar</button>
+                </div>
             </form>
         </dialog>
         <main class="bg-secondary bg-gradient">
@@ -32,25 +41,26 @@
                 <!-- Filtros para la tabla -->
                 <div class="form-control">
                     <label for="filtro_ruc">Ingrese el ruc o ci:</label>
-                    <input id="filtro_ruc" placeholder="Ruc/CI par filtrar" class="form-control col-md-4"  onkeyup="actualizacionRuc(this.value)" oninput="actualizacionRuc(this.value)"/>
+                    <input type="number" id="filtro_ruc" placeholder="Ruc/CI para filtrar" class="form-control col-md-4"  onkeyup="actualizacionRuc(this.value)" oninput="actualizacionRuc(this.value)"/>
                 </div>
                 </br>
                 <div class="form-control">
                     <label for="filtro_nombre">Ingrese el nombre o apellido:</label>
-                    <input id="filtro_nombre" placeholder="Ruc/CI par filtrar" class="form-control col-md-4"  onkeyup="actualizacionNombre(this.value)" oninput="actualizacionNombre(this.value)" />
+                    <input id="filtro_nombre" placeholder="Nombre para filtrar" class="form-control col-md-4"  onkeyup="actualizacionNombre(this.value)" oninput="actualizacionNombre(this.value)" />
                 </div>
                 </br>
                 <table class="table table-hover table-dark m-3" style="width: 98%;">
                     <thead>
-                        <th scope="col" style="width: 60%;">Nombre completo</th>
-                        <th scope="col" style="width: 20%;">Ruc/CI</th>
+                        <th scope="col" style="width: 50%;">Nombre completo</th>
+                        <th scope="col" style="width: 15%;">Ruc/CI</th>
+                        <th scope="col" style="width: 15%;">Telefono</th>
                         <th scope="col" style="width: 20%;">Deuda</th>
                     </thead>
                     <tbody>
                         <!-- Lista de deudores -->
                     </tbody>
                     <tfoot>
-                        <th colspan="2" style="text-align: right;">Total deudas:</th>
+                        <th colspan="3" style="text-align: right;">Total deudas:</th>
                         <th id="total"></th>
                     </tfoot>
                 </table>

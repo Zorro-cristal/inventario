@@ -1,12 +1,13 @@
 <?php
     include './funcionesbdd.php';
     $cedula= $_POST['cedula'];
-    $nombre= $_POST['nombre'];
-    $apellido= $_POST['apellido'];
+    $nombre= strtolower($_POST['nombre']);
+    $apellido= strtolower($_POST['apellido']);
     $ruc= $_POST['ruc'];
-    $direccion= $_POST['direccion'];
+    $direccion= strtolower($_POST['direccion']);
     $fecha= $_POST['fecha'];
-    $comando= "UPDATE INTO clientes SET nombre= " . $nombre ", apellido= " . $apellido . ", ruc= " . $ruc . ", direccion= " . $direccion . ", fecha_nacimiento= " . $fecha . " WHERE cedula= " . $cedula;
+    $fecha= convertirFecha($fecha);
+    $comando= 'UPDATE INTO clientes SET nombre= "' . $nombre '", apellido= "' . $apellido . '", ruc= ' . $ruc . ', direccion= "' . $direccion . '", fecha_nacimiento= STR_TO_DATE("' . $fecha . '", "%Y-%m-%d") WHERE cedula= ' . $cedula;
     modificarBdd($comando);
     header('Location: ../index.html');
 ?>
