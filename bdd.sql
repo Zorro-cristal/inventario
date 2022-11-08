@@ -71,3 +71,18 @@ alter table Detalle_ventas
 
 alter table Ventas
     add foreign key (cliente_fk) references Clientes(cedula);
+
+--Sentencia para el segundo parcial
+SELECT P.nombre, Aux.inversion, Aux.recuperado, 
+	CASE 
+		WHEN (Aux.inversion - Aux.recuperado) > 0 THEN Aux.inversion - Aux.recuperado
+		ELSE 0
+	END AS ganancia
+	, P.precio_venta, P.stock
+	FROM productos AS P NATURAL JOIN (
+		SELECT Pr.id AS id, SUM(IP.cantidad * IP.precio_unitario) AS inversion, SUM((DV.cantidad * DV.precio_venta) - DV.descuento) AS recuperado, SUM(IP.cantidad * IP.precio_unitario) - SUM((DV.cantidad * DV.precio_venta) - DV.descuento) AS ganancia
+			FROM ingresos_productos AS IP 
+				JOIN productos AS Pr ON Pr.id = IP.producto_fk 
+				JOIN detalle_ventas AS DV ON DV.producto_fk= Pr.id
+	) AS Aux;
+	
