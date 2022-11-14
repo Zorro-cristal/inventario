@@ -17,17 +17,17 @@
             <form method="post" action="modificarProducto.php">
                 <input type="hidden" id="id"/>
                 <div class="form-group">
-                    <label for="nombre">Nombre del producto:</label>
+                    <label for="nombre" class="text-light">Nombre del producto:</label>
                     <input type="text" id="nombre" placeholder="Nombre del producto"/>
                 </div>
                 </br>
                 <div class="form-group">
-                    <label for="descripcion">Descripcion del producto:</label>
-                    <input type="number" id="descripcion" placeholder="Descripcion del producto"/>
+                    <label for="descripcion" class="text-light">Descripcion del producto:</label>
+                    <textarea id="descripcion" placeholder="Descripcion del producto"></textarea>
                 </div>
                 </br>
                 <div class="form-group">
-                    <label for="precio_vent">Precio de venta del producto:</label>
+                    <label for="precio_vent" class="text-light">Precio de venta del producto:</label>
                     <input type="number" id="precio_vent" placeholder="Precio de venta del producto"/>
                 </div>
                 </br>
@@ -40,8 +40,9 @@
         </dialog>
         <main style="background-image: url('../assets/fondo_secundario_claro.jpg'); background-size: cover;">
             <div class="p-3">
+                <h2 class="h2 d-flex justify-content-around">Lista de productos en stock</h2>
                 <div class="form-group">
-                    <label for="producto" class="text-light">Ingrese el nombre del producto:</label>
+                    <label for="producto">Ingrese el nombre del producto:</label>
                 </div>
                 <div class="form-group">
                     <div class="col-md-7">

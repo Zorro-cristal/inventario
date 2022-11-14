@@ -21,14 +21,20 @@ function obtenerCliente() {
             return
         },
         success: function (datos) {
-            cliente= JSON.parse(datos)[0];
-            document.getElementById('ced').value= cliente.cedula;
-            document.getElementById('nombre').value= cliente.nombre;
-            document.getElementById('apellido').value= cliente.apellido;
-            document.getElementById('ruc').value= cliente.ruc;
-            document.getElementById('telefono').value= cliente.telefono;
-            document.getElementById('direccion').value= cliente.direccion;
-            document.getElementById('fech_nac').value= cliente.fecha_nacimiento;
+            var cliente= JSON.parse(datos)[0];
+            if (cliente == undefined) {
+                var mensaje= document.getElementById('mensaje');
+                mensaje.innerText= "Cliente no encontrado";
+                document.getElementById('buscarClienteDialog').showModal();
+            } else {
+                document.getElementById('ced').value= cliente.cedula;
+                document.getElementById('nombre').value= cliente.nombre;
+                document.getElementById('apellido').value= cliente.apellido;
+                document.getElementById('ruc').value= cliente.ruc;
+                document.getElementById('telefono').value= cliente.telefono;
+                document.getElementById('direccion').value= cliente.direccion;
+                document.getElementById('fech_nac').value= cliente.fecha_nacimiento;
+            }
         }
     });
 }

@@ -40,6 +40,7 @@ function cargarPagina() {
         var aux= JSON.parse(datos);
         productosAux= aux['1'];
         productos= productosAux;
+        console.log(productos);
         clientes= aux['2'];
       }
     });
@@ -57,11 +58,9 @@ function obtenerCliente() {
         return;
     }
     //Buscamos el cliente
-    console.log(clientes);
     cliente= clientes.filter(
         element => element['cedula'] == cedula
     )[0] || null;
-    console.log(cliente);
     if (cliente == null) {
         //Mostramos el dialg
         dialog.showModal();
@@ -77,7 +76,6 @@ function obtenerCliente() {
         }
         //Asignamos los datos del cliente
         tabla_cliente= document.getElementById('clienteInfo').cells;
-        console.log(tabla_cliente);
         tabla_cliente[0].innerHTML= cliente['nombre'] + " " + cliente['apellido'];
         if (cliente['ruc'] == "" || cliente['ruc'] == null) {
             tabla_cliente[1].innerHTML= cliente['cedula'];
@@ -174,6 +172,7 @@ function actualizarSelect() {
     productos= productosAux.filter(
         prod => prod.nombre.includes(filtro.toLowerCase())
     );
+    console.log(productos);
     //Creamos el select
     var lista_productos= document.createElement('select');
     lista_productos.id= 'lista_producto';
@@ -183,17 +182,29 @@ function actualizarSelect() {
     for (i= 0; i < productos.length; i++) {
         lista_productos[i]= new Option(productos[i]['nombre'], productos[i]['id']);
     }
+    lista_productos.addEventListener("change", function() {
+        var prod= productos.filter(
+            p => p.id == this.value
+        )[0];
+        console.log(prod);
+        document.getElementById('disponible').value= prod.stock;
+    });
     //Reemplazamos el select del html por el creado
     document.getElementById('lista_producto').parentNode.replaceChild(lista_productos, document.getElementById('lista_producto'));
 }
 
 //Funcion para calcular el costo total
 function calcularCosto() {
+    console.log("Calculando costo");
     var cant= parseInt(document.getElementById('cant').value);
     var id_product= parseInt(document.getElementById('lista_producto').value);
-    console.log(id_product);
+    console.log(productos);
+    var prod= productos.filter(
+        p => p['id'] == id_product
+    )[0];
+    console.log(prod);
     if (id_product != undefined && id_product != "" && id_product != "undefined") {
-        var precio= parseFloat(productos[id_product]['precio_venta']);
+        var precio= parseFloat(prod['precio_venta']);
         document.getElementById('total_prec').value= cant * precio;
     } else {
         alert("Seleccione primero el producto");
@@ -203,6 +214,7 @@ function calcularCosto() {
 
 //Funcion para calcular el descuento
 function calcularDescuento() {
+    console.log("Calculando descuento");
     cant= parseInt(document.getElementById('cant').value);
     descuent= parseFloat(document.getElementById('descuento').value) || 0;
     if (cant != 0) {
@@ -212,6 +224,7 @@ function calcularDescuento() {
 
 //Funcion para calcular el subtotal
 function calcularSubtotal() {
+    console.log("Calculando subtotal");
     var costo= parseFloat(document.getElementById('total_prec').value);
     var descuent= parseFloat(document.getElementById('total_desc').value) || 0;
     console.log(costo);
@@ -262,15 +275,15 @@ function registrarCliente() {
     if (direccion == undefined || direccion == ""){
         if (ruc == undefined || ruc == ""){
             if (fecha_nac == undefined || fecha_nac == ""){
-                comando= "INSERT INTO clientes(cedula, nombre, apellido, ) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "');";
+                comando= "INSERT INTO clientes(cedula, nombre, apellido) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "');";
             } else {
-                comando= "INSERT INTO clientes(cedula, nombre, apellido, fecha_nacimiento) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', '" + "STR_TO_DATE('" + fecha_nac + "', '%Y-%m-%d')" + "');";
+                comando= "INSERT INTO clientes(cedula, nombre, apellido, fecha_nacimiento) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', '" + "STR_TO_DATE(" + fecha_nac + ", %d/%m/%Y)" + "');";
             }
         } else {
             if (fecha_nac == undefined || fecha_nac == ""){
                 comando= "INSERT INTO clientes(cedula, nombre, apellido, ruc) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', " + ruc + ");";
             } else {
-                comando= "INSERT INTO clientes(cedula, nombre, apellido, ruc, fecha_nacimiento) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', " + ruc + ", '" + "STR_TO_DATE('" + fecha_nac + "', '%Y-%m-%d')" + "');";
+                comando= "INSERT INTO clientes(cedula, nombre, apellido, ruc, fecha_nacimiento) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', " + ruc + ", '" + "STR_TO_DATE(" + fecha_nac + ", %d/%m/%Y)" + "');";
             }
         }
     } else {
@@ -278,13 +291,13 @@ function registrarCliente() {
             if (fecha_nac == undefined || fecha_nac == ""){
                 comando= "INSERT INTO clientes(cedula, nombre, apellido, direccion) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', '" + direccion + "');";
             } else {
-                comando= "INSERT INTO clientes(cedula, nombre, apellido, direccion, fecha_nacimiento) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', '" + direccion + "', '" + "STR_TO_DATE('" + fecha_nac + "', '%Y-%m-%d')" + "');";
+                comando= "INSERT INTO clientes(cedula, nombre, apellido, direccion, fecha_nacimiento) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', '" + direccion + "', '" + "STR_TO_DATE(" + fecha_nac + ", %d/%m/%Y)" + "');";
             }
         } else {
             if (fecha_nac == undefined || fecha_nac == ""){
                 comando= "INSERT INTO clientes(cedula, nombre, apellido, direccion, ruc) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', '" + direccion + "', " + ruc + ");";
             } else {
-                comando= "INSERT INTO clientes(cedula, nombre, apellido, direccion, ruc, fecha_nacimiento) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', '" + direccion + "', " + ruc + ", '" + "STR_TO_DATE('" + fecha_nac + "', '%Y-%m-%d')" + "');";
+                comando= "INSERT INTO clientes(cedula, nombre, apellido, direccion, ruc, fecha_nacimiento) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', '" + direccion + "', " + ruc + ", '" + "STR_TO_DATE(" + fecha_nac + ", %Y-%m-%d)" + "');";
             }
         }
     }

@@ -26,6 +26,7 @@ function obtenerProveedor(nombre_prov) {
         },
         success: function (datos) {
             proveedor= JSON.parse(datos)[0];
+            console.log("proveedor");
             console.log(proveedor);
             if (proveedor != undefined) {
                 document.getElementById('nombre').value= proveedor.nombre;
@@ -33,8 +34,8 @@ function obtenerProveedor(nombre_prov) {
                 document.getElementById('id_proveedor').value= proveedor.id;
             } else {
                 var mensaje= document.getElementById('mensaje');
-                mensaje.value= "Proveedor no encontrado";
-                document.getElementById('modificarClienteDialog').showModal();
+                mensaje.innerText= "Proveedor no encontrado";
+                document.getElementById('modificarProveedorDialog').showModal();
             }
         }
     });

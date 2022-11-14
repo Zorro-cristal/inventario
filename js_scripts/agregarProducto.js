@@ -107,7 +107,10 @@ function cargaProductos() {
   //Funcion para obtener stock actual
   new_seleccion.addEventListener('change', (event) => {
     var stock= document.getElementById('stock');
-    stock.value= productos[event.target.value].stock;
+    var prod= productos.filter(
+      p => p.id == event.target.value
+    )[0];
+    stock.value= prod.stock;
   });
   agregarOpcion({id: '0', nombre: "Seleccione una opcion"}, new_seleccion);
   //Cargamos todos los productos al select

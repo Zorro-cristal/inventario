@@ -67,24 +67,30 @@
         <!-- Dialog para agregar un producto al canasto -->
         <dialog style="background-image: url('../assets/fondo_secundario_oscuro.jpg'); background-size: cover;" id="productoDialog">
             <div class="d-flex justify-content-around">
-                <h3 class="h3">Agregar producto a la lista</h3>
+                <h3 class="h3 text-light">Agregar producto a la lista</h3>
             </div>
             </br>
             <div class="form-group">
                 <label for="nombre_product" class="text-light">Nombre para filtrar:</label>
                 <input id="nombre_product" class="form-control" placeholder="Ingrese el nombre del producto" onkeyup="actualizarSelect()" onchange="actualizarSelect()" />
             </div>
-            <select class="form-select mt-3 mb-3" size="5" id="lista_producto" required>
+            <select class="form-select mt-3 mb-3" size="3" id="lista_producto" required>
                 <option>Cargando productos...</option>
             </select>
+            </br>
+            <div class="form-group">
+                <label class="text-light" for="disponible">Disponible en stock:</label>
+                <input id="disponible" class="col-md-7" value="0" type="number" readonly />
+            </div>
+            </br>
             <div class="form-group">
                 <label for="cant" class="text-light">Ingrese la cantidad comprada:</label>
-                <input id="cant" class="form-control col-md-7" placeholder="Ingrese la cantidad comprada" type="number" required onkeyup="calcularDescuento();calcularCosto();" onchange="calcularCosto();calcularDescuento();calcularSubtotal()"/>
+                <input id="cant" class="form-control col-md-7" placeholder="Ingrese la cantidad comprada" type="number" required onkeyup="calcularDescuento();calcularCosto();calcularSubtotal();" onchange="calcularCosto();calcularDescuento();calcularSubtotal();"/>
             </div>
             </br>
             <div class="form-group">
                 <label for="descuento" class="text-light">Ingrese el descuento por unidad:</label>
-                <input id="descuento" class="form-control col-md-7" placeholder="Ingrese el descuento por unidad" type="number" value="0" onkeyup="calcularDescuento();calcularSubtotal()" onchange="calcularDescuento()"/>
+                <input id="descuento" class="form-control col-md-7" placeholder="Ingrese el descuento por unidad" type="number" value="0" onkeyup="calcularDescuento();calcularSubtotal()" onchange="calcularDescuento();calcularSubtotal();"/>
             </div>
             </br>
             <div class="form-group">
@@ -165,7 +171,7 @@
                 </div>
                 <div class="form-control d-flex justify-content-around ms-3" style="width: 250px;">
                     <label for="deuda">¿El cliente generara deuda?</label>
-                    <input id="deuda" type="checkbox"/>
+                    <input id="deuda" type="checkbox" name="deuda"/>
                 </div>
                 <!-- Ocultamos el valor de la canasta para que reciba el php -->
                 <div>
