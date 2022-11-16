@@ -10,6 +10,37 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
         <script type="text/javascript" src="../js_scripts/agregarProducto.js"></script>
         <script type="text/javascript" src="../js_scripts/jquery.js"></script>
+        <script>
+            //Extraemos el user del localStorage
+            const rol= localStorage.getItem("alias");
+            console.log(rol);
+            //Obtenemos el rol
+            $.ajaxSetup({async: false});
+            $.ajax({
+                url: "../php/obtenerRol.php",
+                type: "post",
+                data: {
+                    'usuario': rol
+                },
+                error: function (jqXHR, textstatus, errorThrowm) {
+                    //parametros que reciben los erroes si hubiera alguno
+                    console.log(jqXHR);
+                    console.warn(textstatus);
+                    console.log(errorThrowm);
+                    alert("Error al obtener los datos de la base de datos");
+                    return
+                },
+                success: function (datos) {
+                    alias= JSON.parse(datos)[0].alias.toString();
+                    console.log(alias);
+                    if (alias == "empleado") {
+                        localStorage.removeItem("alias");
+                        window.location.replace("../index.html");
+                    }
+                }
+            });
+            $.ajaxSetup({async: true});
+        </script>
     </head>
     <body onload="paginaCargada()">
         <!-- Ventana para agregar un nuevo producto a la base de datos -->
