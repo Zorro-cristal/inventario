@@ -21,7 +21,11 @@
         //Comprobamos si la contraseña obtenida coincide con la codificada
         if ($contra[0]['alias'] == $usuario){
             echo ("Datos validos");
-            header("Location: ../index_sec.html");
+            //Guardamos el usuario en el cache
+            //echo ('<script type="text/JavaScript">localStorage.setItem("usuario", "' . $usuario . '");</script>');
+            //echo ('<script type="text/JavaScript">const dato= "' . $usuario . '";</script>');
+            //Guarda en la cookie que vencera en una hora
+            header("Location: ../principal.html?usuario=" . urlencode($usuario));
             exit();
         }
     }
