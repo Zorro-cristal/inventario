@@ -26,7 +26,7 @@
                 </div>
             </div> 
             <div style="margin: 5%;"></div>
-            <div class="card bg-secondary bg-opacity-10" style="width: 300px;">
+            <div class="card bg-secondary bg-opacity-10" style="width: 300px;" id="funciones_administrador">
                 <div class="card-body">
                     <button type="button" class="btn btn-primary bg-gradient m-2" onclick="location.href='./pages/listarInventario.html'">
                         Ver inventario
@@ -67,13 +67,36 @@
             </a></li>
         </ul>
     </footer>
+    <script type="text/javascript" src="./js_scripts/jquery.js"></script>
     <script>
         //Extraemos el alias del usuario
         user= location.search.split('usuario')[1];
         user= user.substring(1);
         //Guardamos el dato en el localStorage
         localStorage.setItem("alias", user);
-        
+        //Obtenemos el rol
+        $.ajax({
+            url: "./php/obtenerRol.php",
+            type: "post",
+            data: {
+                'usuario': user
+            },
+            error: function (jqXHR, textstatus, errorThrowm) {
+                //parametros que reciben los erroes si hubiera alguno
+                console.log(jqXHR);
+                console.warn(textstatus);
+                console.log(errorThrowm);
+                alert("Error al obtener los datos de la base de datos");
+                return
+            },
+            success: function (datos) {
+                alias= JSON.parse(datos)[0].alias.toString();
+                console.log(alias);
+                if (alias != "administrador") {
+                    document.getElementById('funciones_administrador').style.display= "none";
+                }
+            }
+        });
     </script>
 </body>
 </html>
