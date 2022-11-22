@@ -67,7 +67,7 @@
                 <p class="text-sm-left font-weight-bold ms-3">*Seleccione un producto para modificar sus datos</p>
                 </br>
                 <div class="mt-3 d-flex justify-content-around">
-                    <button class="btn btn-primary" onclick='location.href= "../principal.html"'>Volver al menu</button>
+                    <button class="btn btn-primary" onclick='location.href= "../index.html"'>Volver al menu</button>
                 </div>
             </div>
         </main>
@@ -93,36 +93,5 @@
                 </a></li>
             </ul>
         </footer>
-        <script>
-            //Extraemos el user del localStorage
-            const rol= localStorage.getItem("alias");
-            console.log(rol);
-            //Obtenemos el rol
-            $.ajaxSetup({async: false});
-            $.ajax({
-                url: "../php/obtenerRol.php",
-                type: "post",
-                data: {
-                    'usuario': rol
-                },
-                error: function (jqXHR, textstatus, errorThrowm) {
-                    //parametros que reciben los erroes si hubiera alguno
-                    console.log(jqXHR);
-                    console.warn(textstatus);
-                    console.log(errorThrowm);
-                    alert("Error al obtener los datos de la base de datos");
-                    return
-                },
-                success: function (datos) {
-                    alias= JSON.parse(datos)[0].alias.toString();
-                    console.log(alias);
-                    if (alias == "empleado") {
-                        localStorage.removeItem("alias");
-                        window.location.replace("../index.html");
-                    }
-                }
-            });
-            $.ajaxSetup({async: true});
-        </script>
     </body>
 </html>
