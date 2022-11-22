@@ -16,3 +16,7 @@ ALTER TABLE usuarios ADD FOREIGN KEY (rol_id) REFERENCES roles(id);
 INSERT INTO roles(nombre) VALUES ("administrador");
 
 INSERT INTO usuarios(alias, contra, rol_id) VALUES ("zorro-cristal", AES_ENCRYPT("zorro-cristal", "inventario"), 1);
+
+INSERT INTO roles(nombre) VALUES ("empleado");
+
+INSERT INTO usuarios(alias, contra, rol_id) VALUES ("empleado", AES_ENCRYPT("empleado", "inventario"), 2);`usuarios`
