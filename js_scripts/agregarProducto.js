@@ -1,4 +1,9 @@
-import { obtenerBdd } from "funciones";
+//Validamos el rol
+if (validarRol("administrador")) {
+  console.log("Acceso autorizado");
+} else {
+  window.location.replace("../principal?usuario=" + userName + ".html");
+}
 
 var productos;
 var proveedor;

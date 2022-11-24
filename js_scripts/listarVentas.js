@@ -5,6 +5,13 @@ var detalle_ventasAux;
 var clientes;
 var productos;
 
+//Validamos el rol
+if (validarRol("administrador")) {
+  console.log("Acceso autorizado");
+} else {
+  window.location.replace("../principal?usuario=" + userName + ".html");
+}
+
 //Funcion que filtra por fecha
 function filtraFech(valor) {
   if (valor != "") {
@@ -184,7 +191,6 @@ function actualizarTabla() {
           tbody_content= tbody_content + tr;
 
           monto_total += monto;
-          console.log(monto_total);
       }
       tbody_content= tbody_content + "</tbody>";
       new_tbody.innerHTML= tbody_content;

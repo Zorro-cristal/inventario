@@ -1,4 +1,9 @@
-import { divisorMiles, obtenerBdd } from "funciones.js";
+//Validamos el rol
+if (validarRol("administrador")) {
+    console.log("Acceso autorizado");
+  } else {
+    window.location.replace("../principal?usuario=" + userName + ".html");
+  }  
 
 function paginaCargada() {
     var dialog= document.getElementById('modificarProveedorDialog');

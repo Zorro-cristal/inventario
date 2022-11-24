@@ -1,4 +1,9 @@
-import { divisorMiles, obtenerBdd } from "./funciones";
+//Validamos el rol
+if (validarRol("administrador") || validarRol("empleado")) {
+  console.log("Acceso autorizado");
+} else {
+  window.location.replace("../principal?usuario=" + userName + ".html");
+}
 
 var clientes;
 var clientesAux;

@@ -1,4 +1,9 @@
-import {obtenerBdd, divisorMiles, conversorFecha} from "funciones.js";
+//Validamos el rol
+if (validarRol("administrador") || validarRol("empleado")) {
+    console.log("Acceso autorizado");
+} else {
+    window.location.replace("../principal?usuario=" + userName + ".html");
+}  
 
 //Funcion que retorna datos del proveedor
 function obtenerCliente() {
