@@ -1,3 +1,5 @@
+import { divisorMiles, obtenerBdd } from "./funciones";
+
 //Lista de los productos en la canasta
 var canasta= new Array();
 var productosAux;
@@ -23,28 +25,9 @@ function cargarPagina() {
 
     var dialog, dialogBoton;
     //Obtenemos los datos de la base de datos
-    $.ajaxSetup({async: false});
-    $.ajax({
-      url: "../php/registrarVenta.php",
-      type: "post",
-      error: function (jqXHR, textstatus, errorThrowm) {
-        //parametros que reciben los erroes si hubiera alguno
-        console.log(jqXHR);
-        console.warn(textstatus);
-        console.log(errorThrowm);
-        alert("Error al obtener los datos de la base de datos");
-        return
-      },
-      success: function (datos) {
-        //Se transforma los datos obtenidos al JSON
-        var aux= JSON.parse(datos);
-        productosAux= aux['1'];
-        productos= productosAux;
-        console.log(productos);
-        clientes= aux['2'];
-      }
-    });
-    $.ajaxSetup({async: true});
+    productosAux= obtenerBdd("productos");
+    productos= productosAux;
+    clientes= obtenerBdd("clientes");
 }
 
 //Funcion para obtener Cliente
@@ -78,9 +61,9 @@ function obtenerCliente() {
         tabla_cliente= document.getElementById('clienteInfo').cells;
         tabla_cliente[0].innerHTML= cliente['nombre'] + " " + cliente['apellido'];
         if (cliente['ruc'] == "" || cliente['ruc'] == null) {
-            tabla_cliente[1].innerHTML= cliente['cedula'];
+            tabla_cliente[1].innerHTML= divisorMiles(cliente['cedula']);
         } else {
-            tabla_cliente[1].innerHTML= cliente['cedula'] + '-' + cliente['ruc'];
+            tabla_cliente[1].innerHTML= divisorMiles(cliente['cedula']) + '-' + cliente['ruc'];
         }
     }
 }
@@ -110,16 +93,16 @@ function actualizarTabla() {
         var tdboton= document.createElement('td');
         //Les asignamos sus propiedades
         cantidad_total= cantidad_total + parseInt(canasta[i]['cantidad']);
-        cantidad.innerHTML= canasta[i]['cantidad'];
+        cantidad.innerHTML= divisorMiles(canasta[i]['cantidad']);
         cantidad.style.width= "15%";
         nombre.innerHTML= productos[productPos]['nombre'];
         nombre.style.width= "40%";
-        precio.innerHTML= canasta[i]['precio'];
+        precio.innerHTML= divisorMiles(canasta[i]['precio']);
         precio.style.width= "15%";
         var sub= parseFloat(canasta[i]['precio']);
         sub= sub - parseFloat(canasta[i]['descuento']);
         sub= sub * parseInt(canasta[i]['cantidad']);
-        subTotal.innerHTML= sub;
+        subTotal.innerHTML= divisorMiles(sub);
         subTotal_total= subTotal_total + sub;
         boton.innerHTML= "Eliminar de la lista";
         boton.className= "btn btn-primary";
@@ -137,8 +120,8 @@ function actualizarTabla() {
     tbody.parentNode.replaceChild(new_tbody, tbody);
 
     //Actualizamos el pie de la tabla
-    document.getElementById('cant_total').innerHTML= cantidad_total;
-    document.getElementById('total').innerHTML= subTotal_total;
+    document.getElementById('cant_total').innerHTML= divisorMiles(cantidad_total);
+    document.getElementById('total').innerHTML= divisorMiles(subTotal_total);
 
     document.getElementById('productoDialog').close();
 }
@@ -187,7 +170,7 @@ function actualizarSelect() {
             p => p.id == this.value
         )[0];
         console.log(prod);
-        document.getElementById('disponible').value= prod.stock;
+        document.getElementById('disponible').value= divisorMiles(prod.stock);
     });
     //Reemplazamos el select del html por el creado
     document.getElementById('lista_producto').parentNode.replaceChild(lista_productos, document.getElementById('lista_producto'));
@@ -195,14 +178,11 @@ function actualizarSelect() {
 
 //Funcion para calcular el costo total
 function calcularCosto() {
-    console.log("Calculando costo");
     var cant= parseInt(document.getElementById('cant').value);
     var id_product= parseInt(document.getElementById('lista_producto').value);
-    console.log(productos);
     var prod= productos.filter(
         p => p['id'] == id_product
     )[0];
-    console.log(prod);
     if (id_product != undefined && id_product != "" && id_product != "undefined") {
         var precio= parseFloat(prod['precio_venta']);
         document.getElementById('total_prec').value= cant * precio;
@@ -230,7 +210,7 @@ function calcularSubtotal() {
     console.log(costo);
     console.log(descuent);
     if (costo != 0) {
-        document.getElementById('sub_total').value= costo - descuent;
+        document.getElementById('sub_total').value= divisorMiles(costo - descuent);
     }
 }
 

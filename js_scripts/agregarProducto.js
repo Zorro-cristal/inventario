@@ -1,3 +1,5 @@
+import { obtenerBdd } from "funciones";
+
 var productos;
 var proveedor;
 
@@ -36,34 +38,10 @@ function paginaCargada() {
   document.getElementById("fecha").value= fecha.toISOString().substring(0, 10);
 
   //Actualizamos la lista de productos y proveeodr obtenidos de la base de datos
-  obtenerPHP();
+  productos= obtenerBdd("productos");
+  proveedor= obtenerBdd("proveedores");
   cargaProductos();
   cargaProveedor();
-}
-
-//Funcion para obtener los datos del php
-function obtenerPHP() {
-  $.ajaxSetup({async: false});
-  $.ajax({
-    url: "../php/agregarProducto.php",
-    type: "post",
-    error: function (jqXHR, textstatus, errorThrowm) {
-      //parametros que reciben los erroes si hubiera alguno
-      console.log(jqXHR);
-      console.warn(textstatus);
-      console.log(errorThrowm);
-      return
-    },
-    success: function (datosBase) {
-        //Se transforma los datos obtenidos al JSON
-        var aux= JSON.parse(datosBase);
-        productos= aux['1'];
-        console.log(productos);
-        proveedor= aux['2'];
-        console.log(proveedor);
-    }
-  });
-  $.ajaxSetup({async: true});
 }
 
 //Funcion que carga la lista de proveedor en el select

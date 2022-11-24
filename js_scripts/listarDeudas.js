@@ -1,3 +1,5 @@
+import { divisorMiles, obtenerBdd } from "./funciones";
+
 var clientes;
 var clientesAux;
 
@@ -22,25 +24,7 @@ function actualizacionRuc(valor) {
 
 //Funcion cuando la pagina carga todo
 function paginaCargada() {
-    //Obtenemos la lista de clientes
-    $.ajaxSetup({async: false});
-    $.ajax({
-      url: "../php/listarDeudas.php",
-      type: "post",
-      error: function (jqXHR, textstatus, errorThrowm) {
-        //parametros que reciben los erroes si hubiera alguno
-        console.log(jqXHR);
-        console.warn(textstatus);
-        console.log(errorThrowm);
-        alert("Error al obtener los datos de la base de datos");
-        return
-      },
-      success: function (datos) {
-        clientesAux= JSON.parse(datos);
-        clientes= clientesAux;
-      }
-    });
-    $.ajaxSetup({async: true});
+    clientes= obtenerBdd('clientes');
     //Agregamos la lista a la tabla
     actualizarTabla();
 }
@@ -57,11 +41,11 @@ function actualizarTabla() {
       var nombre= clientes[i]['nombre'] + ' ' + clientes[i]['apellido'];
       var ruc= clientes[i].cedula;
       var telefono= clientes[i].telefono;
-      var deuda= clientes[i].deuda;
+      var deuda= divisorMiles(clientes[i].deuda);
       var id= clientes[i].cedula;
       if (clientes[i]['ruc'] != null) {
           //ruc.textContent(clientes[i]['cedula'] + '-' + clientes['ruc']);
-          ruc= clientes[i]['cedula'] + '-' + clientes[i]['ruc'];
+          ruc= divisorMiles(clientes[i]['cedula']) + '-' + clientes[i]['ruc'];
       }
       //var tr= document.createElement('tr');
       var tr= '<tr onclick="reducirDeuda(event, this.attributes.id.nodeValue);" id="' + id + '"><td style="width: 60%;">'+ nombre +'</td><td style="width: 15%;">'+ ruc +'</td><td style="width: 15%;"></td><td style="width: 20%;">'+ deuda +'</td></tr>';
@@ -114,9 +98,9 @@ function reducirDeuda(evento, ced) {
     }
   });
   //Asigna los valores en el dialog
-  document.getElementById('cedula').value= ced;
+  document.getElementById('cedula').value= divisorMiles(ced);
   var cliente= clientes.filter(element => element['cedula'] == ced)[0];
-  document.getElementById('deuda').value= cliente['deuda'];
+  document.getElementById('deuda').value= divisorMiles(cliente['deuda']);
   console.log(evento);
   dialog.showModal();
   evento.preventDefault();

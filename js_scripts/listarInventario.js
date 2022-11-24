@@ -1,3 +1,5 @@
+import { divisorMiles, obtenerBdd } from "./funciones";
+
 var inventarios;
 var inventarioAux;
 var tbody;
@@ -7,19 +9,8 @@ function paginaCargada() {
     tbody= document.querySelector('tbody');
 
     //Obtenemos la lista de inventario
-    obtenerPHP();
-    inventarios= inventarioAux;    
-
-    // dialogBoton.addEventListener('click', (e) => {
-    //   dialog.showModal();
-    //   e.preventDefault();
-    // });
-  
-    // dialog.addEventListener("click", (e) => {
-    //   if (e.target === dialog) {
-    //     dialog.close();
-    //   }
-    // });
+    inventarioAux= obtenerBdd("productos");
+    inventarios= inventarioAux; 
 
     cargarLista();
 }
@@ -50,8 +41,8 @@ function cargarLista() {
       if (descripcion == null) {
         descripcion= "";
       }
-      var stock= inventarios[i].stock;
-      var precio= inventarios[i].precio_venta;
+      var stock= divisorMiles(inventarios[i].stock);
+      var precio= divisorMiles(inventarios[i].precio_venta);
       var id= inventarios[i].id;
       var tr= '<tr onclick= "modificarDatos(event, this.attributes.id.nodeValue)" id="'+ id +'"><td style="width: 30%;">'+ nombre +'</td><td style="width: 45%;">'+ descripcion +'</td><td style="width: 10%;">'+ stock +'</td><td style="width: 15%;">'+ precio +'</td></tr>';
       tbody_content= tbody_content + tr;
@@ -79,31 +70,7 @@ function modificarDatos(evento, id) {
   console.log(inventario);
   document.getElementById('nombre').value= inventario.nombre;
   document.getElementById('descripcion').value= inventario.descripcion;
-  document.getElementById('precio_vent').value= inventario.precio_venta;
+  document.getElementById('precio_vent').value= divisorMiles(inventario.precio_venta);
   dialog.showModal();
   evento.preventDefault();
-}
-
-//Funcion para obtener los datos del php
-function obtenerPHP() {
-    $.ajaxSetup({async: false});
-    $.ajax({
-      url: "../php/listarInventario.php",
-      type: "post",
-    //   crossDomain: true,
-    //   dataType: 'jsonp',
-      error: function (jqXHR, textstatus, errorThrowm) {
-        //parametros que reciben los erroes si hubiera alguno
-        console.log(jqXHR);
-        console.warn(textstatus);
-        console.log(errorThrowm);
-        alert("Error al obtener los datos de la base de datos");
-        return
-      },
-      success: function (datos) {
-        inventarioAux= JSON.parse(datos);
-        inventario= inventarioAux;
-      }
-    });
-    $.ajaxSetup({async: true});
 }
