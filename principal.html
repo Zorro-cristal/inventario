@@ -100,9 +100,8 @@
             },
             success: function (datos) {
                 alias= JSON.parse(datos)[0].alias.toString();
-                console.log(alias);
                 if (alias != "administrador") {
-                    document.getElementById('funciones_administrador').style.display= "none";
+                    document.getElementById('funciones_administrador').remove();
                 }
             }
         });
