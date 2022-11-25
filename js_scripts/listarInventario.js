@@ -10,11 +10,11 @@ var inventarioAux;
 var tbody;
 
 //Funcion que se ejecuta cuando la pagina a sido carada totalmente
-function paginaCargada() {
+async function paginaCargada() {
     tbody= document.querySelector('tbody');
 
     //Obtenemos la lista de inventario
-    inventarioAux= obtenerBdd("productos");
+    inventarioAux= await obtenerBdd("productos");
     inventarios= inventarioAux; 
 
     cargarLista();

@@ -6,10 +6,10 @@ if (validarRol("administrador") || validarRol("empleado")) {
 }  
 
 //Funcion que retorna datos del proveedor
-function obtenerCliente() {
+async function obtenerCliente() {
     var cedula= document.getElementById('cedula').value;
     document.getElementById('buscarClienteDialog').close();
-    cliente= obtenerBdd("clientes", "cedula = " + cedula);
+    cliente= await obtenerBdd("clientes", "cedula = " + cedula);
     cliente= cliente[0];
     if (cliente == undefined) {
         var mensaje= document.getElementById('mensaje');

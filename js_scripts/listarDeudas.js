@@ -28,8 +28,8 @@ function actualizacionRuc(valor) {
 }
 
 //Funcion cuando la pagina carga todo
-function paginaCargada() {
-    clientes= obtenerBdd('clientes');
+async function paginaCargada() {
+    clientes= await obtenerBdd('clientes');
     //Agregamos la lista a la tabla
     actualizarTabla();
 }

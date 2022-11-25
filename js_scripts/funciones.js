@@ -1,37 +1,41 @@
 //Funciones de comprobacion de roles
 async function validarRol(rolValidar) {
-  //Extraemos el user del localStorage
-  const userName= localStorage.getItem("alias");
-  //Obtenemos el rol
-  obtencion= new Promise((resolve, reject) => {
-    $.ajaxSetup({async: false});
-    $.ajax({
-        url: "../php/obtenerRol.php",
-        type: "post",
-        data: {
-            'usuario': userName
-        },
-        error: function (jqXHR, textstatus, errorThrowm) {
-            //parametros que reciben los erroes si hubiera alguno
-            console.log(jqXHR);
-            console.warn(textstatus);
-            console.log(errorThrowm);
-            alert("Error al obtener los datos de la base de datos");
-            return
-        },
-        success: function (datos) {
-            alias= JSON.parse(datos)[0].alias.toString();
-        }
-    });
-    $.ajaxSetup({async: true});
-  }).then(valor => alias= valor);
-  if (alias == undefined) {
+  try {
+    //Extraemos el user del localStorage
+    const userName= localStorage.getItem("alias");
+    //Obtenemos el rol
+    obtencion= new Promise((resolve, reject) => {
+      $.ajaxSetup({async: false});
+      $.ajax({
+          url: "../php/obtenerRol.php",
+          type: "post",
+          data: {
+              'usuario': userName
+          },
+          error: function (jqXHR, textstatus, errorThrowm) {
+              //parametros que reciben los erroes si hubiera alguno
+              console.log(jqXHR);
+              console.warn(textstatus);
+              console.log(errorThrowm);
+              alert("Error al obtener los datos de la base de datos");
+              return
+          },
+          success: function (datos) {
+              alias= JSON.parse(datos)[0].alias.toString();
+          }
+      });
+      $.ajaxSetup({async: true});
+    }).then(valor => alias= valor);
+
+    if (alias == rolValidar) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
     localStorage.removeItem("alias");
     window.location.replace("../index.html");
-  } else if (alias == rolValidar) {
-    return true;
-  } else {
-    return false;
   }
 }
 

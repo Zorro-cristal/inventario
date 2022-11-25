@@ -37,14 +37,14 @@ function mostrarNuevoProductoDialog(evento) {
 }
 
 //Funcion que se ejecuta cuando la pagina a sido carada totalmente
-function paginaCargada() {  
+async function paginaCargada() {  
   var fecha= new Date();
   fecha.setDate(fecha.getDate());
   document.getElementById("fecha").value= fecha.toISOString().substring(0, 10);
 
   //Actualizamos la lista de productos y proveeodr obtenidos de la base de datos
-  productos= obtenerBdd("productos");
-  proveedor= obtenerBdd("proveedores");
+  productos= await obtenerBdd("productos");
+  proveedor= await obtenerBdd("proveedores");
   cargaProductos();
   cargaProveedor();
 }

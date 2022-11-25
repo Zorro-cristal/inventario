@@ -23,7 +23,7 @@ function limpiarDatosCliente() {
 }
 
 //Funcion para cuando cargue la pagina
-function cargarPagina() {
+async function cargarPagina() {
     //Indicamos la fecha actual
     var fecha= new Date();
     fecha.setDate(fecha.getDate());
@@ -31,9 +31,9 @@ function cargarPagina() {
 
     var dialog, dialogBoton;
     //Obtenemos los datos de la base de datos
-    productosAux= obtenerBdd("productos");
+    productosAux= await obtenerBdd("productos");
     productos= productosAux;
-    clientes= obtenerBdd("clientes");
+    clientes= await obtenerBdd("clientes");
 }
 
 //Funcion para obtener Cliente
