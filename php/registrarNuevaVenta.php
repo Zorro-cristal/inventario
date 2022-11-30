@@ -50,5 +50,8 @@
         echo $comando;
         modificarBdd($comando);
     }
-    header('Location: ../index.html');
+    //header('Location: ../index.html');
+
+    //Generamos el pdf
+    
 ?>
