@@ -26,16 +26,18 @@
     $pdf -> AddPage();
     $pdf -> SetFont('Arial', 'B', 10);
     //Datos de la factura
-    $pdf -> Cell(10, 10, "Factura", 0, 1);
-    $pdf -> Cell(10, 10, "Timbrado Nro.:", 0, 1);
-    $pdf -> Cell(10, 10, "000-000-00000", 0, 1);
+    $pdf -> Cell(10, 5, "Factura autogenerada", 0, 1);
+    $pdf -> Cell(10, 5, "Empresa", 0, 1);
+    $pdf -> Cell(10, 5, "Ruc de la empresa", 0, 1);
+    $pdf -> Cell(10, 5, "Timbrado Nro.:", 0, 1);
+    $pdf -> Cell(10, 5, "000-000-00000", 0, 1);
     //Datos del cliente
-    $pdf -> Cell(10, 10, "Nombre del cliente: ", 0, 1);
-    $pdf -> Cell(10, 10, "Ruc: ", 0, 1);
-    $pdf -> Cell(10, 10, "Fecha de la compra: ", 0, 1);
-    $pdf -> Cell(10, 10, "Direccion", 0, 1);
+    $pdf -> Cell(10, 5, "Nombre del cliente: ", 0, 1);
+    $pdf -> Cell(10, 5, "Ruc: ", 0, 1);
+    $pdf -> Cell(10, 5, "Fecha de la compra: ", 0, 1);
+    $pdf -> Cell(10, 5, "Direccion: ", 0, 1);
+    $pdf -> Ln();
     //Tabla de prductos
-    $pdf-> SetY(20);
     $pdf-> Cabecero();
     $pdf-> Cuerpo(100, 'producto', 100000, 'Exenta', 1000000000);
     //Muestra el monto total
