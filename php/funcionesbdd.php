@@ -57,4 +57,16 @@
 
         return $id;
     }
+
+    //Funcion ue transforma el string de fecha js to fecha mysql
+    function convertirFecha($fecha) {
+        $dia= substr($fecha, 0, 1);
+        $mes= substr($fecha, 3, 4);
+        $anho= substr($fecha, 6);
+        //return $anho . '-' . $mes . '-' . $dia;
+        $fecha_formateada= conectarBdd('SELECT STR_TO_DATE("' . $fecha . '", "%Y-%m-%d");');
+        foreach ($fecha_formateada[0] as $clave => $val) {
+            return $val;
+        }
+    }
 ?>
