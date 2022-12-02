@@ -1,8 +1,9 @@
 <?php
     require('./fpdf.php');
 
+    //Definicion de variables
     class PDF extends FPDF {
-        const ALTURA= 5;
+        const ALTURA= 4;
         function Cabecero() {
             $this->Cell(8,self::ALTURA,'Cant',1);
             $this->Cell(43,self::ALTURA,'Producto',1);
@@ -21,100 +22,129 @@
         }
     }
 
-    //Creacion del PDF
     $pdf= new PDF('P', 'mm', 'Letter');
     $espaciado= 93;
     $longitud= 87;
-    $altura= 5;
+    $altura= 4;
+    $empr_nombre= utf8_decode("Gua'iteño House");
+    $empr_ruc= "4360067-0";
+    $empr_dir= "Villarrica - Paraguay";
+    $emp_timbrado= 1234;
+    $suc= 1;
+    $puest= 1;
+    $nro_venta= 1;
+    $client_ruc= "1234567-8";
+    $client_nomb= "Robert Downey Jr.";
+    $clien_dir= "Villarrica Paraguay";
+    $fecha= "26/12/2023";
+    $forma_pago= "Contado";
+    //Creacion del PDF
     $pdf-> AliasNbPages();
     $pdf -> AddPage();
     $pdf -> SetFont('Arial', 'B', 12);
     $pdf -> Cell($longitud, $altura, "Factura virtual", 0, 1, 'C');
     $pdf -> SetFont('Arial', 'B', 8);
     //Datos de la factura
-    $pdf -> Image('../assets/logo_oficial.png', 15, 15, 25, 25);
+    $pdf -> Image('../assets/logo_oficial.png', 15, 13, 20, 20);
     $empresa= utf8_decode("Gua'iteño House");
-    $pdf -> Cell($longitud, $altura, $empresa, 0, 1, 'R');
-    $pdf -> Cell($longitud, $altura, "4360067-0", 0, 1, 'R');
-    $pdf -> Cell($longitud, $altura, "Villarrica - Paraguay", 0, 1, 'R');
-    $pdf -> Cell($longitud, $altura, "Timbrado Nro.:", 0, 1, 'R');
-    $pdf -> Cell($longitud, $altura, "000-000-00000", 0, 1, 'R');
+    $pdf -> Cell($longitud, $altura, $empr_nombre, 0, 1, 'R');
+    $pdf -> Cell($longitud, $altura, $empr_ruc, 0, 1, 'R');
+    $pdf -> Cell($longitud, $altura, $empr_dir, 0, 1, 'R');
+    $pdf -> Cell($longitud, $altura, "Timbrado Nro.: " . sprintf("%'.08d", $emp_timbrado), 0, 1, 'R');
+    $pdf -> Cell($longitud, $altura, sprintf("%'.03d", $suc) . "-" . sprintf("%'.03d", $puest) . "-" . sprintf("%'.09d", $nro_venta), 0, 1, 'R');
     //Datos del cliente
-    $pdf -> Cell($longitud, $altura, "Fecha de la compra: ", 0, 1);
-    $pdf -> Cell($longitud, $altura, "Nombre del cliente: ", 0, 1);
-    $pdf -> Cell($longitud/2, $altura, "Ruc: ", 0);
-    $pdf -> Cell($longitud/2, $altura, 'Forma de pago: ', 0, 1);
-    $pdf -> Cell($longitud, $altura, "Direccion: ", 0, 1);
-    //Tabla de prductos
+    $pdf -> Cell($longitud, $altura, "Fecha de la compra: ". $fecha, 0, 1);
+    $pdf -> Cell($longitud, $altura, "Nombre del cliente: " . $client_nomb, 0, 1);
+    $pdf -> Cell($longitud/2, $altura, "Ruc: " . $client_ruc, 0);
+    $pdf -> Cell($longitud/2, $altura, 'Forma de pago: ' . $forma_pago, 0, 1);
+    $pdf -> Cell($longitud, $altura, "Direccion: " . $clien_dir, 0, 1);
+    //Tabla de prductos y calculos
+    $grav_exent= 0;
+    $grav_5= 0;
+    $grav_10= 0;
     $pdf-> Cabecero();
     $pdf-> Cuerpo(100, 'producto', 100000, 'Exen', 1000000000);
     //Muestra el monto total y las gravadas
-    $pdf -> Cell($longitud, $altura, "Total grav. 5%: ", 0, 1);
-    $pdf -> Cell($longitud, $altura, "IVA. 5%: ", 0, 1);
-    $pdf -> Cell($longitud, $altura, "Total grav. 10%: ", 0, 1);
+    $pdf -> Cell($longitud/2, $altura, "Total grav. 10%: ", 0);
+    $pdf -> Cell($longitud/2, $altura, number_format($grav_5, 2), 0, 1, 'R');
+    $pdf -> Cell($longitud/2, $altura, "Total grav. 5%: ", 0);
+    $pdf -> Cell($longitud/2, $altura, number_format($grav_10, 2), 0, 1, 'R');
+    $pdf -> Cell($longitud/2, $altura, "Total Exenta: ", 0);
+    $pdf -> Cell($longitud/2, $altura, number_format($grav_exent, 2), 0, 1, 'R');
     $pdf -> Cell($longitud, $altura, "Monto total", 0, 1, 'C');
     $pdf -> SetFont('Arial', 'B', 14);
-    $pdf -> Cell($longitud, 5, "100.000.000 gs.", 0, 1, 'C');
+    $pdf -> Cell($longitud, 5, number_format($grav_5 + $grav_10 + $grav_exent, 0) . " gs.", 0, 1, 'C');
     $pdf -> SetFont('Arial', 'B', 8);
     //Resumen de informacion
-    $pdf -> Cell($longitud, $altura, "IVA. 10%: ", 0, 1);
-    $pdf -> Cell($longitud, $altura, "Total grav. Exenta: ", 0, 1);
-    $pdf -> Cell($longitud, $altura, "Exenta: ", 0, 1);
+    $pdf -> Cell($longitud/2, $altura, "IVA. 10%: ", 0);
+    $pdf -> Cell($longitud/2, $altura, number_format($grav_10 * 0.1, 2), 0, 1, 'R');
+    $pdf -> Cell($longitud/2, $altura, "IVA. 5%: ", 0);
+    $pdf -> Cell($longitud/2, $altura, number_format($grav_5 * 0.05, 2), 0, 1, 'R');
+    $pdf -> Cell($longitud/2, $altura, "Exenta: ", 0);
+    $pdf -> Cell($longitud/2, $altura, number_format($grav_exent, 2), 0, 1, 'R');
+
     //Repetimos todo del otro lado
     $pdf -> SetY(10);
     $pdf -> SetFont('Arial', 'B', 12);
-    $pdf -> Cell($espaciado, $altura);
+    $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
     $pdf -> Cell($longitud, $altura, "Factura virtual", 0, 1, 'C');
     $pdf -> SetFont('Arial', 'B', 8);
     //Datos de la factura
-    $pdf -> Image('../assets/logo_oficial.png', $espaciado + 15, 15, 25, 25);
-    $empresa= utf8_decode("Gua'iteño House");
-    $pdf -> Cell($espaciado, $altura);
-    $pdf -> Cell($longitud, $altura, $empresa, 0, 1, 'R');
-    $pdf -> Cell($espaciado, $altura);
-    $pdf -> Cell($longitud, $altura, "4360067-0", 0, 1, 'R');
-    $pdf -> Cell($espaciado, $altura);
-    $pdf -> Cell($longitud, $altura, "Villarrica - Paraguay", 0, 1, 'R');
-    $pdf -> Cell($espaciado, $altura);
-    $pdf -> Cell($longitud, $altura, "Timbrado Nro.:", 0, 1, 'R');
-    $pdf -> Cell($espaciado, $altura);
-    $pdf -> Cell($longitud, $altura, "000-000-00000", 0, 1, 'R');
+    $pdf -> Image('../assets/logo_oficial.png', $espaciado + 15, 13, 20, 20);
+    $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
+    $pdf -> Cell($longitud, $altura, $empr_nombre, 0, 1, 'R');
+    $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
+    $pdf -> Cell($longitud, $altura, $empr_ruc, 0, 1, 'R');
+    $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
+    $pdf -> Cell($longitud, $altura, $empr_dir, 0, 1, 'R');
+    $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
+    $pdf -> Cell($longitud, $altura, "Timbrado Nro.: " . sprintf("%'.08d", $emp_timbrado), 0, 1, 'R');
+    $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
+    $pdf -> Cell($longitud, $altura, sprintf("%'.03d", $suc) . "-" . sprintf("%'.03d", $puest) . "." . sprintf("%'.09d", $nro_venta), 0, 1, 'R');
     //Datos del cliente
-    $pdf -> Cell($espaciado, $altura);
-    $pdf -> Cell($longitud, $altura, "Fecha de la compra: ", 0, 1);
-    $pdf -> Cell($espaciado, $altura);
-    $pdf -> Cell($longitud, $altura, "Nombre del cliente: ", 0, 1);
-    $pdf -> Cell($espaciado, $altura);
-    $pdf -> Cell($longitud/2, $altura, "Ruc: ", 0);
-    $pdf -> Cell($espaciado, $altura);
-    $pdf -> Cell($longitud/2, $altura, 'Forma de pago: ', 0, 1);
-    $pdf -> Cell($espaciado, $altura);
-    $pdf -> Cell($longitud, $altura, "Direccion: ", 0, 1);
-    //Tabla de prductos
-    $pdf -> Cell($espaciado, $altura);
+    $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
+    $pdf -> Cell($longitud, $altura, "Fecha de la compra: ". $fecha, 0, 1);
+    $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
+    $pdf -> Cell($longitud, $altura, "Nombre del cliente: " . $client_nomb, 0, 1);
+    $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
+    $pdf -> Cell($longitud/2, $altura, "Ruc: " . $client_ruc, 0);
+    $pdf -> Cell($longitud/2, $altura, 'Forma de pago: ' . $forma_pago, 0, 1);
+    $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
+    $pdf -> Cell($longitud, $altura, "Direccion: " . $clien_dir, 0, 1);
+    //Tabla de prductos y calculos
+    $grav_exent= 0;
+    $grav_5= 0;
+    $grav_10= 0;
+    $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
     $pdf-> Cabecero();
-    $pdf -> Cell($espaciado, $altura);
+    $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
     $pdf-> Cuerpo(100, 'producto', 100000, 'Exen', 1000000000);
     //Muestra el monto total y las gravadas
-    $pdf -> Cell($espaciado, $altura);
-    $pdf -> Cell($longitud, $altura, "Total grav. 5%: ", 0, 1);
-    $pdf -> Cell($espaciado, $altura);
-    $pdf -> Cell($longitud, $altura, "IVA. 5%: ", 0, 1);
-    $pdf -> Cell($espaciado, $altura);
-    $pdf -> Cell($longitud, $altura, "Total grav. 10%: ", 0, 1);
-    $pdf -> Cell($espaciado, $altura);
+    $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
+    $pdf -> Cell($longitud/2, $altura, "Total grav. 10%: ", 0);
+    $pdf -> Cell($longitud/2, $altura, number_format($grav_5, 2), 0, 1, 'R');
+    $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
+    $pdf -> Cell($longitud/2, $altura, "Total grav. 5%: ", 0);
+    $pdf -> Cell($longitud/2, $altura, number_format($grav_10, 2), 0, 1, 'R');
+    $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
+    $pdf -> Cell($longitud/2, $altura, "Total Exenta: ", 0);
+    $pdf -> Cell($longitud/2, $altura, number_format($grav_exent, 2), 0, 1, 'R');
+    $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
     $pdf -> Cell($longitud, $altura, "Monto total", 0, 1, 'C');
-    $pdf -> Cell($espaciado, $altura);
     $pdf -> SetFont('Arial', 'B', 14);
-    $pdf -> Cell($longitud, 5, "100.000.000 gs.", 0, 1, 'C');
+    $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
+    $pdf -> Cell($longitud, 5, number_format($grav_5 + $grav_10 + $grav_exent, 0) . " gs.", 0, 1, 'C');
     $pdf -> SetFont('Arial', 'B', 8);
     //Resumen de informacion
-    $pdf -> Cell($espaciado, $altura);
-    $pdf -> Cell($longitud, $altura, "IVA. 10%: ", 0, 1);
-    $pdf -> Cell($espaciado, $altura);
-    $pdf -> Cell($longitud, $altura, "Total grav. Exenta: ", 0, 1);
-    $pdf -> Cell($espaciado, $altura);
-    $pdf -> Cell($longitud, $altura, "Exenta: ", 0, 1);
+    $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
+    $pdf -> Cell($longitud/2, $altura, "IVA. 10%: ", 0);
+    $pdf -> Cell($longitud/2, $altura, number_format($grav_10 * 0.1, 2), 0, 1, 'R');
+    $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
+    $pdf -> Cell($longitud/2, $altura, "IVA. 5%: ", 0);
+    $pdf -> Cell($longitud/2, $altura, number_format($grav_5 * 0.05, 2), 0, 1, 'R');
+    $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
+    $pdf -> Cell($longitud/2, $altura, "Exenta: ", 0);
+    $pdf -> Cell($longitud/2, $altura, number_format($grav_exent, 2), 0, 1, 'R');
 
     //Escribimos la linea final
     $pdf -> SetX(5);
