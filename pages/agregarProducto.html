@@ -66,9 +66,7 @@
                         </div>
                     </div>
                     <!-- Buscador producto por nombre -->
-                    <select class="form-select mt-3 mb-3" size="5" 
-                        id="lista_producto" required name="lista_producto"
-                    >
+                    <select class="form-select mt-3 mb-3 form-select-lg" size="5" id="lista_producto" required name="lista_producto">
                         <option>Cargando productos...</option>
                     </select>
                     <div class="form-row">
@@ -87,6 +85,16 @@
                         <div class="col-md-4">
                             <input id="precio_compr" class="form-control" placeholder="Precio compra" type="number" name="precio_compr"/>
                         </div>
+                    </div>
+                    </br>
+                    <div class="form-group">
+                        <label for="iva" class="text-dark me-1">Ingrese el valor de la IVA:</label>
+                        <select class="form-select form-select-lg" name="iva" required id="iva">
+                            <option>Seleccione el valor de IVA</option>
+                            <option value="Exen">Exenta</option>
+                            <option value="10%">10%</option>
+                            <option value="5%">5%</option>
+                        </select>
                     </div>
                     </br>
                     <div class="form-row">
@@ -119,7 +127,7 @@
                         </div>
                     </div>
                     <!-- Buscador proveedor por nombre -->
-                    <select class="form-select mt-3 mb-3" size="2" id="lista_proveedor" required name="lista_proveedor">
+                    <select class="form-select mt-3 mb-3 form-select-lg" size="2" id="lista_proveedor" required name="lista_proveedor">
                         <option>Cargando proveedores...</option>
                     </select>
                     <div class="form-row">

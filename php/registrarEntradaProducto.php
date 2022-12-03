@@ -2,6 +2,7 @@
     include './funcionesbdd.php';
     $id_product= $_POST['lista_producto'];
     $id_prov= $_POST['lista_proveedor'];
+    $iva= $_POST['iva'];
     echo "lista_prodcto= " . $id_product;
     echo "</br>";
     echo "lista_proveedor= " . $id_prov;
@@ -17,7 +18,7 @@
     echo "</br>";
     modificarBdd($comando);
     $stock= $stock_actual + $stock;
-    $comando= "UPDATE productos SET stock= " . $stock . ", precio_venta= " . $precio . " WHERE id=" . $id_product . ";";
+    $comando= "UPDATE productos SET stock= " . $stock . ", precio_venta= " . $precio . ", iva= '" . $iva . "' WHERE id=" . $id_product . ";";
     modificarBdd($comando);
     echo $comando;
     header('Location: ../index.html');

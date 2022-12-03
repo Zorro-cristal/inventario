@@ -57,6 +57,9 @@ function cargaProveedor() {
   var new_seleccion= document.createElement('select');
   new_seleccion.id= "lista_proveedor";
   new_seleccion.name= "lista_proveedor";
+  new_seleccion.size= 2;
+  new_seleccion.required= true;
+  new_seleccion.className= "form-select mt-3 mb-3 form-select-lg";
   //Cargamos todos los productos al select
   agregarOpcion({id: '0', nombre: "Seleccione una opcion"}, new_seleccion);
   proveedor.forEach(prov => agregarOpcion(prov, new_seleccion));
@@ -87,6 +90,9 @@ function cargaProductos() {
   var new_seleccion= document.createElement('select');
   new_seleccion.id= "lista_producto";
   new_seleccion.name= "lista_producto";
+  new_seleccion.size= 5;
+  new_seleccion.required= true;
+  new_seleccion.className= "form-select mt-3 mb-3 form-select-lg";
   //Funcion para obtener stock actual
   new_seleccion.addEventListener('change', (event) => {
     var stock= document.getElementById('stock');
