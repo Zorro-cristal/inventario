@@ -34,6 +34,10 @@ async function cargarPagina() {
     productosAux= await obtenerBdd("productos");
     productos= productosAux;
     clientes= await obtenerBdd("clientes");
+
+    //Agregamos el nombre del usuario
+    const usuario= localStorage.getItem("alias");
+    document.getElementById('usuario').value= usuario;
 }
 
 //Funcion para obtener Cliente
