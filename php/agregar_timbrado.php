@@ -11,7 +11,8 @@
     modificarBdd($sql);
     // Guardamos el nuevo timbrado
     $sql= "INSERT INTO timbrados (cod, fech_autorizacion, fech_vencimiento) VALUES ";
-    $sql= "(" . $cod . ", " . $fech_auto . ", " . $fech_venc . ");";
+    $sql= $sql . "(" . $cod . ", '" . $fech_auto . "', '" . $fech_venc . "');";
+    echo($sql);
     modificarBdd($sql);
     //Redireccionamos
     header('Location: ../principal.html');
