@@ -25,12 +25,12 @@
             //echo ('<script type="text/JavaScript">localStorage.setItem("usuario", "' . $usuario . '");</script>');
             //echo ('<script type="text/JavaScript">const dato= "' . $usuario . '";</script>');
             //Guarda en la cookie que vencera en una hora
-            header("Location: ../principal.html?usuario=" . urlencode($usuario));
+            header("Location: ../index.html?usuario=" . urlencode($usuario));
             exit();
         }
     }
     //En caso de que el usuario no exista o la contraseña sea erronea, redirigimos al login
     echo "Datos de usuario incorrectos";
-    header("Location: ../index2.html");
+    header("Location: ../login2.html");
     exit();
 ?>

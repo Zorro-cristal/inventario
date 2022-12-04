@@ -2,7 +2,7 @@
 if (validarRol("administrador") || validarRol("empleado")) {
     console.log("Acceso autorizado");
 } else {
-    window.location.replace("../principal?usuario=" + userName + ".html");
+    window.location.replace("../index?usuario=" + userName + ".html");
 }  
 
 //Funcion que retorna datos del proveedor

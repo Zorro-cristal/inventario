@@ -2,7 +2,7 @@
 if (validarRol("administrador") || validarRol("empleado")) {
     console.log("Acceso autorizado");
   } else {
-    window.location.replace("../principal?usuario=" + userName + ".html");
+    window.location.replace("../index?usuario=" + userName + ".html");
   }
   
 
@@ -31,7 +31,8 @@ async function cargarPagina() {
 
     var dialog, dialogBoton;
     //Obtenemos los datos de la base de datos
-    productosAux= await obtenerBdd("productos");
+    //productosAux= await obtenerBdd("productos");
+    productosAux= await obtenerBdd("productos", "stock > 0");
     productos= productosAux;
     clientes= await obtenerBdd("clientes");
 
@@ -69,7 +70,7 @@ function obtenerCliente() {
         }
         //Asignamos los datos del cliente
         tabla_cliente= document.getElementById('clienteInfo').cells;
-        tabla_cliente[0].innerHTML= cliente['nombre'] + " " + cliente['apellido'];
+        tabla_cliente[0].innerHTML= cliente['nombre'][0].toUpperCase() + cliente['nombre'].substring(1) + " " + cliente['apellido'][0].toUpperCase() + cliente['apellido'].substring(1);
         if (cliente['ruc'] == "" || cliente['ruc'] == null) {
             tabla_cliente[1].innerHTML= divisorMiles(cliente['cedula']);
         } else {
@@ -106,9 +107,9 @@ function actualizarTabla() {
         cantidad.innerHTML= divisorMiles(canasta[i]['cantidad']);
         cantidad.style.width= "15%";
         nombre.innerHTML= productos[productPos]['nombre'];
-        nombre.style.width= "40%";
+        nombre.style.width= "35%";
         precio.innerHTML= divisorMiles(canasta[i]['precio']);
-        precio.style.width= "15%";
+        precio.style.width= "20%";
         var sub= parseFloat(canasta[i]['precio']);
         sub= sub - parseFloat(canasta[i]['descuento']);
         sub= sub * parseInt(canasta[i]['cantidad']);
@@ -220,7 +221,8 @@ function calcularSubtotal() {
     console.log(costo);
     console.log(descuent);
     if (costo != 0) {
-        document.getElementById('sub_total').value= divisorMiles(costo - descuent);
+        console.log(costo-descuent);
+        document.getElementById('sub_total').value= costo - descuent;
     }
 }
 

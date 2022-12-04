@@ -74,7 +74,7 @@
                             <label for="precio" class="">Ingrese el precio unitario de venta:</label>
                         </div>
                         <div class="col-md-4">
-                            <input id="precio" class="form-control" placeholder="Precio unitario" type="number" name="precio"/>
+                            <input id="precio" class="form-control" placeholder="Precio unitario" type="number" name="precio" required/>
                         </div>
                     </div>
                     </br>
@@ -83,7 +83,7 @@
                             <label for="precio_compr" class="">Ingrese el precio unitario de compra:</label>
                         </div>
                         <div class="col-md-4">
-                            <input id="precio_compr" class="form-control" placeholder="Precio compra" type="number" name="precio_compr"/>
+                            <input id="precio_compr" class="form-control" placeholder="Precio compra" type="number" name="precio_compr" required/>
                         </div>
                     </div>
                     </br>
@@ -102,7 +102,7 @@
                             <label for="stock" class="">Cantidad de stock actual:</label>
                         </div>
                         <div class="col-md-4">
-                            <input id="stock" class="form-control" readonly value="0" name="stock"/>
+                            <input id="stock" class="form-control" readonly value="0" name="stock" required/>
                         </div>
                     </div>
                     </br>
@@ -111,7 +111,7 @@
                             <label for="sumar" class="">Ingrese la cantidad a sumar:</label>
                         </div>
                         <div class="col-md-4">
-                            <input id="sumar" class="form-control" placeholder="Cantidad" type="number" name="sumar"/>
+                            <input id="sumar" class="form-control" placeholder="Cantidad" type="number" name="sumar" required/>
                         </div>
                     </div>
                     </br>
@@ -141,7 +141,7 @@
                     <div class="mt-3 d-flex justify-content-around">
                         <button type="submit" class="btn btn-primary">Guardar</button>
                         <button type="reset" class="btn btn-primary">Limpiar</button>
-                        <button type="button" class="btn btn-primary" onclick='location.href= "../principal.html";'>Volver al menu</button>
+                        <button type="button" class="btn btn-primary" onclick='location.href= "../index.html";'>Volver al menu</button>
                     </div>
                 </form>
             </div>

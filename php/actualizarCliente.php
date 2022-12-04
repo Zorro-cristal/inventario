@@ -1,6 +1,8 @@
 <?php
     include './funcionesbdd.php';
     $id= $_POST['cedula'];
+    $id= explode(".", $id);
+    $id= implode($id);
     $nombre= strtolower($_POST['nombre']);
     $apellido= strtolower($_POST['apellido']);
     $telefono= $_POST['telefono'];

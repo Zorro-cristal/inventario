@@ -2,7 +2,7 @@
 if (validarRol("administrador")) {
   console.log("Acceso autorizado");
 } else {
-  window.location.replace("../principal?usuario=" + userName + ".html");
+  window.location.replace("../index?usuario=" + userName + ".html");
 }
 
 var productos;
@@ -73,9 +73,10 @@ function actualizacionProveedor(valor) {
   cargaProveedor();
   const select= document.getElementById("lista_proveedor");
   const opciones= select.options;
+  console.log(opciones);
   if (filtro != "") {
     for (i= 0; i <= opciones.length; i++) {
-      if (!(opciones[i].value.toLowerCase().includes(filtro))) {
+      if (!(opciones[i].text.toLowerCase().includes(filtro))) {
         select.remove(i);
       }
     }

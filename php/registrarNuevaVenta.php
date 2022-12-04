@@ -8,18 +8,18 @@
         const ALTURA= 5;
         function Cabecero() {
             $this->Cell(8,self::ALTURA,'Cant',1);
-            $this->Cell(43,self::ALTURA,'Producto',1);
+            $this->Cell(38,self::ALTURA,'Producto',1);
             $this->Cell(11,self::ALTURA,'Desc',1);
             $this->Cell(8,self::ALTURA,'Iva',1);
-            $this->Cell(17,self::ALTURA,'Sub',1);
+            $this->Cell(22,self::ALTURA,'Sub',1);
             $this->Ln();
         }
         function Cuerpo($cant, $producto, $descuento, $iva, $subtotal) {
             $this->Cell(8,self::ALTURA,$cant,1);
-            $this->Cell(43,self::ALTURA,$producto,1);
+            $this->Cell(38,self::ALTURA,$producto,1);
             $this->Cell(11,self::ALTURA,$descuento,1);
             $this->Cell(8,self::ALTURA,$iva,1);
-            $this->Cell(17,self::ALTURA,$subtotal,1);
+            $this->Cell(22,self::ALTURA,$subtotal,1);
             $this->Ln();
         }
     }
@@ -88,7 +88,7 @@
     $comando= "SELECT * FROM ventas WHERE id= ". $idVenta;
     $venta= conectarBdd($comando)[0];
     //echo json_encode($venta) . "</br>";
-    $comando= "SELECT p.nombre, dv.cantidad, dv.descuento, dv.precio_venta FROM detalle_ventas dv JOIN productos p ON p.id=dv.producto_fk WHERE venta_fk= " . $idVenta;
+    $comando= "SELECT p.nombre, p.iva, dv.cantidad, dv.descuento, dv.precio_venta FROM detalle_ventas dv JOIN productos p ON p.id=dv.producto_fk WHERE venta_fk= " . $idVenta;
     $detalle_ventas= conectarBdd($comando);
     //echo json_encode($detalle_ventas) . "</br>";
     $factura= $_POST['usuario'];
@@ -153,9 +153,9 @@
     }
     //Muestra el monto total y las gravadas
     $pdf -> Cell($longitud/2, $altura, "Total grav. 10%: ", 0);
-    $pdf -> Cell($longitud/2, $altura, number_format($grav_5, 2), 0, 1, 'R');
-    $pdf -> Cell($longitud/2, $altura, "Total grav. 5%: ", 0);
     $pdf -> Cell($longitud/2, $altura, number_format($grav_10, 2), 0, 1, 'R');
+    $pdf -> Cell($longitud/2, $altura, "Total grav. 5%: ", 0);
+    $pdf -> Cell($longitud/2, $altura, number_format($grav_5, 2), 0, 1, 'R');
     $pdf -> Cell($longitud/2, $altura, "Total Exenta: ", 0);
     $pdf -> Cell($longitud/2, $altura, number_format($grav_exent, 2), 0, 1, 'R');
     $pdf -> Cell($longitud, $altura, "Monto total", 0, 1, 'C');
@@ -222,10 +222,10 @@
     //Muestra el monto total y las gravadas
     $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
     $pdf -> Cell($longitud/2, $altura, "Total grav. 10%: ", 0);
-    $pdf -> Cell($longitud/2, $altura, number_format($grav_5, 2), 0, 1, 'R');
+    $pdf -> Cell($longitud/2, $altura, number_format($grav_10, 2), 0, 1, 'R');
     $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
     $pdf -> Cell($longitud/2, $altura, "Total grav. 5%: ", 0);
-    $pdf -> Cell($longitud/2, $altura, number_format($grav_10, 2), 0, 1, 'R');
+    $pdf -> Cell($longitud/2, $altura, number_format($grav_5, 2), 0, 1, 'R');
     $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
     $pdf -> Cell($longitud/2, $altura, "Total Exenta: ", 0);
     $pdf -> Cell($longitud/2, $altura, number_format($grav_exent, 2), 0, 1, 'R');

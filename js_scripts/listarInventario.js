@@ -2,7 +2,7 @@
 if (validarRol("administrador") || validarRol("empleado")) {
   console.log("Acceso autorizado");
 } else {
-  window.location.replace("../principal?usuario=" + userName + ".html");
+  window.location.replace("../index?usuario=" + userName + ".html");
 }
 
 var inventarios;
@@ -14,7 +14,8 @@ async function paginaCargada() {
     tbody= document.querySelector('tbody');
 
     //Obtenemos la lista de inventario
-    inventarioAux= await obtenerBdd("productos");
+    //inventarioAux= await obtenerBdd("productos");
+    inventarioAux= await obtenerBdd("productos", "stock > 0");
     inventarios= inventarioAux; 
 
     cargarLista();

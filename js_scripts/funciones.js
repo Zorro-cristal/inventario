@@ -66,10 +66,12 @@ function divisorMiles(texto) {
 //Funcion para obtener datos de una tabla
 async function obtenerBdd(tabla, filtro= "") {
     var datos;
-    sql= "SELECT * FROM " + tabla + ";";
+    sql= "SELECT * FROM " + tabla;
     if (filtro != "") {
-        sql= sql + " WHERE " + filtro;
+        sql= sql + " WHERE (" + filtro + ")";
     }
+    sql= sql + ";";
+    console.log(sql);
     promesa= await ajax(sql).then((valor) => datos= valor);
     return datos;
 }

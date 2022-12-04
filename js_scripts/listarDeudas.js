@@ -2,7 +2,7 @@
 if (validarRol("administrador") || validarRol("empleado")) {
   console.log("Acceso autorizado");
 } else {
-  window.location.replace("../principal?usuario=" + userName + ".html");
+  window.location.replace("../index?usuario=" + userName + ".html");
 }
 
 var clientes;
@@ -12,8 +12,12 @@ var clientesAux;
 function actualizacionNombre(valor) {
   clientes= clientesAux;
   var filtro= valor.toLowerCase();
+  console.log(filtro);
+  console.log(clientes);
   //Aislamos las clientes con ruc
-  clientes= clientes.filter(element => element['nombre'].includes(filtro) || element['apellido'].includes(filtro));
+  clientes= clientes.filter(
+    element => element['nombre'].includes(filtro) || element['apellido'].includes(filtro)
+  );
   //Reconstruimos la tabla
   actualizarTabla();
 }
@@ -29,7 +33,9 @@ function actualizacionRuc(valor) {
 
 //Funcion cuando la pagina carga todo
 async function paginaCargada() {
-    clientes= await obtenerBdd('clientes');
+    //clientes= await obtenerBdd('clientes');
+    clientesAux= await obtenerBdd('clientes', 'deuda > 0');
+    clientes= clientesAux;
     //Agregamos la lista a la tabla
     actualizarTabla();
 }
@@ -43,8 +49,9 @@ function actualizarTabla() {
   //populate_with_new_rows(new_tbody);
   for (i= 0; i < clientes.length; i++) {
       total= total + parseFloat(clientes[i]['deuda']);
-      var nombre= clientes[i]['nombre'] + ' ' + clientes[i]['apellido'];
-      var ruc= clientes[i].cedula;
+      //var nombre= clientes[i]['nombre'] + ' ' + clientes[i]['apellido'];
+      var nombre= clientes[i]['nombre'][0].toUpperCase() + clientes[i]['nombre'].substring(1) + ' ' + clientes[i]['apellido'][0].toUpperCase() + clientes[i]['apellido'].substring(1);
+      var ruc= divisorMiles(clientes[i].cedula);
       var telefono= clientes[i].telefono;
       var deuda= divisorMiles(clientes[i].deuda);
       var id= clientes[i].cedula;
@@ -90,7 +97,7 @@ function actualizarTabla() {
   tbody_content= tbody_content + "</tbody>";
   new_tbody.innerHTML= tbody_content;
   document.querySelector('tbody').parentNode.replaceChild(new_tbody, document.querySelector('tbody'));
-  document.getElementById('total').textContent= total.toString();
+  document.getElementById('total').textContent= divisorMiles(total);
 }
 
 //Funcion para reducir deuda

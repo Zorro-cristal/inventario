@@ -9,7 +9,7 @@ var productos;
 if (validarRol("administrador")) {
   console.log("Acceso autorizado");
 } else {
-  window.location.replace("../principal?usuario=" + userName + ".html");
+  window.location.replace("../index?usuario=" + userName + ".html");
 }
 
 //Funcion que filtra por fecha

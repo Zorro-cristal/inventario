@@ -15,6 +15,6 @@
     echo($sql);
     modificarBdd($sql);
     //Redireccionamos
-    header('Location: ../principal.html');
+    header('Location: ../index.html');
     exit();
 ?>

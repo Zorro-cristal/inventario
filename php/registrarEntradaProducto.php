@@ -19,6 +19,7 @@
     modificarBdd($comando);
     $stock= $stock_actual + $stock;
     $comando= "UPDATE productos SET stock= " . $stock . ", precio_venta= " . $precio . ", iva= '" . $iva . "' WHERE id=" . $id_product . ";";
+    echo $comando;
     modificarBdd($comando);
     echo $comando;
     header('Location: ../index.html');

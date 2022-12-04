@@ -2,7 +2,7 @@
 if (validarRol("administrador")) {
     console.log("Acceso autorizado");
   } else {
-    window.location.replace("../principal?usuario=" + userName + ".html");
+    window.location.replace("../index?usuario=" + userName + ".html");
   }  
 
 function paginaCargada() {
