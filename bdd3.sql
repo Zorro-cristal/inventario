@@ -1,4 +1,4 @@
-ALTER TABLE ventas ADD nro_venta INT(7);
+ALTER TABLE usuarios ADD nro_venta INT(7) DEFAULT 0;
 ALTER TABLE usuarios ADD establecimiento INT(3);
 ALTER TABLE usuarios ADD punto_expedicion INT(3);
 ALTER TABLE productos ADD iva VARCHAR(4);

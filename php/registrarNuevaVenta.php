@@ -38,7 +38,7 @@
     $canasta= $_POST['canasta'];
     $canasta= json_decode($canasta, true);
     $total= 0;
-    ////echo json_encode($canasta);
+    //echo json_encode($canasta);
     for ($i= 0; $i < count($canasta); ++$i) {
         $comando= "INSERT INTO detalle_ventas(producto_fk, venta_fk, cantidad, descuento, precio_venta) VALUES (";
         //echo "</br>Insertando en la tabla detalle_ventas</br>";
@@ -81,16 +81,22 @@
         $forma_pago= "Contado";
     }
     //Obtenemos los datos del cliente
-    $comando= "SELECT establecimiento, punto_expedicion FROM usuarios WHERE alias= '" . $factura . "';";
+    $alias= $_POST['usuario'];
+    $comando= "SELECT establecimiento, punto_expedicion, nro_venta FROM usuarios WHERE alias= '" . $alias . "';";
     //echo "</br>" . $comando . "</br>";
     $factura= conectarBdd($comando)[0];
     //echo json_encode($factura) . "</br>";
     $comando= "SELECT * FROM ventas WHERE id= ". $idVenta;
     $venta= conectarBdd($comando)[0];
     //echo json_encode($venta) . "</br>";
+    $nro_venta= intval($factura['nro_venta']) + 1;
+    $comando= "UPDATE usuarios SET nro_venta = " . $nro_venta . " WHERE alias= '" . $alias . "';";
+    modificarBdd($comando);
     //generamos el numero de factura y actualizamos los datos de la venta
-    $nro_factura= intval($factura['establecimiento'])) . "-" . sprintf("%'.03d", intval($factura['punto_expedicion'])) . "." . sprintf("%'.09d", intval($venta['nro_venta']));
+    $nro_factura= sprintf("%'.03d", intval($factura['establecimiento'])) . "-" . sprintf("%'.03d", intval($factura['punto_expedicion'])) . "-" . sprintf("%'.09d", $nro_venta);
+    //echo $nro_factura . "</br>";
     $comando= "UPDATE ventas SET numero_factura= '" . $nro_factura . "' WHERE id = " . $idVenta;
+    modificarBdd($comando);
     //echo "</br>Mostramos los datos</br>";
     $comando= "SELECT * FROM clientes WHERE cedula= ". $cedula;
     $cliente= conectarBdd($comando)[0];
@@ -128,7 +134,7 @@
     $pdf -> Cell($longitud, $altura, $empr_ruc, 0, 1, 'R');
     $pdf -> Cell($longitud, $altura, $empr_dir, 0, 1, 'R');
     $pdf -> Cell($longitud, $altura, "Timbrado Nro.: " . sprintf("%'.08d", $emp_timbrado), 0, 1, 'R');
-    $pdf -> Cell($longitud, $altura, sprintf("%'.03d", $nro_factura, 0, 1, 'R');
+    $pdf -> Cell($longitud, $altura, $nro_factura, 0, 1, 'R');
     //Datos del cliente
     $pdf -> Cell($longitud, $altura, "Fecha de la compra: ". $fecha, 0, 1);
     $pdf -> Cell($longitud, $altura, "Nombre del cliente: " . ucwords($cliente['nombre'] . ' ' . $cliente['apellido']), 0, 1);
@@ -190,7 +196,7 @@
     $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
     $pdf -> Cell($longitud, $altura, "Timbrado Nro.: " . sprintf("%'.08d", $emp_timbrado), 0, 1, 'R');
     $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
-    $pdf -> Cell($longitud, $altura, sprintf("%'.03d", intval($factura['establecimiento'])) . "-" . sprintf("%'.03d", intval($factura['punto_expedicion'])) . "." . sprintf("%'.09d", intval($venta['nro_venta'])), 0, 1, 'R');
+    $pdf -> Cell($longitud, $altura, $nro_factura, 0, 1, 'R');
     //Datos del cliente
     $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
     $pdf -> Cell($longitud, $altura, "Fecha de la compra: ". $fecha, 0, 1);
@@ -248,7 +254,7 @@
     $pdf -> Cell($espaciado, $altura, "|", 0, 0, "R");
     $pdf -> Cell($longitud/2, $altura, "Exenta: ", 0);
     $pdf -> Cell($longitud/2, $altura, number_format($grav_exent, 2), 0, 1, 'R');
-
+ 
     //Escribimos la linea final
     $pdf -> SetX(5);
     $pdf -> Cell($longitud, $altura, str_repeat('-', $longitud*2+30));
