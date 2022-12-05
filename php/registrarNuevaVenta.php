@@ -81,21 +81,24 @@
         $forma_pago= "Contado";
     }
     //Obtenemos los datos del cliente
-    //echo "</br>Mostramos los datos</br>";
-    $comando= "SELECT * FROM clientes WHERE cedula= ". $cedula;
-    $cliente= conectarBdd($comando)[0];
-    //echo json_encode($cliente) . "</br>";
-    $comando= "SELECT * FROM ventas WHERE id= ". $idVenta;
-    $venta= conectarBdd($comando)[0];
-    //echo json_encode($venta) . "</br>";
-    $comando= "SELECT p.nombre, p.iva, dv.cantidad, dv.descuento, dv.precio_venta FROM detalle_ventas dv JOIN productos p ON p.id=dv.producto_fk WHERE venta_fk= " . $idVenta;
-    $detalle_ventas= conectarBdd($comando);
-    //echo json_encode($detalle_ventas) . "</br>";
-    $factura= $_POST['usuario'];
     $comando= "SELECT establecimiento, punto_expedicion FROM usuarios WHERE alias= '" . $factura . "';";
     //echo "</br>" . $comando . "</br>";
     $factura= conectarBdd($comando)[0];
     //echo json_encode($factura) . "</br>";
+    $comando= "SELECT * FROM ventas WHERE id= ". $idVenta;
+    $venta= conectarBdd($comando)[0];
+    //echo json_encode($venta) . "</br>";
+    //generamos el numero de factura y actualizamos los datos de la venta
+    $nro_factura= intval($factura['establecimiento'])) . "-" . sprintf("%'.03d", intval($factura['punto_expedicion'])) . "." . sprintf("%'.09d", intval($venta['nro_venta']));
+    $comando= "UPDATE ventas SET numero_factura= '" . $nro_factura . "' WHERE id = " . $idVenta;
+    //echo "</br>Mostramos los datos</br>";
+    $comando= "SELECT * FROM clientes WHERE cedula= ". $cedula;
+    $cliente= conectarBdd($comando)[0];
+    //echo json_encode($cliente) . "</br>";
+    $comando= "SELECT p.nombre, p.iva, dv.cantidad, dv.descuento, dv.precio_venta FROM detalle_ventas dv JOIN productos p ON p.id=dv.producto_fk WHERE venta_fk= " . $idVenta;
+    $detalle_ventas= conectarBdd($comando);
+    //echo json_encode($detalle_ventas) . "</br>";
+    $factura= $_POST['usuario'];
     $comando= "SELECT cod FROM timbrados WHERE ((fech_autorizacion < '" . $fecha . "') AND (fech_vencimiento > '" . $fecha . "'));";
     $emp_timbrado= conectarBdd($comando)[0];
     $emp_timbrado= $emp_timbrado['cod'];
@@ -125,7 +128,7 @@
     $pdf -> Cell($longitud, $altura, $empr_ruc, 0, 1, 'R');
     $pdf -> Cell($longitud, $altura, $empr_dir, 0, 1, 'R');
     $pdf -> Cell($longitud, $altura, "Timbrado Nro.: " . sprintf("%'.08d", $emp_timbrado), 0, 1, 'R');
-    $pdf -> Cell($longitud, $altura, sprintf("%'.03d", intval($factura['establecimiento'])) . "-" . sprintf("%'.03d", intval($factura['punto_expedicion'])) . "." . sprintf("%'.09d", intval($venta['nro_venta'])), 0, 1, 'R');
+    $pdf -> Cell($longitud, $altura, sprintf("%'.03d", $nro_factura, 0, 1, 'R');
     //Datos del cliente
     $pdf -> Cell($longitud, $altura, "Fecha de la compra: ". $fecha, 0, 1);
     $pdf -> Cell($longitud, $altura, "Nombre del cliente: " . ucwords($cliente['nombre'] . ' ' . $cliente['apellido']), 0, 1);
