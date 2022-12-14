@@ -111,7 +111,7 @@
             });
         } catch (error) {
             console.log(error);
-            if (localStorage.getItem("alias", user) == null) {
+            if (localStorage.getItem("alias", user) == null || user == undefined) {
                 window.location.replace("./login.html");
             }
         }
