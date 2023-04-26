@@ -20,3 +20,7 @@ INSERT INTO usuarios(alias, contra, rol_id) VALUES ("zorro-cristal", AES_ENCRYPT
 INSERT INTO roles(nombre) VALUES ("empleado");
 
 INSERT INTO usuarios(alias, contra, rol_id) VALUES ("empleado", AES_ENCRYPT("empleado", "inventario"), 2);`usuarios`
+
+INSERT INTO roles(nombre) VALUES ("gerente");
+
+INSERT INTO usuarios(alias, contra, rol_id) VALUES ("gerente", AES_ENCRYPT("gerente", "inventario"), 2);`usuarios`
