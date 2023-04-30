@@ -26,11 +26,13 @@
     $empr_nombre= utf8_decode("Gua'iteño House");
     $empr_ruc= "4360067-0";
     $empr_dir= "Villarrica - Paraguay";
+    //Obtenemos el alias
+    $alias= $_POST['alias'];
     //Agregamos la nueva venta
     $fecha= $_POST['fecha'];
     $cedula= $_POST['cedula'];
     //Generamos el numero de factura
-    $comando= 'INSERT INTO ventas(cliente_fk, fecha) VALUES (' . $cedula . ', STR_TO_DATE("' . $fecha . '", "%Y-%m-%d"))';
+    $comando= 'INSERT INTO ventas(cliente_fk, responsable, fecha) VALUES (' . $cedula . ', ' . $alias . ', STR_TO_DATE("' . $fecha . '", "%Y-%m-%d"))';
     //echo "</br>Insertando en la tabla ventas</br>";
     //echo ($comando);
     $idVenta= modificarBdd($comando);
@@ -80,9 +82,8 @@
         //echo "</br>No se genera deuda</br>";
         $forma_pago= "Contado";
     }
-    //Obtenemos los datos del cliente
-    $alias= $_POST['usuario'];
-    $comando= "SELECT establecimiento, punto_expedicion, nro_venta FROM usuarios WHERE alias= '" . $alias . "';";
+    //Obtenemos los datos del vendedor
+    $comando= "SELECT establecimiento, punto_expedicion, nro_venta FROM Usuarios WHERE alias= '" . $alias . "';";
     //echo "</br>" . $comando . "</br>";
     $factura= conectarBdd($comando)[0];
     //echo json_encode($factura) . "</br>";
@@ -90,7 +91,7 @@
     $venta= conectarBdd($comando)[0];
     //echo json_encode($venta) . "</br>";
     $nro_venta= intval($factura['nro_venta']) + 1;
-    $comando= "UPDATE usuarios SET nro_venta = " . $nro_venta . " WHERE alias= '" . $alias . "';";
+    $comando= "UPDATE Usuarios SET nro_venta = " . $nro_venta . " WHERE alias= '" . $alias . "';";
     modificarBdd($comando);
     //generamos el numero de factura y actualizamos los datos de la venta
     $nro_factura= sprintf("%'.03d", intval($factura['establecimiento'])) . "-" . sprintf("%'.03d", intval($factura['punto_expedicion'])) . "-" . sprintf("%'.09d", $nro_venta);

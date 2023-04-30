@@ -3,7 +3,7 @@
     $usuario= $_POST['usuario'];
     $contra= $_POST['contra'];
     //Buscamos si existe una clave como la introducida
-    $comando= "select alias from usuarios where contra= aes_encrypt('" . $contra . "', 'inventario');";
+    $comando= "select alias from Usuarios where contra= aes_encrypt('" . $contra . "', 'inventario');";
     echo "</br>";
     echo $comando;
     $contra= conectarBdd($comando);

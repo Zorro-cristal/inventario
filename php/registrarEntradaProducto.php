@@ -13,7 +13,7 @@
     $precio_compra= $_POST['precio_compr'];
     $fecha= $_POST['fecha'];
     $id_prov= $_POST['lista_proveedor'];
-    $comando= "INSERT INTO ingresos_productos(proveedor_fk, producto_fk, fecha_ingreso, cantidad, precio_unitario) VALUES ( " . $id_prov . ", " . $id_product . ', STR_TO_DATE("' . $fecha . '", "%Y-%m-%d"), ' . $stock . ", " . $precio_compra . ")";
+    $comando= "INSERT INTO ingresos_productos(proveedor_fk, producto_fk, responsable, fecha_ingreso, cantidad, precio_unitario) VALUES ( " . $id_prov . ", " . $id_product . ', ' . $alias . ', STR_TO_DATE("' . $fecha . '", "%Y-%m-%d"), ' . $stock . ", " . $precio_compra . ")";
     echo $comando;
     echo "</br>";
     modificarBdd($comando);
