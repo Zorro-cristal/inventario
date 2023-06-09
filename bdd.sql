@@ -51,6 +51,7 @@ create table Clientes (
     nombre              varchar(25)     NOT NULL    ,
     apellido            varchar(25)     NOT NULL    ,
     ruc                 int(2)                      ,
+    telefono            int(12)                     ,
     direccion           varchar(100)                ,
     fecha_nacimiento    date                        ,
     deuda               decimal(17,2)   DEFAULT 0   ,
