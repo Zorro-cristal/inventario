@@ -34,6 +34,7 @@ create table Detalle_ventas (
     venta_fk    int(10)         NOT NULL                    ,
     cantidad    int(7)          NOT NULL                    ,
     descuento   decimal(17,2)   DEFAULT 0                   ,
+    precio_venta   decimal(17,2)   DEFAULT 0                   ,
     PRIMARY KEY (id)
 );
 
