@@ -14,8 +14,8 @@ async function paginaCargada() {
     tbody= document.querySelector('tbody');
 
     //Obtenemos la lista de inventario
-    //inventarioAux= await obtenerBdd("productos");
-    inventarioAux= await obtenerBdd("productos", "stock > 0");
+    //inventarioAux= await obtenerBdd("Productos");
+    inventarioAux= await obtenerBdd("Productos", "stock > 0");
     inventarios= inventarioAux; 
 
     cargarLista();

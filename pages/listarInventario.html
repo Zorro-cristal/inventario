@@ -15,8 +15,8 @@
     <body onload="paginaCargada()">
         <!-- Dialogo para modificar datos del producto -->
         <dialog id="modificarProductoDialog" style="background-image: url('../assets/fondo_secundario_oscuro.jpg'); background-size: cover;">
-            <form method="post" action="modificarProducto.php">
-                <input type="hidden" id="id"/>
+            <form method="post" action="../php/modificarProducto.php">
+                <input type="hidden" id="id" name="id"/>
                 <div class="form-group">
                     <label for="nombre" class="text-light">Nombre del producto:</label>
                     <input type="text" id="nombre" placeholder="Nombre del producto"/>
