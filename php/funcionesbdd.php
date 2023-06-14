@@ -1,13 +1,14 @@
 <?php
+    $servername= "localhost";
+    $user= "root";
+    $contras= "";
+    $dbname= "inventario";
     function conectarBdd($sql) {
-        $servername= "localhost";
-        $user= "root";
-        $contra= "";
-        $dbname= "inventario";
+        GLOBAL $servername, $user, $contras, $dbname;
         $datos= array();
 
         //Crear conexion
-        $conn= mysqli_connect($servername, $user, $contra, $dbname);
+        $conn= mysqli_connect($servername, $user, $contras, $dbname);
 
         //En caso de error en la conexion
         if (!$conn) {
@@ -28,13 +29,9 @@
     }
 
     function modificarBdd($sql) {
-        $servername= "localhost";
-        $user= "root";
-        $contra= "";
-        $dbname= "inventario";
-
+        GLOBAL $servername, $user, $contras, $dbname;
         //Crear conexion
-        $conn= mysqli_connect($servername, $user, $contra, $dbname);
+        $conn= mysqli_connect($servername, $user, $contras, $dbname);
 
         //En caso de error en la conexion
         if (!$conn) {
