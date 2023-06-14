@@ -114,7 +114,8 @@
             </div>
         </dialog>
         <main style="background-image: url('../assets/fondo_secundario_claro.jpg'); background-size: cover;">
-            <form method="post" action="../php/registrarNuevaVenta.php">
+            <form method="post" action="enviarDatos()" id="form_principal">
+                <input type="hidden" name="alias" id="alias"/>
                 <div class="ms-3 me-3">
                     <h1 class="h1 d-flex justify-content-center">Datos del cliente</h1>
                     <br/>

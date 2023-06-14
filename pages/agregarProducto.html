@@ -54,6 +54,7 @@
         <main style="background-image: url('../assets/fondo_secundario_claro.jpg'); background-size: cover;">
             <div class="p-3">
                 <form method="POST" action="../php/registrarEntradaProducto.php">
+                    <input type="hidden" name="alias" id="alias"/>
                     <div class="form-group">
                         <label for="producto" class="">Ingrese el nombre del producto:</label>
                     </div>
@@ -102,7 +103,7 @@
                             <label for="stock" class="">Cantidad de stock actual:</label>
                         </div>
                         <div class="col-md-4">
-                            <input id="stock" class="form-control" readonly value="0" name="stock" required/>
+                            <input id="stock" class="form-control" readonly value="0" name="stock"/>
                         </div>
                     </div>
                     </br>

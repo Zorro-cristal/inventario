@@ -1,6 +1,8 @@
 //Validamos el rol
-if (validarRol("administrador")) {
-  console.log("Acceso autorizado");
+usuario= document.getElementById("alias");
+if (validarRol("gerente") || validarRol("administrador")) {
+  usuario.value= localStorage.getItem("alias");
+  console.log('usuario valido');
 } else {
   window.location.replace("../index?usuario=" + userName + ".html");
 }
@@ -38,13 +40,14 @@ function mostrarNuevoProductoDialog(evento) {
 
 //Funcion que se ejecuta cuando la pagina a sido carada totalmente
 async function paginaCargada() {  
+  document.getElementById("alias").value= localStorage.getItem("alias");
   var fecha= new Date();
   fecha.setDate(fecha.getDate());
   document.getElementById("fecha").value= fecha.toISOString().substring(0, 10);
 
   //Actualizamos la lista de productos y proveeodr obtenidos de la base de datos
-  productos= await obtenerBdd("productos");
-  proveedor= await obtenerBdd("proveedores");
+  productos= await obtenerBdd("Productos");
+  proveedor= await obtenerBdd("Proveedores");
   cargaProductos();
   cargaProveedor();
 }
