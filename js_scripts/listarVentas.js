@@ -83,7 +83,7 @@ function dialogDetalles(event, element) {
   const id= element.id;
   var new_tbody= document.createElement('tbody');
   new_tbody.id= "detalle_ventas";
-  venta= ventas.filter(
+  ventas= ventasAux.filter(
     element => element['id'] == id
   )[0];
 
@@ -141,13 +141,14 @@ function dialogDetalles(event, element) {
 
 //Funcion cuando cargue toda la pagina
 async function paginaCargada() {
-  ventasAux= await obtenerBdd("ventas");
+  //ventasAux= await obtenerBdd("Ventas", "responsable = '" + localStorage.getItem("alias") + "'");
+  ventasAux= await obtenerBdd("Ventas");
   console.log(ventasAux);
   ventas= ventasAux;
-  detalle_ventasAux= await obtenerBdd("detalle_ventas");
+  detalle_ventasAux= await obtenerBdd("Detalle_ventas");
   detalle_ventas= detalle_ventasAux;
-  clientes= await obtenerBdd("clientes");
-  productos= await obtenerBdd("productos");
+  clientes= await obtenerBdd("Clientes");
+  productos= await obtenerBdd("Productos");
   //Actualizamos la tabla de Ventas
   actualizarTabla();
 }
@@ -155,6 +156,7 @@ async function paginaCargada() {
 //Funcion que actualiza la tabla
 function actualizarTabla() {
     var monto_total= 0;
+    //ventas= ventasAux;
     var tbody= document.getElementById('lista_ventas');
     var new_tbody= document.createElement('tbody');
     new_tbody.id= "lista_ventas";
