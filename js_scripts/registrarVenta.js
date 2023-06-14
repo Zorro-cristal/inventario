@@ -7,10 +7,10 @@ if (validarRol("administrador") || validarRol("empleado")) {
   
 
 //Lista de los productos en la canasta
-var canasta= new Array();
+var canasta= [];
 var productosAux;
 var productos;
-var clientes;
+var clientes= [];
 var cliente;
 
 //Funcion para limpiar datos del cliente nuevo
@@ -24,6 +24,7 @@ function limpiarDatosCliente() {
 
 //Funcion para cuando cargue la pagina
 async function cargarPagina() {
+    document.getElementById("alias").value= localStorage.getItem("alias");
     //Indicamos la fecha actual
     var fecha= new Date();
     fecha.setDate(fecha.getDate());
@@ -31,14 +32,15 @@ async function cargarPagina() {
 
     var dialog, dialogBoton;
     //Obtenemos los datos de la base de datos
-    //productosAux= await obtenerBdd("productos");
-    productosAux= await obtenerBdd("productos", "stock > 0");
+    //productosAux= await obtenerBdd("Productos");
+    productosAux= await obtenerBdd("Productos", "stock > 0");
     productos= productosAux;
-    clientes= await obtenerBdd("clientes");
+    clientes= await obtenerBdd("Clientes");
 
     //Agregamos el nombre del usuario
     const usuario= localStorage.getItem("alias");
     document.getElementById('usuario').value= usuario;
+    canasta= [];
 }
 
 //Funcion para obtener Cliente
@@ -47,7 +49,7 @@ function obtenerCliente() {
     const cedula= document.getElementById('cedula').value;
     var dialog= document.getElementById('clienteDialog');
     //Evaluamos si se ingreso la cedula
-    if (cedula == "") {
+    if (cedula == "" || cedula <= 0) {
         alert("Ingrese la cedula del cliente");
         return;
     }
@@ -267,29 +269,29 @@ function registrarCliente() {
     if (direccion == undefined || direccion == ""){
         if (ruc == undefined || ruc == ""){
             if (fecha_nac == undefined || fecha_nac == ""){
-                comando= "INSERT INTO clientes(cedula, nombre, apellido) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "');";
+                comando= "INSERT INTO Clientes(cedula, nombre, apellido) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "');";
             } else {
-                comando= "INSERT INTO clientes(cedula, nombre, apellido, fecha_nacimiento) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', '" + "STR_TO_DATE(" + fecha_nac + ", %d/%m/%Y)" + "');";
+                comando= "INSERT INTO Clientes(cedula, nombre, apellido, fecha_nacimiento) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', '" + "STR_TO_DATE(" + fecha_nac + ", %d/%m/%Y)" + "');";
             }
         } else {
             if (fecha_nac == undefined || fecha_nac == ""){
-                comando= "INSERT INTO clientes(cedula, nombre, apellido, ruc) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', " + ruc + ");";
+                comando= "INSERT INTO Clientes(cedula, nombre, apellido, ruc) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', " + ruc + ");";
             } else {
-                comando= "INSERT INTO clientes(cedula, nombre, apellido, ruc, fecha_nacimiento) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', " + ruc + ", '" + "STR_TO_DATE(" + fecha_nac + ", %d/%m/%Y)" + "');";
+                comando= "INSERT INTO Clientes(cedula, nombre, apellido, ruc, fecha_nacimiento) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', " + ruc + ", '" + "STR_TO_DATE(" + fecha_nac + ", %d/%m/%Y)" + "');";
             }
         }
     } else {
         if (ruc == undefined || ruc == ""){
             if (fecha_nac == undefined || fecha_nac == ""){
-                comando= "INSERT INTO clientes(cedula, nombre, apellido, direccion) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', '" + direccion + "');";
+                comando= "INSERT INTO Clientes(cedula, nombre, apellido, direccion) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', '" + direccion + "');";
             } else {
-                comando= "INSERT INTO clientes(cedula, nombre, apellido, direccion, fecha_nacimiento) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', '" + direccion + "', '" + "STR_TO_DATE(" + fecha_nac + ", %d/%m/%Y)" + "');";
+                comando= "INSERT INTO Clientes(cedula, nombre, apellido, direccion, fecha_nacimiento) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', '" + direccion + "', '" + "STR_TO_DATE(" + fecha_nac + ", %d/%m/%Y)" + "');";
             }
         } else {
             if (fecha_nac == undefined || fecha_nac == ""){
-                comando= "INSERT INTO clientes(cedula, nombre, apellido, direccion, ruc) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', '" + direccion + "', " + ruc + ");";
+                comando= "INSERT INTO Clientes(cedula, nombre, apellido, direccion, ruc) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', '" + direccion + "', " + ruc + ");";
             } else {
-                comando= "INSERT INTO clientes(cedula, nombre, apellido, direccion, ruc, fecha_nacimiento) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', '" + direccion + "', " + ruc + ", '" + "STR_TO_DATE(" + fecha_nac + ", %Y-%m-%d)" + "');";
+                comando= "INSERT INTO Clientes(cedula, nombre, apellido, direccion, ruc, fecha_nacimiento) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', '" + direccion + "', " + ruc + ", '" + "STR_TO_DATE(" + fecha_nac + ", %Y-%m-%d)" + "');";
             }
         }
     }
@@ -335,4 +337,13 @@ function cerrarDialog(dialog) {
         dialog.close();
     }
     });
+}
+
+//Funcion para enviar los datos del formulario principal
+function enviarDatos() {
+    if (canasta.length > 0) {
+        document.getElementById("form_principal").action= "../php/registrarNuevaVenta.php";
+    } else {
+        alert("No existe ningun producto cargado en el carro");
+    }
 }
