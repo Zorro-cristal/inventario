@@ -6,9 +6,9 @@
 
     //Generamos el comando de acuerdo a los datos recibidos
     if ($telefono == "" || $telefono == null) {
-        $comando= 'INSERT INTO proveedores(nombre) VALUES ("' . $nombre . '")';
+        $comando= 'INSERT INTO  Proveedores(nombre) VALUES ("' . $nombre . '")';
     } else {
-        $comando= 'INSERT INTO proveedores(nombre, telefono) VALUES ("' . $nombre . '", "' . $telefono . '")';
+        $comando= 'INSERT INTO  Proveedores(nombre, telefono) VALUES ("' . $nombre . '", "' . $telefono . '")';
     }
 
     //Guardamos los datos en la base de datos

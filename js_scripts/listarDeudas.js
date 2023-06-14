@@ -34,7 +34,7 @@ function actualizacionRuc(valor) {
 //Funcion cuando la pagina carga todo
 async function paginaCargada() {
     //clientes= await obtenerBdd('clientes');
-    clientesAux= await obtenerBdd('clientes', 'deuda > 0');
+    clientesAux= await obtenerBdd('Clientes', 'deuda > 0');
     clientes= clientesAux;
     //Agregamos la lista a la tabla
     actualizarTabla();

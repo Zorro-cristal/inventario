@@ -1,6 +1,6 @@
 <?php
     include './funcionesbdd.php';
-    $clientes= conectarBdd("SELECT * FROM clientes WHERE (deuda > 0)");
-    $aux= json_encode($clientes);
+    $Clientes= conectarBdd("SELECT * FROM Clientes WHERE (deuda > 0)");
+    $aux= json_encode($Clientes);
     echo ($aux);
 ?>

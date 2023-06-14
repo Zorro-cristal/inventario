@@ -17,7 +17,7 @@ function paginaCargada() {
 
 //Funcion que retorna datos del proveedor
 async function obtenerProveedor(nombre_prov) {
-    proveedor= await obtenerBdd("proveedores", "nombre = '" + nombre_prov + "'");
+    proveedor= await obtenerBdd("Proveedores", "nombre = '" + nombre_prov + "'");
     proveedor= proveedor[0];
     if (proveedor != undefined) {
         document.getElementById('nombre').value= proveedor.nombre;

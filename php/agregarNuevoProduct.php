@@ -7,9 +7,9 @@
 
     //Generamos el comando de acuerdo a la situacion
     if ($descripcion == "" || $descripcion == null) {
-        $comando= 'INSERT INTO productos(nombre, stock) VALUES ("' . $nombre . '", ' . $stock . ')';
+        $comando= 'INSERT INTO Productos(nombre, stock) VALUES ("' . $nombre . '", ' . $stock . ')';
     } else {
-        $comando= 'INSERT INTO productos(nombre, descripcion, stock) VALUES ("' . $nombre . '", "' . $descripcion . '", ' . $stock . ')';
+        $comando= 'INSERT INTO Productos(nombre, descripcion, stock) VALUES ("' . $nombre . '", "' . $descripcion . '", ' . $stock . ')';
     }
     echo $comando;
 

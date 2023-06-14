@@ -7,11 +7,11 @@
     $fech_auto= convertirFecha($fech_auto);
     $fech_venc= convertirFecha($fech_venc);
     // Eliminamos si existe un timbrado que vensa antes
-    $sql= "DELETE FROM timbrados WHERE fech_vencimiento > " . $fech_venc;
+    $sql= "DELETE FROM Timbrados WHERE fech_vencimiento > STR_TO_DATE('" . $fech_venc . "', '%Y-%m-%d');";
     modificarBdd($sql);
     // Guardamos el nuevo timbrado
-    $sql= "INSERT INTO timbrados (cod, fech_autorizacion, fech_vencimiento) VALUES ";
-    $sql= $sql . "(" . $cod . ", '" . $fech_auto . "', '" . $fech_venc . "');";
+    $sql= "INSERT INTO Timbrados (cod, fech_autorizacion, fech_vencimiento) VALUES ";
+    $sql= $sql . "(" . $cod . ", STR_TO_DATE('" . $fech_auto . "', '%Y-%m-%d'), STR_TO_DATE('" . $fech_venc . "', '%Y-%m-%d'));";
     echo($sql);
     modificarBdd($sql);
     //Redireccionamos

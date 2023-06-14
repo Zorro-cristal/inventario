@@ -9,7 +9,7 @@ if (validarRol("administrador") || validarRol("empleado")) {
 async function obtenerCliente() {
     var cedula= document.getElementById('cedula').value;
     document.getElementById('buscarClienteDialog').close();
-    cliente= await obtenerBdd("clientes", "cedula = " + cedula);
+    cliente= await obtenerBdd("Clientes", "cedula = " + cedula);
     cliente= cliente[0];
     if (cliente == undefined) {
         var mensaje= document.getElementById('mensaje');
@@ -19,10 +19,10 @@ async function obtenerCliente() {
         document.getElementById('ced').value= divisorMiles(cliente.cedula);
         document.getElementById('nombre').value= cliente.nombre;
         document.getElementById('apellido').value= cliente.apellido;
-        document.getElementById('ruc').value= cliente.ruc;
-        document.getElementById('telefono').value= cliente.telefono;
-        document.getElementById('direccion').value= cliente.direccion;
+        document.getElementById('ruc').value= cliente.ruc || "";
+        document.getElementById('telefono').value= cliente.telefono || "";
+        document.getElementById('direccion').value= cliente.direccion || "";
         //document.getElementById('fech_nac').value= cliente.fecha_nacimiento;
-        document.getElementById('fech_nac').value= conversorFecha(cliente.fecha_nacimiento);
+        document.getElementById('fech_nac').value= conversorFecha(cliente.fecha_nacimiento) || "";
     }
 }
