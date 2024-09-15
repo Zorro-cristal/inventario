@@ -13,7 +13,7 @@ END; */
 CREATE TABLE Timbrados (
 	id INT(9) AUTO_INCREMENT,
 	cod INT(8) NOT NULL,
-	fech_autorizacion DATE NOT NULL,
-	fech_vencimiento DATE NOT NULL,
+	fech_autorizacion varchar(20) NOT NULL,
+	fech_vencimiento varchar(20) NOT NULL,
 	PRIMARY KEY (id)
 );
