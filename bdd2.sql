@@ -1,5 +1,5 @@
 CREATE TABLE Usuarios (
-	alias VARCHAR(50) NOT NULL,
+	alias VARCHAR(25) NOT NULL,
 	nombre VARCHAR(25) NOT NULL,
 	apellido VARCHAR(25) NOT NULL,
 	contra BLOB,
@@ -17,8 +17,14 @@ ALTER TABLE usuarios
 	ADD FOREIGN KEY (rol_id) REFERENCES Roles(id);
 
 -- Vinculamos los usuarios con la salida y entrada de productos
+ALTER TABLE Ventas
+	add column responsable varchar(25);
+
 ALTER TABLE Ventas 
 	add foreign key (responsable) references Usuarios(alias);
+
+ALTER TABLE Ingresos_productos
+	add column responsable varchar(25);
 
 ALTER TABLE Ingresos_productos 
 	add foreign key (responsable) references Usuarios(alias);

@@ -3,12 +3,13 @@
     $user= "root";
     $contras= "";
     $dbname= "inventario";
+    $puerto= 3306;
     function conectarBdd($sql) {
-        GLOBAL $servername, $user, $contras, $dbname;
+        GLOBAL $servername, $user, $contras, $dbname, $puerto;
         $datos= array();
 
         //Crear conexion
-        $conn= mysqli_connect($servername, $user, $contras, $dbname);
+        $conn= mysqli_connect($servername, $user, $contras, $dbname, $puerto);
 
         //En caso de error en la conexion
         if (!$conn) {
@@ -43,7 +44,7 @@
         $result= mysqli_query($conn, $sql);
         if (!$result) {
             echo '<dialog open>Error al modificar la base de datos</dialog>';
-            die("Error al modificar: " . mysqli->error);
+            die("Error al modificar: " . $conn->error);
         }
 
         //Obtenemos la id autogenerado

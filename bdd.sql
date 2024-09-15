@@ -59,6 +59,7 @@ create table Clientes (
 );
 
 --Relacionamos las tablas
+
 alter table Ingresos_productos
     add foreign key (proveedor_fk) references Proveedores(id);
 
