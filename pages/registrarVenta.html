@@ -120,14 +120,14 @@
                 <button class="btn btn-primary" onclick="document.getElementById('productoDialog').close()">Cancelar</button>
             </div>
         </dialog>
-        <header class="d-flex flex-wrap justify-content-center py-1 mb-2 border border-color-bottom container-base">
+        <header class="d-flex flex-wrap justify-content-center py-1 mb-2 border-bottom container-base">
             <h1 class="h1 d-flex justify-content-center">Datos de la venta</h1>
         </header>
         <main class="container-xl">
             <br/>
             <div class="col-12 gy-2 gx-3 align-items-center card container-base">
                 <!-- <form method="post" action="enviarDatos()" id="form_principal"> -->
-                <div class="card card-body container-base-secondary container grid pt-2 pb-2 m-1">
+                <div class="card card-body container-base-secondary grid pt-2 pb-2">
                     <div class="row justify-content-between">
                         <div class="col-6">
                             <label for="cedula" class="form-label">Cedula/ruc del cliente:</label>
@@ -149,29 +149,29 @@
                     </div>
                 </div>
                 <br/>
-                <div class="card container-base-secondary container grid pt-2 pb-2 m-1">
+                <div class="card container-base-secondary grid pt-2 pb-2">
                     <div class="row justify-content-around card-body">
-                        <table class="table border border-color">
+                        <table class="table border">
                             <thead>
-                                <tr class="border border-color">
-                                    <td class="border border-color" style="width: 10%">Cod.</td>
-                                    <td class="border border-color" style="width: 45%">Nombre</td>
-                                    <td class="border border-color" style="width: 20%">Categoria</td>
-                                    <td class="border border-color" style="width: 30%">Precio</td>
+                                <tr>
+                                    <td style="width: 10%">Cod.</td>
+                                    <td style="width: 45%">Nombre</td>
+                                    <td style="width: 20%">Categoria</td>
+                                    <td style="width: 30%">Precio</td>
                                 </tr>
-                                <tr class="border border-color">
-                                    <td class="border border-color" scope="col">
+                                <tr>
+                                    <td scope="col">
                                         <input class="form-control" type="number" name="inptCodigoProductoVenta" id="inptCodigoProductoVenta" placeholder="Cod." style="width: 100%;">
                                     </td>
-                                    <td class="border border-color" scope="col">
+                                    <td scope="col">
                                         <input class="form-control" type="text" name="inptNombreProductoVenta" id="inptNombreProductoVenta" placeholder="Ingrese el nombre de un producto" style="width: 100%;">
                                     </td>
-                                    <td class="border border-color" scope="col">
+                                    <td scope="col">
                                         <select class="form-select" name="inptCategoriaProductoVenta" id="inptCategoriaProductoVenta">
                                             <option selected>Cargando...</option>
                                         </select>
                                     </td>
-                                    <td class="border border-color" scope="col"></td>
+                                    <td scope="col"></td>
                                 </tr>
                             </thead>
                             <tbody id="listaProductosVenta"></tbody>
@@ -179,32 +179,36 @@
                     </div>
                 </div>
                 <br/>
-                <div class="card container-base-secondary container grid pt-2 pb-2 m-1">
+                <div class="card container-base-secondary grid pt-2 pb-2">
                     <div class="row justify-content-around card-body">
-                        <table class="table border border-color">
+                        <table class="table border">
                             <thead>
-                                <tr class="border border-color">
-                                    <td class="border border-color" style="width: 20%" rowspan="2">Nombre producto</td>
-                                    <td class="border border-color" style="width: 10%" rowspan="2">Cantidad</td>
-                                    <td class="border border-color" style="width: 20%" rowspan="2">Precio unit.</td>
-                                    <td class="border border-color" style="width: 10%" colspan="3" class="text-center">IVA</td>
-                                    <td class="border border-color" style="width: 20%" rowspan="2">SubTotal</td>
+                                <tr>
+                                    <td style="width: 20%">Nombre producto</td>
+                                    <td style="width: 10%">Cantidad</td>
+                                    <td style="width: 20%">Precio unit.</td>
+                                    <td class="text-center" style="width: 10%">IVA</td>
+                                    <td style="width: 20%">SubTotal</td>
                                 </tr>
-                                <tr class="border border-color">
-                                    <td class="border border-color" style="width: 10%">Exenta</td>
-                                    <td class="border border-color" style="width: 10%">5%</td>
-                                    <td class="border border-color" style="width: 10%">10%</td>
+                                <tr>
+                                    <td style="width: 20%"></td>
+                                    <td style="width: 10%"></td>
+                                    <td style="width: 20%"></td>
+                                    <td style="width: 10%">Exenta</td>
+                                    <td style="width: 10%">5%</td>
+                                    <td style="width: 10%">10%</td>
+                                    <td style="width: 20%"></td>
                                 </tr>
                             </thead>
                             <tbody id="detalleVenta"></tbody>
                             <tfoot>
-                                <td class="border border-color" style="width: 20%"></td>
-                                <td class="border border-color" style="width: 10%" id="totalCant"></td>
-                                <td class="border border-color" style="width: 20%"></td>
-                                <td class="border border-color" style="width: 10%" id="totalExent"></td>
-                                <td class="border border-color" style="width: 10%" id="total5"></td>
-                                <td class="border border-color" style="width: 10%" id="total10"></td>
-                                <td class="border border-color" style="width: 20%" id="totalSubTotal"></td>
+                                <td style="width: 20%"></td>
+                                <td style="width: 10%" id="totalCant"></td>
+                                <td style="width: 20%"></td>
+                                <td style="width: 10%" id="totalExent"></td>
+                                <td style="width: 10%" id="total5"></td>
+                                <td style="width: 10%" id="total10"></td>
+                                <td style="width: 20%" id="totalSubTotal"></td>
                             </tfoot>
                         </table>
                     </div>

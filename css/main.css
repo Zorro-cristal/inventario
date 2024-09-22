@@ -21,8 +21,9 @@ main {
     background-color: var(--bg-color);
 }
 
-.border-color {
-    border-color: var(--text-color) !important;
+table thead, tr ,td, tfoot {
+    border-collapse: collapse;
+    border: 1px solid var(--text-color) !important;
 }
 
 .container-base {
@@ -31,6 +32,8 @@ main {
 
 .container-base-secondary {
     background-color: var(--card-secondary-color) !important;
+    margin: 1rem !important;
+    width: 98%;
 }
 
 .form-control:focus {
