@@ -1,7 +1,7 @@
 # inventario
-##Descripcion
+## Descripcion
 Programa de administracion basica de inventario y ventas con registro de clientes.
-##Tecnologias
+## Tecnologias
 - HTML
 - PHP
 - JAVASCRIPT

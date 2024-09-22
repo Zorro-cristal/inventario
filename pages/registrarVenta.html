@@ -8,9 +8,16 @@
         <script type="text/javascript" src="../js_scripts/jquery.js"></script>
         <script type="text/javascript" src="../js_scripts/funciones.js"></script>
         <script type="text/javascript" src="../js_scripts/registrarVenta.js"></script>
-        <!-- CSS only -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+        <!-- Tailwind CSS configuraciones -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <link href="../css/main.css" type="text/css" rel="stylesheet"/>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const temaActual = localStorage.getItem("tema") || 'light';
+                document.body.classList.add(`${temaActual}-mode`);
+            });
+        </script>
     </head>
     <body onload="cargarPagina()">
         <!-- Dialog para redirigir a deuda -->
@@ -113,80 +120,106 @@
                 <button class="btn btn-primary" onclick="document.getElementById('productoDialog').close()">Cancelar</button>
             </div>
         </dialog>
-        <main style="background-image: url('../assets/fondo_secundario_claro.jpg'); background-size: cover;">
-            <form method="post" action="enviarDatos()" id="form_principal">
-                <input type="hidden" name="alias" id="alias"/>
-                <div class="ms-3 me-3">
-                    <h1 class="h1 d-flex justify-content-center">Datos del cliente</h1>
-                    <br/>
-                    <div class="form-group">
-                        <label for="cedula">Ingrese la cedula del cliente:</label>
-                        <div class="col-md-7">
-                            <input id="cedula" class="form-control" placeholder="Ingrese la cedula del cliente" required name="cedula"/>
+        <header class="d-flex flex-wrap justify-content-center py-1 mb-2 border border-color-bottom container-base">
+            <h1 class="h1 d-flex justify-content-center">Datos de la venta</h1>
+        </header>
+        <main class="container-xl">
+            <br/>
+            <div class="col-12 gy-2 gx-3 align-items-center card container-base">
+                <!-- <form method="post" action="enviarDatos()" id="form_principal"> -->
+                <div class="card container-base-secondary container grid pt-2 pb-2 m-1">
+                    <div class="row justify-content-between">
+                        <div class="col-6">
+                            <label for="cedula" class="form-label">Cedula/ruc del cliente:</label>
+                            <div style="display: ruby">
+                                <input id="cedula" class="form-control" style="width: fit-content" placeholder="Cedula/ruc" required name="cedula"/>
+                                <button type="button" class="btn btn-outline-primary mr-2" id="btnSeleccionarCliente" onclick="obtenerCliente()">Seleccionar cliente</button>
+                            </div>
                         </div>
-                        <button type="button" class="btn btn-primary" id="select_client" onclick="obtenerCliente()">Seleccionar cliente</button>
+                        <div class="col-4">
+                            <label for="fecha" class="form-label">Fecha:</label>
+                            <input id="fecha" class="form-control" style="width: fit-content" placeholder="dd/mm/aaaa" required name="fecha"/>
+                        </div>
                     </div>
-                    </br>
-                    <table class="table table-hover table-dark">
-                        <thead>
-                            <tr>
-                                <th scope="col" style="width: 40%;">Nombre</th>
-                                <th scope="col" style="width: 20%;">Ruc</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr id="clienteInfo">
-                                <td style="width: 40%;"></td>
-                                <td style="width: 20%;"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="form-group">
-                        <label for="fecha">Ingrese la fecha de la venta:</label>
-                        <input type="date" id="fecha" class="form-control col-md-4" name="fecha" />
+                    <div class="row justify-content-between mt-2">
+                        <div class="col-11 justify-content-between" style="display: ruby">
+                            <label for="clienteNombre" class="form-label">Nombre del cliente:</label>
+                            <input id="clienteNombre" class="form-control" placeholder="Nombre del cliente" required name="clienteNombre" style="width: 95%"/>
+                        </div>
                     </div>
                 </div>
-                <div class="ms-3 me-3">
-                    <h1>Lista de productos</h1>
-                    <table class="table table-hover table-dark">
-                        <thead>
-                            <tr>
-                                <th scope="col" style="width: 15%;">Cantidad</th>
-                                <th scope="col" style="width: 35%;">Nombre</th>
-                                <th scope="col" style="width: 20%;">Precio unitario</th>
-                                <th scope="col" style="width: 15%;">Sub Total</th>
-                                <th style="width: 15%;"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="canasta_body">
-                            <!--Filas de cada producto-->
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <!--Resultado de los productos-->
-                                <th id="cant_total" style="width: 10%;"></th>
-                                <th style="text-align: right;" colspan="2">Total:</th>
-                                <th id="total" colspan="2"></th>
-                            </tr>
-                        </tfoot>
-                    </table>
+                <br/>
+                <div class="card container-base-secondary container grid pt-2 pb-2 m-1">
+                    <div class="row justify-content-around">
+                        <table class="table border border-color">
+                            <thead>
+                                <tr class="border border-color">
+                                    <td class="border border-color" style="width: 10%">Cod.</td>
+                                    <td class="border border-color" style="width: 45%">Nombre</td>
+                                    <td class="border border-color" style="width: 20%">Categoria</td>
+                                    <td class="border border-color" style="width: 30%">Precio</td>
+                                </tr>
+                                <tr class="border border-color">
+                                    <td class="border border-color" scope="col">
+                                        <input class="form-control" type="number" name="inptCodigoProductoVenta" id="inptCodigoProductoVenta" placeholder="Cod." style="width: 100%;">
+                                    </td>
+                                    <td class="border border-color" scope="col">
+                                        <input class="form-control" type="text" name="inptNombreProductoVenta" id="inptNombreProductoVenta" placeholder="Ingrese el nombre de un producto" style="width: 100%;">
+                                    </td>
+                                    <td class="border border-color" scope="col">
+                                        <select class="form-select" name="inptCategoriaProductoVenta" id="inptCategoriaProductoVenta">
+                                            <option selected>Cargando...</option>
+                                        </select>
+                                    </td>
+                                    <td class="border border-color" scope="col"></td>
+                                </tr>
+                            </thead>
+                            <tbody id="listaProductosVenta"></tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="form-control d-flex justify-content-around ms-3" style="width: 250px;">
-                    <label for="deuda">¿El cliente generara deuda?</label>
-                    <input id="deuda" type="checkbox" name="deuda"/>
+                <br/>
+                <div class="card container-base-secondary container grid pt-2 pb-2 m-1">
+                    <div class="row justify-content-around">
+                        <table class="table border border-color">
+                            <thead>
+                                <tr class="border border-color">
+                                    <td class="border border-color" style="width: 20%" rowspan="2">Nombre producto</td>
+                                    <td class="border border-color" style="width: 10%" rowspan="2">Cantidad</td>
+                                    <td class="border border-color" style="width: 20%" rowspan="2">Precio unit.</td>
+                                    <td class="border border-color" style="width: 10%" colspan="3" class="text-center">IVA</td>
+                                    <td class="border border-color" style="width: 20%" rowspan="2">SubTotal</td>
+                                </tr>
+                                <tr class="border border-color">
+                                    <td class="border border-color" style="width: 10%">Exenta</td>
+                                    <td class="border border-color" style="width: 10%">5%</td>
+                                    <td class="border border-color" style="width: 10%">10%</td>
+                                </tr>
+                            </thead>
+                            <tbody id="detalleVenta"></tbody>
+                            <tfoot>
+                                <td class="border border-color" style="width: 20%"></td>
+                                <td class="border border-color" style="width: 10%" id="totalCant"></td>
+                                <td class="border border-color" style="width: 20%"></td>
+                                <td class="border border-color" style="width: 10%" id="totalExent"></td>
+                                <td class="border border-color" style="width: 10%" id="total5"></td>
+                                <td class="border border-color" style="width: 10%" id="total10"></td>
+                                <td class="border border-color" style="width: 20%" id="totalSubTotal"></td>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- Ocultamos el valor de la canasta para que reciba el php -->
+                    <div>
+                        <input type="hidden" id="canasta" name="canasta" />
+                        <input type="hidden" id="usuario" name="usuario" />
+                    </div>
+                    <div class="mt-3 d-flex justify-content-around">
+                        <button type="button" class="btn btn-outline-warning" onclick='limpiarVenta()'>Limpiar</button>
+                        <button type="submit" class="btn btn-outline-success" onclick="enviarDatos()">Registrar Venta</button>
+                        <button type="button" class="btn btn-outline-danger" onclick='limpiarVenta();location.href= "../index.html";'>Cancelar Venta</button>
+                    </div>
                 </div>
-                <!-- Ocultamos el valor de la canasta para que reciba el php -->
-                <div>
-                    <input type="hidden" id="canasta" name="canasta" />
-                    <input type="hidden" id="usuario" name="usuario" />
-                </div>
-                <div class="mt-3 d-flex justify-content-around">
-                    <button type="button" class="btn btn-primary" onclick='cargarProducto()'>Agregar producto</button>
-                    <button type="submit" class="btn btn-primary">Registrar Venta</button>
-                    <button type="button" class="btn btn-primary" onclick='location.href= "../index.html";'>Cancelar Venta</button>
-                </div>
-                </br>
-            </form>
+            </div>
         </main>
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 bg-dark bg-gradient mt-0 mb-0">
             <div class="col-md-4 d-flex align-items-center ms-3">  
