@@ -32,3 +32,8 @@ main {
 .container-base-secondary {
     background-color: var(--card-secondary-color) !important;
 }
+
+.form-control:focus {
+    border-color: green;
+    box-shadow: #6def53;
+}
