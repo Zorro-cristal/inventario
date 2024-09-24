@@ -13,7 +13,7 @@
     </head>
     <body onload="paginaCargada()">
         <!-- Dialogo para modificar datos del proveedor -->
-        <dialog open id="modificarProveedorDialog" style="background-image: url('../assets/fondo_secundario_oscuro.jpg'); background-size: cover;">
+        <dialog open id="modificarProveedorDialog" class="imagen-fondo">
             <form method="dialog">
                 <h3 class="h3 text-light d-flex justify-content-around">Modificacion del proveedor</h3>
                 <h4 class="h4 text-danger d-flex justify-content-around" id="mensaje"></h4>
@@ -37,12 +37,12 @@
                         <label for="nombre" class="col-md-4">Nombre del proveedor</label>
                         <input id="nombre" class="col-md-7 form-control" name="nombre" />
                     </div>
-                    </br>
+                    <br/>
                     <div class="form-group">
                         <label for="telefono" class="col-md-4">Telefono del proveedor</label>
                         <input id="telefono" type="tel" class="col-md-7 form-control" name="telefono" />
                     </div>
-                    </br>
+                    <br/>
                     <div class="d-flex justify-content-around">
                         <button type="submit" class="btn btn-primary">Guardar modificaciones</button>
                         <button type="reset" class="btn btn-primary">Limpiar</button>

@@ -5,9 +5,9 @@
     $iva= $_POST['iva'];
     $alias= $_POST['alias'];
     echo "lista_prodcto= " . $id_product;
-    echo "</br>";
+    echo "<br/>";
     echo "lista_proveedor= " . $id_prov;
-    echo "</br>";
+    echo "<br/>";
     $stock_actual= (int)$_POST['stock'];
     $stock= (int)$_POST['sumar'];
     $precio= $_POST['precio'];
@@ -16,7 +16,7 @@
     $id_prov= $_POST['lista_proveedor'];
     $comando= "INSERT INTO Ingresos_productos (proveedor_fk, producto_fk, fecha_ingreso, cantidad, precio_unitario, responsable) VALUES ( " . $id_prov . ", " . $id_product . ', STR_TO_DATE("' . $fecha . '", "%Y-%m-%d"), ' . $stock . ", " . $precio_compra . ",' " . $alias . "')";
     echo $comando;
-    echo "</br>";
+    echo "<br/>";
     modificarBdd($comando);
     $stock= $stock_actual + $stock;
     $comando= "UPDATE Productos SET stock= " . $stock . ", precio_venta= " . $precio . ", iva= '" . $iva . "' WHERE id=" . $id_product . ";";

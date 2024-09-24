@@ -11,23 +11,23 @@
     </head>
     <body onload="paginaCargada()">
         <!-- Dialogo que muestra informacion de la venta -->
-        <dialog style="background-image: url('../assets/fondo_secundario_oscuro.jpg'); background-size: cover;" id="detalle_ventaDialog">
+        <dialog class="imagen-fondo" id="detalle_ventaDialog">
             <input type="hidden" id="id_venta"/>
             <div class="form group">
                 <label for="nro_fact" class="text-light">Numero factura</label>
                 <input id="nro_fact" readonly />
             </div>
-            </br>
+            <br/>
             <div class="form group">
                 <label for="client"  class="text-light">Cliente</label>
                 <input id="client" readonly />
             </div>
-            </br>
+            <br/>
             <div class="form group">
                 <label for="ruc" class="text-light">Ruc</label>
                 <input id="ruc" readonly />
             </div>
-            </br>
+            <br/>
             <table class="table table-hover table-dark m-3" style="width: 98%;">
                 <thead>
                     <tr>
@@ -57,23 +57,23 @@
                 <div class="d-flex justify-content-center ms-3 me-3">
                     <h1 class="h1 p-3">Lista de ventas</h1>
                 </div>
-                </br>
+                <br/>
             </div>
             <div class="form-control">
                 <label for="ced_busc" >Ingrese la cedula del cliente:</label>
                 <input id="ced_busc" class="form-control" placeholder="Cedula del cliente" type="number" onkeyup="filtraCed(this.value)" onchange="filtraCed(this.value)"/>
             </div>
-            </br>
+            <br/>
             <div class="form-control">
                 <label for="nombre_client">Ingrese el nombre o apellido del cliente:</label>
                 <input id="nombre_client" class="form-control" placeholder="Nombre o apellido del cliente" onkeyup="filtraNombre(this.value)" onchange="filtraNombre(this.value)"/>
             </div>
-            </br>
+            <br/>
             <div class="form-control">
                 <label for="fech_vent" >Ingrese la fecha de la venta:</label>
                 <input id="fech_vent" class="form-control" placeholder="fecha de ventas" type="date" onkeyup="filtraFech(this.value)" onchange="filtraFech(this.value)"/>
             </div>
-            </br>
+            <br/>
             <table class="table table-holder table-dark mt-3 ms-3 me-3" style="width: 98%;">
                 <thead>
                     <th scope="col" style="width: 25%;">Nro Factura</th>
@@ -97,12 +97,12 @@
                 </tfoot>
             </table>
             <p class="text-sm-left font-weight-bold ms-3">*Seleccione una venta para ver mas informacion o eliminarla</p>
-            </br>
-            </br>
+            <br/>
+            <br/>
             <div class="d-flex justify-content-around">
                 <button class="btn btn-primary" onclick='location.href= "../index.html"'>Volver al menu</button>
             </div>
-            </br>
+            <br/>
         </main>
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 bg-dark bg-gradient mt-0 mb-0">
             <div class="col-md-4 d-flex align-items-center ms-3">  

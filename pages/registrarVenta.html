@@ -21,7 +21,7 @@
     </head>
     <body onload="cargarPagina()">
         <!-- Dialog para redirigir a deuda -->
-        <dialog style="background-image: url('../assets/fondo_secundario_oscuro.jpg'); background-size: cover;" id="deudaDialog">
+        <dialog class="imagen-fondo" id="deudaDialog">
             <div class="d-flex justify-content-around">
                 <span class="badge badge-danger">
                     <h1 class="h1 text-danger">El cliente tiene una deuda pendiente</h1>
@@ -33,7 +33,7 @@
             </div>
         </dialog>
         <!-- Dialog para agregar un cliente nuevo -->
-        <dialog style="background-image: url('../assets/fondo_secundario_oscuro.jpg'); background-size: cover;" id="clienteDialog">
+        <dialog class="imagen-fondo" id="clienteDialog">
             <div class="d-flex justify-content-around">
                 <span class="badge badge-danger">
                     <h1 class="h1 text-danger">El cliente no existe</h1>
@@ -45,27 +45,27 @@
                     <label for="nombre_client" class="text-light">Nombre:</label>
                     <input id="nombre_client" class="form-control" placeholder="Ingrese el nombre del cliente" required/>
                 </div>
-                </br>
+                <br/>
                 <div class="form-group">
                     <label for="apellido" class="text-light">Apellido:</label>
                     <input id="apellido" class="form-control" placeholder="Ingrese el apellido del cliente" required/>
                 </div>
-                </br>
+                <br/>
                 <div class="form-group">
                     <label for="ruc" class="text-light">Ruc:</label>
                     <input id="ruc" class="form-control" placeholder="Ingrese el ruc del cliente" type="number" maxlength="1" />
                 </div>
-                </br>
+                <br/>
                 <div class="form-group">
                     <label for="direccion" class="text-light">Direccion:</label>
                     <input id="direccion" class="form-control" placeholder="Ingrese la direccion del cliente" />
                 </div>
-                </br>
+                <br/>
                 <div class="form-group">
                     <label for="fech_nac" class="text-light">Fecha de nacimiento:</label>
                     <input id="fech_nac" class="form-control" placeholder="Ingrese la fecha de nacimiento del cliente" type="date"/>
                 </div>
-                </br>
+                <br/>
                 <div class="mt-3 d-flex justify-content-around">
                     <button class="btn btn-primary" id="guardarCliente" onclick="registrarCliente()">Guardar cliente</button>
                     <button class="btn btn-primary" id="limpiarCliente" onclick="limpiarDatosCliente()">Limpiar datos</button>
@@ -73,11 +73,11 @@
             </form>
         </dialog>
         <!-- Dialog para agregar un producto al canasto -->
-        <dialog style="background-image: url('../assets/fondo_secundario_oscuro.jpg'); background-size: cover;" id="productoDialog">
+        <dialog class="imagen-fondo" id="productoDialog">
             <div class="d-flex justify-content-around">
                 <h3 class="h3 text-light">Agregar producto a la lista</h3>
             </div>
-            </br>
+            <br/>
             <div class="form-group">
                 <label for="nombre_product" class="text-light">Nombre para filtrar:</label>
                 <input id="nombre_product" class="form-control" placeholder="Ingrese el nombre del producto" onkeyup="actualizarSelect()" onchange="actualizarSelect()" />
@@ -85,32 +85,32 @@
             <select class="form-select mt-3 mb-3 form-select-lg" size="3" id="lista_producto" required>
                 <option>Cargando productos...</option>
             </select>
-            </br>
+            <br/>
             <div class="form-group">
                 <label class="text-light" for="disponible">Disponible en stock:</label>
                 <input id="disponible" class="col-md-7" value="0" type="number" readonly />
             </div>
-            </br>
+            <br/>
             <div class="form-group">
                 <label for="cant" class="text-light">Ingrese la cantidad comprada:</label>
                 <input id="cant" class="form-control col-md-7" placeholder="Ingrese la cantidad comprada" type="number" required onkeyup="calcularDescuento();calcularCosto();calcularSubtotal();" onchange="calcularCosto();calcularDescuento();calcularSubtotal();"/>
             </div>
-            </br>
+            <br/>
             <div class="form-group">
                 <label for="descuento" class="text-light">Ingrese el descuento por unidad:</label>
                 <input id="descuento" class="form-control col-md-7" placeholder="Ingrese el descuento por unidad" type="number" value="0" onkeyup="calcularDescuento();calcularSubtotal()" onchange="calcularDescuento();calcularSubtotal();"/>
             </div>
-            </br>
+            <br/>
             <div class="form-group">
                 <label class="text-light col-md-7" for="total_desc">Total del descuento:</label>
                 <input id="total_desc" class="col-md-5" value="0" type="number" readonly />
             </div>
-            </br>
+            <br/>
             <div class="form-group">
                 <label class="text-light col-md-5">Total costo:</label>
                 <input id="total_prec" class="col-md-7" type="number" readonly value="0" />
             </div>
-            </br>
+            <br/>
             <div class="form-group">
                 <label class="text-light col-md-5" for="sub_total">SubTotal:</label>
                 <input id="sub_total" class="col-md-7" type="number" readonly value="0"/>
@@ -123,109 +123,107 @@
         <header class="d-flex flex-wrap justify-content-center py-1 mb-2 border-bottom container-base">
             <h1 class="h1 d-flex justify-content-center">Datos de la venta</h1>
         </header>
-        <main class="container-xl">
+        <main class="col-12 gy-2 gx-3 align-items-center container-xl card container-base imagen-fondo">
             <br/>
-            <div class="col-12 gy-2 gx-3 align-items-center card container-base">
-                <!-- <form method="post" action="enviarDatos()" id="form_principal"> -->
-                <div class="card card-body container-base-secondary grid pt-2 pb-2">
-                    <div class="row justify-content-between">
-                        <div class="col-6">
-                            <label for="cedula" class="form-label">Cedula/ruc del cliente:</label>
-                            <div style="display: ruby">
-                                <input id="cedula" class="form-control" style="width: fit-content" placeholder="Cedula/ruc" required name="cedula"/>
-                                <button type="button" class="btn btn-outline-primary mr-2" id="btnSeleccionarCliente" onclick="obtenerCliente()">Seleccionar cliente</button>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <label for="fecha" class="form-label">Fecha:</label>
-                            <input id="fecha" class="form-control" style="width: fit-content" placeholder="dd/mm/aaaa" required name="fecha"/>
+            <!-- <form method="post" action="enviarDatos()" id="form_principal"> -->
+            <div class="card card-body container-base-secondary grid pt-2 pb-2">
+                <div class="row justify-content-between">
+                    <div class="col-6">
+                        <label for="cedula" class="form-label">Cedula/ruc del cliente:</label>
+                        <div style="display: ruby">
+                            <input id="cedula" class="form-control" style="width: fit-content" placeholder="Cedula/ruc" required name="cedula"/>
+                            <button type="button" class="btn btn-outline-primary mr-2" id="btnSeleccionarCliente" onclick="obtenerCliente()">Seleccionar cliente</button>
                         </div>
                     </div>
-                    <div class="row justify-content-between mt-2">
-                        <div class="col-11 justify-content-between" style="display: ruby">
-                            <label for="clienteNombre" class="form-label">Nombre del cliente:</label>
-                            <input id="clienteNombre" class="form-control" placeholder="Nombre del cliente" required name="clienteNombre" style="width: 95%"/>
-                        </div>
+                    <div class="col-4">
+                        <label for="fecha" class="form-label">Fecha:</label>
+                        <input id="fecha" class="form-control" style="width: fit-content" placeholder="dd/mm/aaaa" required name="fecha"/>
                     </div>
                 </div>
-                <br/>
-                <div class="card container-base-secondary grid pt-2 pb-2">
-                    <div class="row justify-content-around card-body">
-                        <table class="table border">
-                            <thead>
-                                <tr>
-                                    <td style="width: 10%">Cod.</td>
-                                    <td style="width: 45%">Nombre</td>
-                                    <td style="width: 20%">Categoria</td>
-                                    <td style="width: 30%">Precio</td>
-                                </tr>
-                                <tr>
-                                    <td scope="col">
-                                        <input class="form-control" type="number" name="inptCodigoProductoVenta" id="inptCodigoProductoVenta" placeholder="Cod." style="width: 100%;">
-                                    </td>
-                                    <td scope="col">
-                                        <input class="form-control" type="text" name="inptNombreProductoVenta" id="inptNombreProductoVenta" placeholder="Ingrese el nombre de un producto" style="width: 100%;">
-                                    </td>
-                                    <td scope="col">
-                                        <select class="form-select" name="inptCategoriaProductoVenta" id="inptCategoriaProductoVenta">
-                                            <option selected>Cargando...</option>
-                                        </select>
-                                    </td>
-                                    <td scope="col"></td>
-                                </tr>
-                            </thead>
-                            <tbody id="listaProductosVenta"></tbody>
-                        </table>
-                    </div>
-                </div>
-                <br/>
-                <div class="card container-base-secondary grid pt-2 pb-2">
-                    <div class="row justify-content-around card-body">
-                        <table class="table border">
-                            <thead>
-                                <tr>
-                                    <td style="width: 20%">Nombre producto</td>
-                                    <td style="width: 10%">Cantidad</td>
-                                    <td style="width: 20%">Precio unit.</td>
-                                    <td class="text-center" style="width: 10%">IVA</td>
-                                    <td style="width: 20%">SubTotal</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 20%"></td>
-                                    <td style="width: 10%"></td>
-                                    <td style="width: 20%"></td>
-                                    <td style="width: 10%">Exenta</td>
-                                    <td style="width: 10%">5%</td>
-                                    <td style="width: 10%">10%</td>
-                                    <td style="width: 20%"></td>
-                                </tr>
-                            </thead>
-                            <tbody id="detalleVenta"></tbody>
-                            <tfoot>
-                                <td style="width: 20%"></td>
-                                <td style="width: 10%" id="totalCant"></td>
-                                <td style="width: 20%"></td>
-                                <td style="width: 10%" id="totalExent"></td>
-                                <td style="width: 10%" id="total5"></td>
-                                <td style="width: 10%" id="total10"></td>
-                                <td style="width: 20%" id="totalSubTotal"></td>
-                            </tfoot>
-                        </table>
-                    </div>
-                    <!-- Ocultamos el valor de la canasta para que reciba el php -->
-                    <div>
-                        <input type="hidden" id="canasta" name="canasta" />
-                        <input type="hidden" id="usuario" name="usuario" />
-                    </div>
-                    <div class="mt-3 d-flex justify-content-around">
-                        <button type="button" class="btn btn-outline-warning" onclick='limpiarVenta()'>Limpiar</button>
-                        <button type="submit" class="btn btn-outline-success" onclick="enviarDatos()">Registrar Venta</button>
-                        <button type="button" class="btn btn-outline-danger" onclick='limpiarVenta();location.href= "../index.html";'>Cancelar Venta</button>
+                <div class="row justify-content-between mt-2">
+                    <div class="col-11 justify-content-between" style="display: ruby">
+                        <label for="clienteNombre" class="form-label">Nombre del cliente:</label>
+                        <input id="clienteNombre" class="form-control" placeholder="Nombre del cliente" required name="clienteNombre" style="width: 95%"/>
                     </div>
                 </div>
             </div>
+            <br/>
+            <div class="card container-base-secondary grid pt-2 pb-2">
+                <div class="row justify-content-around card-body">
+                    <table class="table border">
+                        <thead>
+                            <tr>
+                                <td style="width: 10%">Cod.</td>
+                                <td style="width: 45%">Nombre</td>
+                                <td style="width: 20%">Categoria</td>
+                                <td style="width: 30%">Precio</td>
+                            </tr>
+                            <tr>
+                                <td scope="col">
+                                    <input class="form-control" type="number" name="inptCodigoProductoVenta" id="inptCodigoProductoVenta" placeholder="Cod." style="width: 100%;">
+                                </td>
+                                <td scope="col">
+                                    <input class="form-control" type="text" name="inptNombreProductoVenta" id="inptNombreProductoVenta" placeholder="Ingrese el nombre de un producto" style="width: 100%;">
+                                </td>
+                                <td scope="col">
+                                    <select class="form-select" name="inptCategoriaProductoVenta" id="inptCategoriaProductoVenta">
+                                        <option selected>Cargando...</option>
+                                    </select>
+                                </td>
+                                <td scope="col"></td>
+                            </tr>
+                        </thead>
+                        <tbody id="listaProductosVenta"></tbody>
+                    </table>
+                </div>
+            </div>
+            <br/>
+            <div class="card container-base-secondary grid pt-2 pb-2">
+                <div class="row justify-content-around card-body">
+                    <table class="table border">
+                        <thead>
+                            <tr>
+                                <td style="width: 20%">Nombre producto</td>
+                                <td style="width: 10%">Cantidad</td>
+                                <td style="width: 20%">Precio unit.</td>
+                                <td class="text-center" style="width: 10%">IVA</td>
+                                <td style="width: 20%">SubTotal</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 20%"></td>
+                                <td style="width: 10%"></td>
+                                <td style="width: 20%"></td>
+                                <td style="width: 10%">Exenta</td>
+                                <td style="width: 10%">5%</td>
+                                <td style="width: 10%">10%</td>
+                                <td style="width: 20%"></td>
+                            </tr>
+                        </thead>
+                        <tbody id="detalleVenta"></tbody>
+                        <tfoot>
+                            <td style="width: 20%"></td>
+                            <td style="width: 10%" id="totalCant"></td>
+                            <td style="width: 20%"></td>
+                            <td style="width: 10%" id="totalExent"></td>
+                            <td style="width: 10%" id="total5"></td>
+                            <td style="width: 10%" id="total10"></td>
+                            <td style="width: 20%" id="totalSubTotal"></td>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- Ocultamos el valor de la canasta para que reciba el php -->
+                <div>
+                    <input type="hidden" id="canasta" name="canasta" />
+                    <input type="hidden" id="usuario" name="usuario" />
+                </div>
+                <div class="mt-3 d-flex justify-content-around">
+                    <button type="button" class="btn btn-outline-warning" onclick='limpiarVenta()'>Limpiar</button>
+                    <button type="submit" class="btn btn-outline-success" onclick="enviarDatos()">Registrar Venta</button>
+                    <button type="button" class="btn btn-outline-danger" onclick='limpiarVenta();location.href= "../index.html";'>Cancelar Venta</button>
+                </div>
+            </div>
         </main>
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 bg-dark bg-gradient mt-0 mb-0">
+        <!-- <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 bg-dark bg-gradient mt-0 mb-0">
             <div class="col-md-4 d-flex align-items-center ms-3">  
                 <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
                     <i class="bi bi-bootstrap-fill"></i>
@@ -246,6 +244,6 @@
                     <i class="bi bi-github"></i>
                 </a></li>
             </ul>
-        </footer>
+        </footer> -->
     </body>
 </html>

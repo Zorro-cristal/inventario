@@ -4,18 +4,18 @@
     $contra= $_POST['contra'];
     //Buscamos si existe una clave como la introducida
     $comando= "select alias from Usuarios where contra= aes_encrypt('" . $contra . "', 'inventario');";
-    echo "</br>";
+    echo "<br/>";
     echo $comando;
     $contra= conectarBdd($comando);
-    echo "</br>";
+    echo "<br/>";
     echo "usuario:";
     echo json_decode($usuario);
     if ($contra) {
         //Si el usuario existe, comparamos el usuario introducido
-        echo "</br>";
+        echo "<br/>";
         echo $comando;
         $contra= conectarBdd($comando);
-        echo "</br>";
+        echo "<br/>";
         echo "contra:";
         echo json_encode($contra);
         //Comprobamos si la contraseña obtenida coincide con la codificada

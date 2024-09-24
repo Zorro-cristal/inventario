@@ -14,7 +14,7 @@
     </head>
     <body onload="paginaCargada()">
         <!-- Ventana para agregar un nuevo producto a la base de datos -->
-        <dialog style="background-image: url('../assets/fondo_secundario_oscuro.jpg'); background-size: cover;" id="nuevoProductoDialog">
+        <dialog class="imagen-fondo" id="nuevoProductoDialog">
             <form action="../php/agregarNuevoProduct.php" method="post">
                 <div class="form-group">
                     <label for="nombre_prod" class="text-light">Nombre del producto:</label>
@@ -33,7 +33,7 @@
             </form>
         </dialog>
         <!-- Ventana para agregar un nuevo proveedor a la base de datos -->
-        <dialog style="background-image: url('../assets/fondo_secundario_oscuro.jpg'); background-size: cover;" id="nuevoProveedorDialog">
+        <dialog class="imagen-fondo" id="nuevoProveedorDialog">
             <form action="../php/agregarNuevoProveedor.php" method="post">
                 <div class="form-group">
                     <label for="nombre_prov" class="text-light">Nombre del proveedor:</label>
@@ -78,7 +78,7 @@
                             <input id="precio" class="form-control" placeholder="Precio unitario" type="number" name="precio" required/>
                         </div>
                     </div>
-                    </br>
+                    <br/>
                     <div class="form-row">
                         <div class="col-md-6">
                             <label for="precio_compr" class="">Ingrese el precio unitario de compra:</label>
@@ -87,7 +87,7 @@
                             <input id="precio_compr" class="form-control" placeholder="Precio compra" type="number" name="precio_compr" required/>
                         </div>
                     </div>
-                    </br>
+                    <br/>
                     <div class="form-group">
                         <label for="iva" class="text-dark me-1">Ingrese el valor de la IVA:</label>
                         <select class="form-select form-select-lg" name="iva" required id="iva">
@@ -97,7 +97,7 @@
                             <option value="5%">5%</option>
                         </select>
                     </div>
-                    </br>
+                    <br/>
                     <div class="form-row">
                         <div class="col-md-6">
                             <label for="stock" class="">Cantidad de stock actual:</label>
@@ -106,7 +106,7 @@
                             <input id="stock" class="form-control" readonly value="0" name="stock"/>
                         </div>
                     </div>
-                    </br>
+                    <br/>
                     <div class="form-row">
                         <div class="col-md-6">
                             <label for="sumar" class="">Ingrese la cantidad a sumar:</label>
@@ -115,7 +115,7 @@
                             <input id="sumar" class="form-control" placeholder="Cantidad" type="number" name="sumar" required/>
                         </div>
                     </div>
-                    </br>
+                    <br/>
                     <div class="form-group">
                         <label for="proveedor" class="">Ingrese el nombre del proveedor:</label>
                     </div>

@@ -1,8 +1,9 @@
 /* Temas de Bootstrap */
 .light-mode {
     --bg-color: #e2e2e2;
-    --card-primary-color: #6def53;
-    --card-secondary-color: #ccdec2;
+    --bg-fondo: url('../assets/fondo_secundario_claro.jpg');
+    --card-primary-color: #27a50e;
+    --card-secondary-color: #aed699;
     --text-color: #000000;
     --header-bg: #f0f0f0;
     --footer-bg: #f0f0f0;
@@ -39,4 +40,9 @@ table thead, tr ,td, tfoot {
 .form-control:focus {
     border-color: green;
     box-shadow: #6def53;
+}
+
+.imagen-fondo {
+    background-image: var(--bg-fondo);
+    background-size: cover;
 }

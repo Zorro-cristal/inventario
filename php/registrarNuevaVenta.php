@@ -49,7 +49,7 @@
             $cedula= $_POST['cedula'];
             //Generamos el numero de factura
             $comando= 'INSERT INTO Ventas(cliente_fk, responsable, fecha) VALUES (' . $cedula . ', ' . $alias . ', STR_TO_DATE("' . $fecha . '", "%Y-%m-%d"))';
-            //echo "</br>Insertando en la tablaVentas</br>";
+            //echo "<br/>Insertando en la tablaVentas<br/>";
             //echo ($comando);
             $idVenta= modificarBdd($comando);
             //Agregamos los Productos asociados a laVenta
@@ -59,7 +59,7 @@
             //echo json_encode($canasta);
             for ($i= 0; $i < count($canasta); ++$i) {
                 $comando= "INSERT INTO Detalle_ventas(producto_fk,Venta_fk, cantidad, descuento, precio_venta) VALUES (";
-                //echo "</br>Insertando en la tablaDetalle_ventas</br>";
+                //echo "<br/>Insertando en la tablaDetalle_ventas<br/>";
                 //echo $comando;
                 if ($canasta[$i]['descuento'] == "" || isset($canasta[$i]['descuento'])){
                     $comando= $comando . $canasta[$i]['id'] . ", " . $idVenta . ", " . $canasta[$i]['cantidad'] . ", 0, " . $canasta[$i]['precio'] . ")";
@@ -82,7 +82,7 @@
                     $stock= $stock - (int)$canasta[$i]['cantidad'];
                     $comando= 'UPDATE Productos SET stock= ' . $stock . ' WHERE id= ' . $canasta[$i]['id'] . ';';
                 }
-                //echo "</br>Se actualiza el stock</br>";
+                //echo "<br/>Se actualiza el stock<br/>";
                 //echo $comando;
                 modificarBdd($comando);
             }
@@ -90,42 +90,42 @@
             $deuda= $_POST['deuda'];
             if (!empty($deuda)) {
                 $comando= 'UPDATE Clientes SET deuda= ' . $total . ' WHERE cedula=' . $cedula;
-                //echo "</br>Se genera dueda? " . $deuda . "</br>";
+                //echo "<br/>Se genera dueda? " . $deuda . "<br/>";
                 //echo $comando;
                 modificarBdd($comando);
                 $forma_pago= "Credito";
             } else {
-                //echo "</br>No se genera deuda</br>";
+                //echo "<br/>No se genera deuda<br/>";
                 $forma_pago= "Contado";
             }
             //Obtenemos los datos del vendedor
             $comando= "SELECT establecimiento, punto_expedicion, nro_venta FROM Usuarios WHERE alias= '" . $alias . "';";
-            //echo "</br>" . $comando . "</br>";
+            //echo "<br/>" . $comando . "<br/>";
             $factura= conectarBdd($comando)[0];
-            //echo json_encode($factura) . "</br>";
+            //echo json_encode($factura) . "<br/>";
             $comando= "SELECT * FROM Ventas WHERE id= ". $idVenta;
             $venta= conectarBdd($comando)[0];
-            //echo json_encode($venta) . "</br>";
+            //echo json_encode($venta) . "<br/>";
             $nro_venta= intval($factura['nro_venta']) + 1;
             $comando= "UPDATE Usuarios SET nro_venta = " . $nro_venta . " WHERE alias= '" . $alias . "';";
             modificarBdd($comando);
             //generamos el numero de factura y actualizamos los datos de laVenta
             $nro_factura= sprintf("%'.03d", intval($factura['establecimiento'])) . "-" . sprintf("%'.03d", intval($factura['punto_expedicion'])) . "-" . sprintf("%'.07d", $nro_venta);
-            //echo $nro_factura . "</br>";
+            //echo $nro_factura . "<br/>";
             $comando= "UPDATE Ventas SET numero_factura= '" . $nro_factura . "' WHERE id = " . $idVenta;
             modificarBdd($comando);
-            //echo "</br>Mostramos los datos</br>";
+            //echo "<br/>Mostramos los datos<br/>";
             $comando= "SELECT * FROM Clientes WHERE cedula= ". $cedula;
             $cliente= conectarBdd($comando)[0];
-            //echo json_encode($cliente) . "</br>";
+            //echo json_encode($cliente) . "<br/>";
             $comando= "SELECT p.nombre, p.iva, dv.cantidad, dv.descuento, dv.precio_venta FROM Detalle_ventas dv JOIN Productos p ON p.id=dv.producto_fk WHERE Venta_fk= " . $idVenta;
             $detalle_ventas= conectarBdd($comando);
-            //echo json_encode($detalle_ventas) . "</br>";
+            //echo json_encode($detalle_ventas) . "<br/>";
             $factura= $_POST['usuario'];
             $comando= "SELECT cod FROM Timbrados WHERE ((fech_autorizacion < '" . $fecha . "') AND (fech_vencimiento > '" . $fecha . "'));";
             $emp_timbrado= conectarBdd($comando)[0];
             $emp_timbrado= $emp_timbrado['cod'];
-            //echo $emp_timbrado . "</br>";
+            //echo $emp_timbrado . "<br/>";
             
             //Generamos el pdf
             $fech= explode("-", $fecha);

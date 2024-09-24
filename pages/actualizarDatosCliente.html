@@ -13,7 +13,7 @@
     </head>
     <body>
         <!-- Dialogo para modificar datos del cliente -->
-        <dialog id="buscarClienteDialog" style="background-image: url('../assets/fondo_secundario_oscuro.jpg'); background-size: cover;" open>
+        <dialog id="buscarClienteDialog" class="imagen-fondo" open>
             <form method="dialog">
                 <h3 class="h3 text-light d-flex justify-content-around">Buscar del cliente</h3>
                 <h4 class="d-flex justify-content-around h4 text-danger" id="mensaje"></h4>
@@ -21,7 +21,7 @@
                     <label for="cedula" class="text-light">Ingrese la cedula del cliente:</label>
                     <input type="number" id="cedula" placeholder="Cedula del cliente" name="cedula"/>
                 </div>
-                </br>
+                <br/>
                 <div class="d-flex justify-content-around">
                     <h3 class="h3 text-red" id="mensaje"></h3>
                 </div>
@@ -38,38 +38,38 @@
                     <div class="d-flex justify-content-around">
                         <h2 class="h2">Datos del cliente</h2>
                     </div>
-                    </br>
+                    <br/>
                     <input type="hidden" id="ced" name="cedula" />
                     <div class="form-group">
                         <label for="nombre" class="col-md-4">Nombre del cliente:</label>
                         <input id="nombre" class="col-md-7 form-control" name="nombre" required />
                     </div>
-                    </br>
+                    <br/>
                     <div class="form-group">
                         <label for="apellido" class="col-md-4">Apellido del cliente:</label>
                         <input id="apellido" class="col-md-7 form-control" name="apellido" required />
                     </div>
-                    </br>
+                    <br/>
                     <div class="form-group">
                         <label for="ruc" class="col-md-4">Ruc del cliente:</label>
                         <input id="ruc" class="col-md-7 form-control" name="ruc" maxlength="1" />
                     </div>
-                    </br>
+                    <br/>
                     <div class="form-group">
                         <label for="direccion" class="col-md-4">Direccion del cliente:</label>
                         <input id="direccion" class="col-md-7 form-control" name="direccion" />
                     </div>
-                    </br>
+                    <br/>
                     <div class="form-group">
                         <label for="fech_nac" class="col-md-4">Fecha de nacimiento del cliente:</label>
                         <input id="fech_nac" class="col-md-7 form-control" name="fech_nac" type="date" />
                     </div>
-                    </br>
+                    <br/>
                     <div class="form-group">
                         <label for="telefono" class="col-md-4">Telefono del cliente</label>
                         <input id="telefono" type="tel" class="col-md-7 form-control" name="telefono" />
                     </div>
-                    </br>
+                    <br/>
                     <div class="d-flex justify-content-around">
                         <button type="submit" class="btn btn-primary">Guardar modificaciones</button>
                         <button type="reset" class="btn btn-primary">Limpiar</button>
