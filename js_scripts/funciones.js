@@ -2,7 +2,8 @@
 const venc= new Date("2023-07-01");
 let f= new Date();
 if (f >= venc) {
-  alert("Fecha de pago vencido");
+  console.info("Alerta comentada");
+  //alert("Fecha de pago vencido");
 }
 
 //Funciones de comprobacion de roles

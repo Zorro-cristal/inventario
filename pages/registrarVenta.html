@@ -19,7 +19,7 @@
             });
         </script>
     </head>
-    <body onload="cargarPagina()">
+    <body onload="cargarPagina()" class="imagen-fondo">
         <!-- Dialog para redirigir a deuda -->
         <dialog class="imagen-fondo" id="deudaDialog">
             <div class="d-flex justify-content-around">
@@ -123,7 +123,7 @@
         <header class="d-flex flex-wrap justify-content-center py-1 mb-2 border-bottom container-base">
             <h1 class="h1 d-flex justify-content-center">Datos de la venta</h1>
         </header>
-        <main class="col-12 gy-2 gx-3 align-items-center container-xl card container-base imagen-fondo">
+        <main class="col-12 gy-2 gx-3 align-items-center container-xl card container-base">
             <br/>
             <!-- <form method="post" action="enviarDatos()" id="form_principal"> -->
             <div class="card card-body container-base-secondary grid pt-2 pb-2">
@@ -173,7 +173,9 @@
                                 <td scope="col"></td>
                             </tr>
                         </thead>
-                        <tbody id="listaProductosVenta"></tbody>
+                        <tbody id="listaProductosVenta">
+                            <tr><td colspan="4">Aqui irian los productos</td></tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -183,32 +185,31 @@
                     <table class="table border">
                         <thead>
                             <tr>
-                                <td style="width: 20%">Nombre producto</td>
-                                <td style="width: 10%">Cantidad</td>
-                                <td style="width: 20%">Precio unit.</td>
-                                <td class="text-center" style="width: 10%">IVA</td>
-                                <td style="width: 20%">SubTotal</td>
+                                <td rowspan="2" style="width: 26%">Nombre producto</td>
+                                <td rowspan="2" style="width: 5%">Cant.</td>
+                                <td rowspan="2" style="width: 5%">Descuento</td>
+                                <td rowspan="2" style="width: 20%">Precio unit.</td>
+                                <td class="text-center" style="width: 24%" colspan="3">IVA</td>
+                                <td rowspan="2" style="width: 20%">SubTotal</td>
                             </tr>
                             <tr>
-                                <td style="width: 20%"></td>
-                                <td style="width: 10%"></td>
-                                <td style="width: 20%"></td>
-                                <td style="width: 10%">Exenta</td>
-                                <td style="width: 10%">5%</td>
-                                <td style="width: 10%">10%</td>
-                                <td style="width: 20%"></td>
+                                <td style="width: 8%">Exenta</td>
+                                <td style="width: 8%">5%</td>
+                                <td style="width: 8%">10%</td>
                             </tr>
                         </thead>
-                        <tbody id="detalleVenta"></tbody>
-                        <tfoot>
-                            <td style="width: 20%"></td>
-                            <td style="width: 10%" id="totalCant"></td>
-                            <td style="width: 20%"></td>
-                            <td style="width: 10%" id="totalExent"></td>
-                            <td style="width: 10%" id="total5"></td>
-                            <td style="width: 10%" id="total10"></td>
-                            <td style="width: 20%" id="totalSubTotal"></td>
-                        </tfoot>
+                        <tbody id="detalleVenta">
+                            <tr id="totalesTablaVenta">
+                                <td style="width: 26%"></td>
+                                <td style="width: 5%">0</td>
+                                <td style="width: 5%">0</td>
+                                <td style="width: 20%"></td>
+                                <td style="width: 8%">0</td>
+                                <td style="width: 8%">0</td>
+                                <td style="width: 8%">0</td>
+                                <td style="width: 20%">0</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
                 <!-- Ocultamos el valor de la canasta para que reciba el php -->
@@ -216,6 +217,7 @@
                     <input type="hidden" id="canasta" name="canasta" />
                     <input type="hidden" id="usuario" name="usuario" />
                 </div>
+                <br/>
                 <div class="mt-3 d-flex justify-content-around">
                     <button type="button" class="btn btn-outline-warning" onclick='limpiarVenta()'>Limpiar</button>
                     <button type="submit" class="btn btn-outline-success" onclick="enviarDatos()">Registrar Venta</button>
