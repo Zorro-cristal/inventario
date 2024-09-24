@@ -32,7 +32,7 @@ ALTER TABLE Ingresos_productos
 -- Usuarios de prueba
 INSERT INTO roles(nombre) VALUES ("administrador");
 
-INSERT INTO usuarios(alias, nombre, apellido, contra, rol_id) VALUES ("zorro-cristal", "zorro", "cristal", AES_ENCRYPT("zorro-cristal", "inventario"), 1);
+INSERT INTO usuarios(alias, nombre, apellido, contra, rol_id) VALUES ("admin", "Admin", "Istrador", AES_ENCRYPT("admin", "inventario"), 1);
 
 INSERT INTO roles(nombre) VALUES ("empleado");
 
