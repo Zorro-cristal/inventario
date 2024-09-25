@@ -123,7 +123,7 @@
         <header class="d-flex flex-wrap justify-content-center py-1 mb-2 border-bottom container-base">
             <h1 class="h1 d-flex justify-content-center">Datos de la venta</h1>
         </header>
-        <main class="col-12 gy-2 gx-3 align-items-center container-xl card container-base">
+        <main class="col align-self-center container-xl card container-base" style="display: grid">
             <br/>
             <!-- <form method="post" action="enviarDatos()" id="form_principal"> -->
             <div class="card card-body container-base-secondary grid pt-2 pb-2">
@@ -153,24 +153,24 @@
                     <table class="table border">
                         <thead>
                             <tr>
-                                <td style="width: 10%">Cod.</td>
-                                <td style="width: 45%">Nombre</td>
-                                <td style="width: 20%">Categoria</td>
-                                <td style="width: 30%">Precio</td>
+                                <th style="width: 10%">Cod.</th>
+                                <th style="width: 45%">Nombre</th>
+                                <th style="width: 20%">Categoria</th>
+                                <th style="width: 30%">Precio</th>
                             </tr>
                             <tr>
-                                <td scope="col">
+                                <th scope="col">
                                     <input class="form-control" type="number" name="inptCodigoProductoVenta" id="inptCodigoProductoVenta" placeholder="Cod." style="width: 100%;">
-                                </td>
-                                <td scope="col">
+                                </th>
+                                <th scope="col">
                                     <input class="form-control" type="text" name="inptNombreProductoVenta" id="inptNombreProductoVenta" placeholder="Ingrese el nombre de un producto" style="width: 100%;">
-                                </td>
-                                <td scope="col">
+                                </th>
+                                <th scope="col">
                                     <select class="form-select" name="inptCategoriaProductoVenta" id="inptCategoriaProductoVenta">
                                         <option selected>Cargando...</option>
                                     </select>
-                                </td>
-                                <td scope="col"></td>
+                                </th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody id="listaProductosVenta">
@@ -185,29 +185,29 @@
                     <table class="table border">
                         <thead>
                             <tr>
-                                <td rowspan="2" style="width: 26%">Nombre producto</td>
-                                <td rowspan="2" style="width: 5%">Cant.</td>
-                                <td rowspan="2" style="width: 5%">Descuento</td>
-                                <td rowspan="2" style="width: 20%">Precio unit.</td>
-                                <td class="text-center" style="width: 24%" colspan="3">IVA</td>
-                                <td rowspan="2" style="width: 20%">SubTotal</td>
+                                <th rowspan="2" style="width: 26%">Nombre producto</th>
+                                <th rowspan="2" style="width: 5%">Cant.</th>
+                                <th rowspan="2" style="width: 5%">Descuento</th>
+                                <th rowspan="2" style="width: 20%">Precio unit.</th>
+                                <th class="text-center" style="width: 24%" colspan="3">IVA</th>
+                                <th rowspan="2" style="width: 20%">SubTotal</th>
                             </tr>
                             <tr>
-                                <td style="width: 8%">Exenta</td>
-                                <td style="width: 8%">5%</td>
-                                <td style="width: 8%">10%</td>
+                                <th style="width: 8%">Exenta</th>
+                                <th style="width: 8%">5%</th>
+                                <th style="width: 8%">10%</th>
                             </tr>
                         </thead>
                         <tbody id="detalleVenta">
                             <tr id="totalesTablaVenta">
-                                <td style="width: 26%"></td>
-                                <td style="width: 5%">0</td>
-                                <td style="width: 5%">0</td>
-                                <td style="width: 20%"></td>
-                                <td style="width: 8%">0</td>
-                                <td style="width: 8%">0</td>
-                                <td style="width: 8%">0</td>
-                                <td style="width: 20%">0</td>
+                                <th style="width: 26%"></th>
+                                <th style="width: 5%">0</th>
+                                <th style="width: 5%">0</th>
+                                <th style="width: 20%"></th>
+                                <th style="width: 8%">0</th>
+                                <th style="width: 8%">0</th>
+                                <th style="width: 8%">0</th>
+                                <th style="width: 20%">0</th>
                             </tr>
                         </tbody>
                     </table>
