@@ -1,21 +1,19 @@
 /* Temas de Bootstrap */
 .light-mode {
     --bg-color: #e2e2e2;
-    --bg-fondo: url('../assets/fondo_secundario_claro.jpg');
-    --card-primary-color: #27a50e;
-    --card-secondary-color: #aed699;
+    --bg-fondo: url('../assets/fondo_secundario_claro.png');
+    --card-primary-color: #354980;
+    --card-secondary-color: #30b3d1;
     --text-color: #000000;
-    --header-bg: #f0f0f0;
-    --footer-bg: #f0f0f0;
+    --bg-nav: #202f5a;
 }
 
 .dark-mode {
     --bg-color: #e2e2e2;
-    --card-primary-color: #6def53;
+    --card-primary-color: #354980;
     --card-secondary-color: #ccdec2;
-    --text-color: #000000;
-    --header-bg: #f0f0f0;
-    --footer-bg: #f0f0f0;
+    --text-color: #545454;
+    --bg-nav: #354980;
 }
 
 main {
@@ -38,11 +36,62 @@ table thead, tr ,td, tfoot {
 }
 
 .form-control:focus {
-    border-color: green;
-    box-shadow: #6def53;
+    border-color: var(--card-primary-color);
+    box-shadow: var(--card-secondary-color);
 }
 
 .imagen-fondo {
     background-image: var(--bg-fondo);
     background-size: cover;
+}
+
+/* Fondo de la ventana principal */
+body {
+    background-image: var(--bg-fondo);
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Centrar logo en el medio */
+.logo {
+    width: 150px; /* Ajusta el tamaño del logo */
+    height: auto;
+}
+
+/* Barra de menú personalizada */
+.navbar {
+    background-color: var(--card-primary-color);
+    width: 100%;
+}
+
+.navbar a {
+    color: var(--text-color) !important; /* Color del texto de los ítems del menú */
+}
+
+.navbar-nav .nav-link {
+    color: var(--text-color) !important; /* Color del texto de los ítems del menú */
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: var(--card-secondary-color);
+}
+
+/* Estilos para íconos de menú */
+.nav-icon {
+    width: 20px;
+    margin-right: 10px;
+}
+
+/* Estilo de la hora */
+.clock {
+    color: white;
+    font-size: 18px;
+    position: absolute;
+    top: 10px;
+    right: 20px;
 }

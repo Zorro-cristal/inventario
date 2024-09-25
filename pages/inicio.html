@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <script type="text/javascript" src="../js_scripts/jquery.js"></script>
+    <script type="text/javascript" src="../js_scripts/funciones.js"></script>
+    <!-- Bootstrap CSS configuraciones -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link href="../css/main.css" type="text/css" rel="stylesheet"/>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const temaActual = localStorage.getItem("tema") || 'light';
+            document.body.classList.add(`${temaActual}-mode`);
+        });
+    </script>
+</head>
+<body>
+    <!-- Barra de menú -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Sistema</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu_principal" aria-controls="menu_principal" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu_principal">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <!-- Menú de Registrar Compra -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="menu_registrocompra" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="../assets/icons8-producto-100.png" alt="Producto" class="nav-icon">Registrar Compra
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="menu_registrocompra">
+                            <a class="dropdown-item" href="#" id="jmi_nuevoproducto">Registrar nuevo producto</a>
+                            <a class="dropdown-item" href="#">Actualizar datos del producto</a>
+                        </div>
+                    </li>
+
+                    <!-- Menú de Proveedores -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="menu_proveedores" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="../assets/icons8-proveedor-100.png" alt="Proveedor" class="nav-icon">Proveedores
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="menu_proveedores">
+                            <a class="dropdown-item" href="#" id="jmi_proveedor">Registrar nuevo proveedor</a>
+                            <a class="dropdown-item" href="#">Actualizar datos del proveedor</a>
+                        </div>
+                    </li>
+
+                    <!-- Menú de Registrar Venta -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="menu_registroventa" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="../assets/icons8-boleto-100.png" alt="Venta" class="nav-icon">Registrar Venta
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="menu_registroventa">
+                            <a class="dropdown-item" id="jmi_ticket" href="../pages/registrarVenta.html">Nueva venta</a>
+                        </div>
+                    </li>
+
+                    <!-- Menú de Registrar Servicio -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="jmi_servicio">
+                            <img src="../assets/icons8-maquina-de-copiar-100.png" alt="Servicio" class="nav-icon">Registrar Servicio
+                        </a>
+                    </li>
+                    
+                    <!-- Menú de Generar Informes -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="jmi_generarinformes" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="../assets/icons8-pdf-100.png" alt="Informes" class="nav-icon">Generar Informes
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="jmi_generarinformes">
+                            <a class="dropdown-item" href="#"><img src="../assets/icons8-pdf-100.png" alt="PDF" class="nav-icon">PDF</a>
+                            <a class="dropdown-item" href="#"><img src="../assets/icons8-microsoft-excel-2019-100.png" alt="Excel" class="nav-icon">Excel</a>
+                        </div>
+                    </li>
+
+                    <!-- Menú de Salir -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="menu_salir">
+                            <img src="../assets/icons8-x-100.png" alt="Salir" class="nav-icon">Salir
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Logo en el centro de la pantalla -->
+    <div class="container text-center">
+        <img src="../assets/logo.png" alt="Logo" class="logo">
+    </div>
+
+    <!-- Reloj en la ventana principal -->
+    <div class="clock" id="clock">
+        <!-- Aquí aparecerá la hora -->
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Script para mostrar la hora -->
+    <script>
+        setInterval(updateClock, 1000);
+        updateClock(); // Inicializa el reloj inmediatamente
+    </script>
+</body>
+</html>
