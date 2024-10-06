@@ -114,15 +114,3 @@ function ajax(sql) {
 function conversorFecha(fecha) {
     return fecha.substr(8) + "/" + fecha.substr(5, 2) + "/" + fecha.substr(0, 4);
 }
-
-// Asignar tema
-function cambiarTema() {
-  const nuevoTema = currentTheme === 'light' ? 'dark' : 'light';
-  if (temaActual == "") {
-    body.classList.contains('light-mode') ? 'light' : 'dark';
-  } else {
-    body.classList.remove(`${temaActual}-mode`);
-  }
-  body.classList.add(`${nuevoTema}-mode`);
-  localStorage.setItem("tema", temaActual);
-}
