@@ -9,20 +9,40 @@ function updateClock() {
 
 // Asignar tema
 function cambiarTema(opc= undefined) {
-    const temaActual = localStorage.getItem("tema");
-    console.log("Tema Almacenado: ", temaActual);
+    const tema_actual = localStorage.getItem("tema") || "light";
+    console.log("Tema Almacenado: ", tema_actual);
     let body= document.getElementsByTagName("body")[0];
-    let nuevoTema = temaActual === 'light' ? 'dark' : 'light';
+    let nuevo_tema = tema_actual === 'light' ? 'dark' : 'light';
     
     if (opc !== undefined) {
-        nuevoTema = opc;
+        nuevo_tema = opc;
     }
 
-    body.classList.remove(`${temaActual}-mode`);
-    body.classList.add(`${nuevoTema}-mode`);
-    localStorage.setItem("tema", nuevoTema);
+    // Ocultamos los botones correspondiente al tema actual
+    let botones_dark= document.getElementsByClassName("dark-btn");
+    let botones_light= document.getElementsByClassName("light-btn");
+    Array.from(botones_dark).forEach(btn => {
+        btn.style.display= "none";
+    });
+    Array.from(botones_light).forEach(btn => {
+        btn.style.display= "none";
+    });
+    if (nuevo_tema === 'dark') {
+        Array.from(botones_light).forEach(btn => {
+            btn.style.display= "";
+        }); 
+    } else {
+        Array.from(botones_dark).forEach(btn => {
+            btn.style.display= "";
+        });
+    }
+    
+
+    body.classList.remove(`${tema_actual}-mode`);
+    body.classList.add(`${nuevo_tema}-mode`);
+    localStorage.setItem("tema", nuevo_tema);
     body.offsetHeight;
-    console.log("Cambiado  de " + temaActual + " a " + nuevoTema);
+    console.log("Cambiado  de " + tema_actual + " a " + nuevo_tema);
 }
 
 //Funcion para obtener datos de una tabla
