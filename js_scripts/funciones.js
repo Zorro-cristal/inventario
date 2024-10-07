@@ -24,3 +24,42 @@ function cambiarTema(opc= undefined) {
     body.offsetHeight;
     console.log("Cambiado  de " + temaActual + " a " + nuevoTema);
 }
+
+//Funcion para obtener datos de una tabla
+async function obtenerBdd(tabla, filtro= "") {
+    var datos;
+    sql= "SELECT * FROM " + tabla;
+    if (filtro != "") {
+        sql= sql + " WHERE (" + filtro + ")";
+    }
+    sql= sql + ";";
+    promesa= await obtencionBdd(sql).then((valor) => datos= valor);
+    return datos;
+}
+
+function obtencionBdd(sql) {
+  return new Promise(function (resolve, rejected) {
+    $.ajaxSetup({async: false});
+    $.ajax({
+      url: "../php/obtenerBdd.php",
+      type: "post",
+      data: {
+        "comando": sql
+      },
+      error: function (jqXHR, textstatus, errorThrowm) {
+        //parametros que reciben los erroes si hubiera alguno
+        console.log(jqXHR);
+        console.warn(textstatus);
+        console.log(errorThrowm);
+        alert("Error al obtener los datos de la base de datos");
+        rejected(errorThrowm);
+        return
+      },
+      success: function (datos) {
+        datos= JSON.parse(datos);
+        resolve(datos);
+      }
+    });
+    $.ajaxSetup({async: true});
+  })
+}

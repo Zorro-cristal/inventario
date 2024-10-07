@@ -28,11 +28,9 @@ async function cargarPagina() {
     //Indicamos la fecha actual
     var fecha= new Date();
     fecha.setDate(fecha.getDate());
-    document.getElementById("fecha").value= fecha.toISOString().substring(0, 10);
+    document.getElementById("fechaVenta").value= fecha.toISOString().substring(0, 10);
 
-    var dialog, dialogBoton;
     //Obtenemos los datos de la base de datos
-    //productosAux= await obtenerBdd("Productos");
     productosAux= await obtenerBdd("Productos", "stock > 0");
     productos= productosAux;
     clientes= await obtenerBdd("Clientes");

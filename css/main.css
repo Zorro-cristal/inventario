@@ -7,6 +7,7 @@
     --card-secondary-color: #30b3d1;
     --text-color: #000000 !important;
     --bg-nav: #202f5a;
+    --box-shadow: 0px 5px 5px #30b3d1;
 }
 
 .dark-mode {
@@ -17,9 +18,14 @@
     --card-secondary-color: #30b3d1;
     --text-color: #e2e2e2 !important;
     --bg-nav: #354980;
+    --box-shadow: 0px 5px 5px #30b3d1;
 }
 
 main {
+    width: 90%
+}
+
+.main-menu {
     margin-top: 56.5px;
 }
 
@@ -28,14 +34,19 @@ table thead, tr ,td, tfoot {
     border: 1px solid var(--text-color) !important;
 }
 
-.container-base {
+.container-base-primary {
     background-color: var(--card-primary-color) !important;
 }
 
 .container-base-secondary {
     background-color: var(--card-secondary-color) !important;
     margin: 1rem !important;
-    width: 98%;
+    width: 95%;
+    align-items: center;
+}
+
+.form-control {
+    width: 95% !important;
 }
 
 .form-control:focus {
@@ -43,21 +54,23 @@ table thead, tr ,td, tfoot {
     box-shadow: var(--card-secondary-color);
 }
 
-.imagen-fondo {
-    background-image: none !important;
-    background-size: cover;
-}
-
 /* Fondo de la ventana principal */
 body {
     background-image: var(--bg-fondo);
     background-size: cover;
     background-position: center;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+header {
+    background-color: var(--bg-nav);
+    color: var(--text-color);
+    width: 100%;
+    box-shadow: var(--box-shadow);
 }
 
 /* Centrar logo en el medio */
