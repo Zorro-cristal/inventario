@@ -29,20 +29,22 @@ main {
     margin-top: 56.5px;
 }
 
-table thead, tr ,td, tfoot {
+/* Tablas */
+table, thead, tr ,td, tfoot {
     border-collapse: collapse;
     border: 1px solid var(--text-color) !important;
+    color: var(--text-color) !important;
 }
 
 .container-base-primary {
     background-color: var(--card-primary-color) !important;
+    align-items: center;
 }
 
 .container-base-secondary {
     background-color: var(--card-secondary-color) !important;
     margin: 1rem !important;
     width: 95%;
-    align-items: center;
 }
 
 .form-control {
@@ -52,6 +54,10 @@ table thead, tr ,td, tfoot {
 .form-control:focus {
     border-color: var(--card-primary-color);
     box-shadow: var(--card-secondary-color);
+}
+
+.form-label {
+    color: var(--text-color) !important;
 }
 
 /* Fondo de la ventana principal */
@@ -105,4 +111,9 @@ header {
 .clock {
     color: var(--text-color);
     font-size: 18px;
+}
+
+/* Otros componentes */
+span, p {
+    color: var(--text-color);
 }

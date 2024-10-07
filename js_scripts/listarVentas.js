@@ -155,6 +155,7 @@ async function paginaCargada() {
 
 //Funcion que actualiza la tabla
 function actualizarTabla() {
+    const pie= document.getElementById("totalesTablaVenta").cloneNode(true);
     var monto_total= 0;
     //ventas= ventasAux;
     var tbody= document.getElementById('lista_ventas');
@@ -194,6 +195,7 @@ function actualizarTabla() {
 
           monto_total += monto;
       }
+      tbody_content += "<th>" + pie.innerHTML + "</th>";
       tbody_content= tbody_content + "</tbody>";
       new_tbody.innerHTML= tbody_content;
       tbody.parentNode.replaceChild(new_tbody, tbody);
