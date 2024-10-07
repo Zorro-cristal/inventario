@@ -20,6 +20,104 @@
         </script>
     </head>
     <body onload="cargarPagina()">
+                <!-- Dialog para redirigir a deuda -->
+                <dialog class="imagen-fondo" id="deudaDialog">
+                    <div class="d-flex justify-content-around">
+                        <span class="badge badge-danger">
+                            <h1 class="h1 text-danger">El cliente tiene una deuda pendiente</h1>
+                        </span>
+                    </div>
+                    <div class="mt-3 d-flex justify-content-around">
+                        <button type="button" class="btn btn-primary" onclick='location.href= "./listarDeudas.html";'>Redirigir a pago de deudas</button>
+                        <button type="button" class="btn btn-primary" onclick="location.href= '../index.html';">Cancelar venta</button>
+                    </div>
+                </dialog>
+                <!-- Dialog para agregar un cliente nuevo -->
+                <dialog class="imagen-fondo" id="clienteDialog">
+                    <div class="d-flex justify-content-around">
+                        <span class="badge badge-danger">
+                            <h1 class="h1 text-danger">El cliente no existe</h1>
+                        </span>
+                    </div>
+                    <h4 class="h4 text-light">Ingrese los datos para agregarlo</h4>
+                    <form method="dialog">
+                        <div class="form-group">
+                            <label for="nombre_client" class="text-light">Nombre:</label>
+                            <input id="nombre_client" class="form-control" placeholder="Ingrese el nombre del cliente" required/>
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                            <label for="apellido" class="text-light">Apellido:</label>
+                            <input id="apellido" class="form-control" placeholder="Ingrese el apellido del cliente" required/>
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                            <label for="ruc" class="text-light">Ruc:</label>
+                            <input id="ruc" class="form-control" placeholder="Ingrese el ruc del cliente" type="number" maxlength="1" />
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                            <label for="direccion" class="text-light">Direccion:</label>
+                            <input id="direccion" class="form-control" placeholder="Ingrese la direccion del cliente" />
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                            <label for="fech_nac" class="text-light">Fecha de nacimiento:</label>
+                            <input id="fech_nac" class="form-control" placeholder="Ingrese la fecha de nacimiento del cliente" type="date"/>
+                        </div>
+                        <br/>
+                        <div class="mt-3 d-flex justify-content-around">
+                            <button class="btn btn-primary" id="guardarCliente" onclick="registrarCliente()">Guardar cliente</button>
+                            <button class="btn btn-primary" id="limpiarCliente" onclick="limpiarDatosCliente()">Limpiar datos</button>
+                        </div>
+                    </form>
+                </dialog>
+                <!-- Dialog para agregar un producto al canasto -->
+                <dialog class="imagen-fondo" id="productoDialog">
+                    <div class="d-flex justify-content-around">
+                        <h3 class="h3 text-light">Agregar producto a la lista</h3>
+                    </div>
+                    <br/>
+                    <div class="form-group">
+                        <label for="nombre_product" class="text-light">Nombre para filtrar:</label>
+                        <input id="nombre_product" class="form-control" placeholder="Ingrese el nombre del producto" onkeyup="actualizarSelect()" onchange="actualizarSelect()" />
+                    </div>
+                    <select class="form-select mt-3 mb-3 form-select-lg" size="3" id="lista_producto" required>
+                        <option>Cargando productos...</option>
+                    </select>
+                    <br/>
+                    <div class="form-group">
+                        <label class="text-light" for="disponible">Disponible en stock:</label>
+                        <input id="disponible" class="col-md-7" value="0" type="number" readonly />
+                    </div>
+                    <br/>
+                    <div class="form-group">
+                        <label for="cant" class="text-light">Ingrese la cantidad comprada:</label>
+                        <input id="cant" class="form-control col-md-7" placeholder="Ingrese la cantidad comprada" type="number" required onkeyup="calcularDescuento();calcularCosto();calcularSubtotal();" onchange="calcularCosto();calcularDescuento();calcularSubtotal();"/>
+                    </div>
+                    <br/>
+                    <div class="form-group">
+                        <label for="descuento" class="text-light">Ingrese el descuento por unidad:</label>
+                        <input id="descuento" class="form-control col-md-7" placeholder="Ingrese el descuento por unidad" type="number" value="0" onkeyup="calcularDescuento();calcularSubtotal()" onchange="calcularDescuento();calcularSubtotal();"/>
+                    </div>
+                    <br/>
+                    <div class="form-group">
+                        <label class="text-light col-md-7" for="total_desc">Total del descuento:</label>
+                        <input id="total_desc" class="col-md-5" value="0" type="number" readonly />
+                    </div>
+                    <br/>
+                    <div class="form-group">
+                        <label class="text-light col-md-5">Total costo:</label>
+                        <input id="total_prec" class="col-md-7" type="number" readonly value="0" />
+                    </div>
+                    <br/>
+                    <div class="form-group">
+                        <label class="text-light col-md-5" for="sub_total">SubTotal:</label>
+                        <input id="sub_total" class="col-md-7" type="number" readonly value="0"/>
+                    </div>
+                    <div class="mt-3 d-flex justify-content-around">
+                        <button class="btn btn-primary" onclick="anhadirProducto()">Agregar producto</button>
+                        <button class="btn btn-primary" onclick="document.getElementById('productoDialog').close()">Cancelar</button>
         <header class="d-flex flex-wrap py-1 mb-2 border-bottom container-base">
             <div class="justify-content-center" style="width: 95%;">
                 <h1 class="h1 d-flex justify-content-center">Datos de la venta</h1>
