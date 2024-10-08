@@ -8,14 +8,19 @@ function updateClock() {
 }
 
 // Asignar tema
-function cambiarTema(opc= undefined) {
+function cambiarTema(opc= undefined, inicio= false) {
     const tema_actual = localStorage.getItem("tema") || "light";
-    console.log("Tema Almacenado: ", tema_actual);
+    console.log("Tema Almacenado: ", tema_actual, inicio);
     let body= document.getElementsByTagName("body")[0];
-    let nuevo_tema = tema_actual === 'light' ? 'dark' : 'light';
     
-    if (opc !== undefined) {
-        nuevo_tema = opc;
+    // Si es la primera vez, no cambia el tema
+    let nuevo_tema= tema_actual;
+    if (!inicio) {
+      nuevo_tema = tema_actual === 'light' ? 'dark' : 'light';
+    
+      if (opc !== undefined) {
+          nuevo_tema = opc;
+      }
     }
 
     // Ocultamos los botones correspondiente al tema actual

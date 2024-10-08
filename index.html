@@ -11,9 +11,8 @@
     
     <link href="./css/main.css" type="text/css" rel="stylesheet"/>
     <script type="text/javascript" src="./js_scripts/funciones.js"></script>
-    
 </head>
-<body onload="cambiarTema();">
+<body onload="cambiarTema(undefined, true);">
     <!-- Barra de menú -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container-fluid">
@@ -26,7 +25,7 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <!-- Menú de Ventas -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link" href="./pages/registrarVenta.html" style="text-decoration: none;" id="menu_registroventa" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link" href="./pages/registrarVenta.html" style="text-decoration: none;" id="menu_registroventa">
                             <img src="./assets/icons8-boleto-100.png" alt="Venta" class="nav-icon">Nueva Venta
                         </a>
                     </li>
@@ -67,7 +66,7 @@
 
                     <!-- Menú de Generar Informes -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link" href="./pages/listarVentas.html" style="text-decoration:none;" id="jmi_generarinformes" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link" href="./pages/listarVentas.html" style="text-decoration:none;" id="jmi_generarinformes">
                             <img src="./assets/icons8-pdf-100.png" alt="Informes" class="nav-icon">Generar Informes
                         </a>
                         <!-- <div class="dropdown-menu" aria-labelledby="jmi_generarinformes">
@@ -86,12 +85,12 @@
                             </div>
                         </li>
                         <li class="nav-item light-btn">
-                            <a class="nav-link" onclick="cambiarTema('light')">
+                            <a class="nav-link" onclick="cambiarTema(opc= 'light')">
                                 <img src="./assets/icons8-dia.png" alt="Claro" class="nav-icon">
                             </a>
                         </li>
                         <li class="nav-item dark-btn">
-                            <a class="nav-link" onclick="cambiarTema('dark')">
+                            <a class="nav-link" onclick="cambiarTema(opc= 'dark')">
                                 <img src="./assets/icons8-noche.png" alt="Oscuro" class="nav-icon">
                             </a>
                         </li>

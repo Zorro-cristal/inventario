@@ -141,6 +141,7 @@ function dialogDetalles(event, element) {
 
 //Funcion cuando cargue toda la pagina
 async function paginaCargada() {
+  cambiarTema(undefined, true);
   //ventasAux= await obtenerBdd("Ventas", "responsable = '" + localStorage.getItem("alias") + "'");
   ventasAux= await obtenerBdd("Ventas");
   console.log(ventasAux);

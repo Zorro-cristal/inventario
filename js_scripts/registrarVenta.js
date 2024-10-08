@@ -24,6 +24,7 @@ function limpiarDatosCliente() {
 
 //Funcion para cuando cargue la pagina
 async function cargarPagina() {
+    cambiarTema(undefined, true);
     document.getElementById("alias").value= localStorage.getItem("alias");
     //Indicamos la fecha actual
     var fecha= new Date();
