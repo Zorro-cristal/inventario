@@ -2,22 +2,13 @@
 var canasta= [];
 var cliente;
 
-//Funcion para limpiar datos del cliente nuevo
-function limpiarDatosCliente() {
-    document.getElementById('nombre_client').value= "";
-    document.getElementById('apellido').value= "";
-    document.getElementById('ruc').value= "";
-    document.getElementById('direccion').value= "";
-    document.getElementById('fecha_nac').value= "";
-}
-
 //Funcion para cuando cargue la pagina
 async function cargarPagina() {
     cambiarTema(undefined, true);
     //Indicamos la fecha actual
     var fecha= new Date();
     fecha.setDate(fecha.getDate());
-    document.getElementById("fechaVenta").value= fecha.toISOString().substring(0, 10);
+    document.getElementById("fecha_venta").value= fecha.toISOString().substring(0, 10);
 
     //Obtenemos los datos de la base de datos
     const categorias= await obtenerBdd("categorias");
@@ -274,4 +265,17 @@ function enviarDatos() {
     } else {
         alert("No existe ningun producto cargado en el carro");
     }
+}
+
+// Funcion para limpiar los campos
+function limpiarCamposVenta() {
+    document.getElementById('fecha_venta').value= new Date().toISOString();
+    document.getElementById('cedula_venta').value= "";
+    document.getElementById('cliente_nombre_venta').value= "";
+    canasta= [];
+    cliente= null;
+
+    document.getElementById('inptCodigoProductoVenta').value= "";
+    document.getElementById('inptNombreProductoVenta').value= "";
+    document.getElementById('inptCategoriaProductoVenta').value= "";
 }

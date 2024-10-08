@@ -21,45 +21,47 @@
     </head>
     <body onload="paginaCargada()">
         <!-- Dialogo que muestra informacion de la venta -->
-        <dialog class="imagen-fondo" id="detalle_ventaDialog">
-            <input type="hidden" id="id_venta"/>
-            <div class="form group">
-                <label for="nro_fact" class="text-light">Numero factura</label>
-                <input id="nro_fact" readonly />
-            </div>
-            <br/>
-            <div class="form group">
-                <label for="client"  class="text-light">Cliente</label>
-                <input id="client" readonly />
-            </div>
-            <br/>
-            <div class="form group">
-                <label for="ruc" class="text-light">Ruc</label>
-                <input id="ruc" readonly />
-            </div>
-            <br/>
-            <table class="table table-hover table-dark m-3" style="width: 98%;">
-                <thead>
-                    <tr>
-                        <th scope="col" style="width: 10%;">Cantidad</th>
-                        <th scope="col" style="width: 50%;">Producto</th>
-                        <th scope="col" style="width: 20%;">Descuento</th>
-                        <th scope="col" style="width: 20%;">SubTotal</th>
-                    </tr>
-                </thead>
-                <tbody id="detalle_ventas">
-                    <!-- Informacion de la venta seleccionada -->
-                </tbody>
-                <tfoot>
-                    <th id="cantidad_total"></th>
-                    <th></th>
-                    <th id="descuento_total"></th>
-                    <th id="subTotal_total"></th>
-                </tfoot>
-            </table>
-            <div class="d-flex justify-content-around">
-                <button class="btn btn-primary" onclick="eliminarVenta()">Eliminar venta</button>
-                <button class="btn btn-primary" onclick="document.getElementById('detalle_ventaDialog').close()">Atras</button>
+        <dialog class="container-base-primary" id="detalle_ventaDialog">
+            <div class="container-base-secondary">
+                <input type="hidden" id="id_venta"/>
+                <div class="form group">
+                    <label for="nro_fact" class="text-light">Numero factura</label>
+                    <input id="nro_fact" readonly />
+                </div>
+                <br/>
+                <div class="form group">
+                    <label for="client"  class="text-light">Cliente</label>
+                    <input id="client" readonly />
+                </div>
+                <br/>
+                <div class="form group">
+                    <label for="ruc" class="text-light">Ruc</label>
+                    <input id="ruc" readonly />
+                </div>
+                <br/>
+                <table class="table table-hover table-dark m-3" style="width: 98%;">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width: 10%;">Cantidad</th>
+                            <th scope="col" style="width: 50%;">Producto</th>
+                            <th scope="col" style="width: 20%;">Descuento</th>
+                            <th scope="col" style="width: 20%;">SubTotal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="detalle_ventas">
+                        <!-- Informacion de la venta seleccionada -->
+                    </tbody>
+                    <tfoot>
+                        <th id="cantidad_total"></th>
+                        <th></th>
+                        <th id="descuento_total"></th>
+                        <th id="subTotal_total"></th>
+                    </tfoot>
+                </table>
+                <div class="d-flex justify-content-around">
+                    <button class="btn btn-primary" onclick="eliminarVenta()">Eliminar venta</button>
+                    <button class="btn btn-primary" onclick="document.getElementById('detalle_ventaDialog').close()">Atras</button>
+                </div>
             </div>
         </dialog>
         <header class="d-flex flex-wrap py-1 mb-2 border-bottom container-base">
