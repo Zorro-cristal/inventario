@@ -1,81 +1,17 @@
-var ventas;
-var ventasAux;
-var detalle_ventas;
-var detalle_ventasAux;
-var clientes;
-var productos;
+// Funcion para buscar las ventas
+async function buscarVentas() {
+  let filtro= "";
+  // Obtener los filtros
+  var cedula= document.getElementById('ced_busc_listado_venta').value || "";
+  var nombre= document.getElementById('nombre_client_listado_venta').value || "";
+  var fecha= document.getElementById('fech_listado_venta').value || "";
+  filtro += (nombre != "") ? "nombre LIKE '%" + nombre + "%' AND apellido LIKE '%" + apellido + "%'" : "";
+  filtro += (cedula != "") ? " AND cedula = " + cedula : "";
+  filtro += (fecha != "") ? " AND fecha = '" + fecha + "'" : "";
+  
+  ventas= await obtenerBdd("Ventas", filtro);
 
-//Validamos el rol
-if (validarRol("administrador")) {
-  console.log("Acceso autorizado");
-} else {
-  window.location.replace("../index?usuario=" + userName + ".html");
-}
-
-//Funcion que filtra por fecha
-function filtraFech(valor) {
-  if (valor != "") {
-    ventas= ventasAux.filter(
-      v => v['fecha'].includes(valor)
-    );
-    actualizarTabla();
-  } else {
-    ventas= ventasAux;
-    actualizarTabla();
-  }
-}
-
-//Funcion que filtra por cedula
-function filtraCed(valor) {
-  if (valor != "") {
-    //Obtenemos las cedulas similares al valor
-    var cliente_busc= clientes.filter(
-      c => c['cedula'].includes(valor)
-    );
-    console.log(cliente_busc);
-    //Obtenemos las ventas realizadas segun el cliente_busc
-    console.log(ventas);
-    ventas= [];
-    for (i= 0; i < cliente_busc.length; i++) {
-      ventas= ventas.concat(
-        ventasAux.filter(
-          v => v.cliente_fk.includes(cliente_busc[i].cedula)
-        )
-      );
-    }
-    console.log(ventas)
-    //Actualizamos la tabla de ventas
-    actualizarTabla();
-  } else {
-      ventas= ventasAux;
-      actualizarTabla();
-  }
-}
-
-//Funcion que filtra por nombre o apellido
-function filtraNombre(valor) {
-  var filtro= valor.toLowerCase();
-  if (filtro != "") {
-    //Obtenemos los nombres similares al valor
-    var cliente_busc= clientes.filter(
-      c => c.nombre.includes(filtro) || c.apellido.includes(filtro)
-    );
-    //Obtenemos las ventas realizadas segun el cliente_busc
-    ventas= [];
-    for (i= 0; i < cliente_busc.length; i++) {
-      ventas= ventas.concat(
-        ventasAux.filter(
-          v => v.cliente_fk.includes(cliente_busc[i].cedula)
-        )
-      );
-    }
-    console.log(ventas)
-    //Actualizamos la tabla de ventas
-    actualizarTabla();
-  } else {
-    ventas= ventasAux;
-    actualizarTabla();
-  }
+  actualizarTabla();
 }
 
 //Funcion que muestra el dialog detalle ventas
@@ -142,21 +78,11 @@ function dialogDetalles(event, element) {
 //Funcion cuando cargue toda la pagina
 async function paginaCargada() {
   cambiarTema(undefined, true);
-  //ventasAux= await obtenerBdd("Ventas", "responsable = '" + localStorage.getItem("alias") + "'");
-  ventasAux= await obtenerBdd("Ventas");
-  console.log(ventasAux);
-  ventas= ventasAux;
-  detalle_ventasAux= await obtenerBdd("Detalle_ventas");
-  detalle_ventas= detalle_ventasAux;
-  clientes= await obtenerBdd("Clientes");
-  productos= await obtenerBdd("Productos");
-  //Actualizamos la tabla de Ventas
-  actualizarTabla();
 }
 
 //Funcion que actualiza la tabla
 function actualizarTabla() {
-    const pie= document.getElementById("totalesTablaVenta").cloneNode(true);
+    const pie= document.getElementById("totales_tabla_listado_venta").cloneNode(true);
     var monto_total= 0;
     //ventas= ventasAux;
     var tbody= document.getElementById('lista_ventas');
@@ -196,7 +122,8 @@ function actualizarTabla() {
 
           monto_total += monto;
       }
-      tbody_content += "<th>" + pie.innerHTML + "</th>";
+      pie.children[1].innerHTML= divisorMiles(monto_total);
+      tbody_content += "<tr>" + pie.innerHTML + "</tr>";
       tbody_content= tbody_content + "</tbody>";
       new_tbody.innerHTML= tbody_content;
       tbody.parentNode.replaceChild(new_tbody, tbody);

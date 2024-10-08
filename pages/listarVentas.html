@@ -95,17 +95,23 @@
         <main>
             <div class="card container-base-primary grid p-1 mt-4">
                 <div class="card-body container-base-secondary">
-                    <div class="row justify-content-around">
-                        <label for="ced_busc_listado_venta" class="form-label">Ingrese la cedula del cliente:</label>
-                        <input id="ced_busc_listado_venta" class="form-control" placeholder="Cedula del cliente" type="number" onkeyup="filtraCed(this.value)" onchange="filtraCed(this.value)"/>
+                    <div class="row justify-content-around p-1">
+                        <div class="col-6">
+                            <div class="row justify-content-around">
+                                <label for="ced_busc_listado_venta" class="form-label">Ingrese la cedula del cliente:</label>
+                                <input id="ced_busc_listado_venta" class="form-control" placeholder="Cedula-ruc" onkeyup="(event.keyCode === 13) && buscarVentas()"/>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row justify-content-around" class="form-label">
+                                <label for="fech_listado_venta" class="form-label">Ingrese la fecha de la venta:</label>
+                                <input id="fech_listado_venta" class="form-control" placeholder="fecha de ventas" type="date" onkeyup="(event.keyCode === 13) && buscarVentas()"/>
+                            </div>
+                        </div>
                     </div>
-                    <div class="row justify-content-around">
+                    <div class="row justify-content-around p-1">
                         <label for="nombre_client_listado_venta" class="form-label">Ingrese el nombre o apellido del cliente:</label>
-                        <input id="nombre_client_listado_venta" class="form-control" placeholder="Nombre o apellido del cliente" onkeyup="filtraNombre(this.value)" onchange="filtraNombre(this.value)"/>
-                    </div>
-                    <div class="row justify-content-around" class="form-label">
-                        <label for="fech_listado_venta" class="form-label">Ingrese la fecha de la venta:</label>
-                        <input id="fech_listado_venta" class="form-control" placeholder="fecha de ventas" type="date" onkeyup="filtraFech(this.value)" onchange="filtraFech(this.value)"/>
+                        <input id="nombre_client_listado_venta" class="form-control" placeholder="Nombre o apellido del cliente" onkeyup="(event.keyCode === 13) && buscarVentas()"/>
                     </div>
                 </div>
             </div>
@@ -128,7 +134,7 @@
                                     Listado de productos vendidos
                                 </td>
                             </tr>
-                            <tr id="totalesTablaListadoVenta">
+                            <tr id="totales_tabla_listado_venta">
                                 <th colspan="3" style="text-align: right;">Total ingreso:</th>
                                 <th id="monto_total">0</th>
                             </tr>
@@ -136,9 +142,6 @@
                     </table>
                     <p class="text-sm-left font-weight-bold ms-3">*Seleccione una venta para ver mas informacion o eliminarla</p>
                 </div>
-            </div>
-            <div class="m-3 d-flex justify-content-around">
-                <button class="btn btn-primary" onclick='location.href= "../index.html"'>Volver al inicio</button>
             </div>
         </main>
         <script type="text/javascript" src="../js_scripts/jquery.js"></script>

@@ -46,7 +46,6 @@ async function obtenerCliente() {
         filtro += " AND ruc = " + cedula.split("-")[1];
     }
     cliente= await obtenerBdd("clientes", filtro) || null;
-    console.log(cliente, filtro);
     if (cliente == null && cliente[0] == undefined) {
         alert("El cliente no existe");
         return;
