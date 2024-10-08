@@ -1,16 +1,5 @@
-//Validamos el rol
-if (validarRol("administrador") || validarRol("empleado")) {
-    console.log("Acceso autorizado");
-  } else {
-    window.location.replace("../index?usuario=" + userName + ".html");
-  }
-  
-
 //Lista de los productos en la canasta
 var canasta= [];
-var productosAux;
-var productos;
-var clientes= [];
 var cliente;
 
 //Funcion para limpiar datos del cliente nuevo
@@ -25,59 +14,127 @@ function limpiarDatosCliente() {
 //Funcion para cuando cargue la pagina
 async function cargarPagina() {
     cambiarTema(undefined, true);
-    document.getElementById("alias").value= localStorage.getItem("alias");
     //Indicamos la fecha actual
     var fecha= new Date();
     fecha.setDate(fecha.getDate());
     document.getElementById("fechaVenta").value= fecha.toISOString().substring(0, 10);
 
     //Obtenemos los datos de la base de datos
-    productosAux= await obtenerBdd("Productos", "stock > 0");
-    productos= productosAux;
-    clientes= await obtenerBdd("Clientes");
+    const categorias= await obtenerBdd("categorias");
 
-    //Agregamos el nombre del usuario
-    const usuario= localStorage.getItem("alias");
-    document.getElementById('usuario').value= usuario;
+    let categorias_opciones= "";
+    // Asignar las categorias
+    categorias.forEach(cat => {
+        categorias_opciones += "<option value='" + cat['id'] + "'>" + cat['nombre'] + "</option>";
+    });
+    document.getElementById("categorias_filtro").innerHTML= categorias_opciones;
+
     canasta= [];
 }
 
 //Funcion para obtener Cliente
-function obtenerCliente() {
-    var cliente;
-    const cedula= document.getElementById('cedula').value;
-    var dialog= document.getElementById('clienteDialog');
+async function obtenerCliente() {
+    const cedula= document.getElementById('cedula_venta').value;
     //Evaluamos si se ingreso la cedula
     if (cedula == "" || cedula <= 0) {
         alert("Ingrese la cedula del cliente");
         return;
     }
     //Buscamos el cliente
-    cliente= clientes.filter(
-        element => element['cedula'] == cedula
-    )[0] || null;
-    if (cliente == null) {
-        //Mostramos el dialg
-        dialog.showModal();
-        //evento.preventDefault();
-        // showDialog.addEventListener('click', (e) => {
-        //     dialog.showModal();
-        //     e.preventDefault();
-        // });
-        //cerrarDialog(dialog);
-    } else {
-        if (cliente['deuda'] > 0) {
-            document.getElementById('deudaDialog').showModal();
-        }
-        //Asignamos los datos del cliente
-        tabla_cliente= document.getElementById('clienteInfo').cells;
-        tabla_cliente[0].innerHTML= cliente['nombre'][0].toUpperCase() + cliente['nombre'].substring(1) + " " + cliente['apellido'][0].toUpperCase() + cliente['apellido'].substring(1);
-        if (cliente['ruc'] == "" || cliente['ruc'] == null) {
-            tabla_cliente[1].innerHTML= divisorMiles(cliente['cedula']);
-        } else {
-            tabla_cliente[1].innerHTML= divisorMiles(cliente['cedula']) + '-' + cliente['ruc'];
-        }
+    let filtro= "cedula = " + cedula.split("-")[0];
+    if (cedula.split("-").length > 1) {
+        filtro += " AND ruc = " + cedula.split("-")[1];
     }
+    cliente= await obtenerBdd("clientes", filtro) || null;
+    console.log(cliente, filtro);
+    if (cliente == null && cliente[0] == undefined) {
+        alert("El cliente no existe");
+        return;
+    } else {
+        cliente= cliente[0];
+        //Asignamos los datos del cliente
+        document.getElementById('cedula_venta').value= divisorMiles(cliente['cedula']) + "-" + cliente['ruc'];
+        document.getElementById('cliente_nombre_venta').value= cliente['nombre'] + " " +cliente['apellido'];
+    }
+}
+
+// Funcion para obtener los productos
+async function obtenerProductos() {
+    // Obtenemos los filtros
+    const cod_filtro= document.getElementById('inptCodigoProductoVenta').value;
+    const nombre_filtro= document.getElementById('inptNombreProductoVenta').value;
+    const categoria_filtro= document.getElementById('inptCategoriaProductoVenta').value;
+    
+    // Construir el filtro
+    let filtro= "";
+    if (cod_filtro != "") {
+        filtro += "id = " + cod_filtro + " AND ";
+    }
+    if (nombre_filtro != "") {
+        filtro += "nombre LIKE '%" + nombre_filtro + "%'" + " AND ";
+    }
+    if (categoria_filtro != "") {
+        //filtro += "categoriaFK = " + categoria_filtro + " AND ";
+    }
+    if (filtro != "") {
+        filtro = filtro.substring(0, filtro.length - 4);
+    }
+
+    // Obtenemos los productos
+    productos= await obtenerBdd("productos p join Categoria c on c.id=p.id_categoria", filtro);
+    console.log(productos, filtro);
+    
+    // Actualizamos la tabla
+    var productos_opciones_tbody= document.createElement("tbody");
+    productos_opciones_tbody.id= 'lista_productos_venta';
+    productos.forEach(prod => {
+        var tr= document.createElement('tr');
+        tr.onclick="agregarQuitarCanasta(" + prod['id'] + ");";
+        
+        //Creamos las columnas
+        var cod= document.createElement('td');
+        var nombre= document.createElement('td');
+        var categoria= document.createElement('td');
+        var precio= document.createElement('td');
+        var stock= document.createElement('td');
+
+        //Asignamos sus propiedades
+        cod.innerHTML= prod['id'];
+        cod.style.width= "10%";
+        nombre.innerHTML= prod['nombre'];
+        nombre.style.width= "45%";
+        categoria.innerHTML= prod['nombre_categoria'];
+        categoria.style.width= "20%";
+        precio.innerHTML= divisorMiles(prod['precio'] || 0);
+        precio.style.width= "25%";
+        stock.innerHTML= prod['stock'];
+        stock.style.width= "5%";
+
+        tr.appendChild(cod);
+        tr.appendChild(nombre);
+        tr.appendChild(categoria);
+        tr.appendChild(stock);
+        tr.appendChild(precio);
+
+        productos_opciones_tbody.appendChild(tr);
+    });
+    
+    // Reemplaza la tabla existente
+    document.getElementById('lista_productos_venta').replaceWith(productos_opciones_tbody);
+}
+
+// Agregar o quitar de la canasta
+function agregarQuitarCanasta(id) {
+    if (canasta.findIndex(element => element['id'] == id) == -1) {
+        canasta.push({
+            'id': id,
+            'cantidad': 1
+        });
+    } else {
+        canasta.splice(canasta.findIndex(element => element['id'] == id), 1);
+    }
+    //Actualizamos la tabla
+    actualizarTabla();
 }
 
 //Funcion para actualizar tabla
@@ -105,7 +162,7 @@ function actualizarTabla() {
         var tdboton= document.createElement('td');
         //Les asignamos sus propiedades
         cantidad_total= cantidad_total + parseInt(canasta[i]['cantidad']);
-        cantidad.innerHTML= divisorMiles(canasta[i]['cantidad']);
+        cantidad.innerHTML= "<input type='number'  value= '" + canasta[i]['cantidad'] + "' min= '0' style='width: 100%;' onchange='canasta[id]['cantidad']= this.value;'/>";
         cantidad.style.width= "15%";
         nombre.innerHTML= productos[productPos]['nombre'];
         nombre.style.width= "35%";
@@ -144,48 +201,6 @@ function eliminarProducto(boton) {
     const element= canasta[pos];
     canasta.splice(element['id'], element['id'] + 1);
     actualizarTabla();
-}
-
-//Funcion para mostrar el producto Dialog
-function cargarProducto() {
-    //Limpiamos los campos
-    document.getElementById("nombre_product").value= "";
-    document.getElementById("cant").value= "";
-    document.getElementById("descuento").value= "";
-    document.getElementById("total_desc").value= 0;
-    document.getElementById("total_prec").value= 0;
-    document.getElementById("sub_total").value= 0;
-    actualizarSelect();
-    //Mostramos el dialog
-    document.getElementById('productoDialog').showModal();
-}
-
-//Funcion actualizar productos select
-function actualizarSelect() {
-    //Filtramos el input
-    var filtro= document.getElementById('nombre_product').value;
-    productos= productosAux.filter(
-        prod => prod.nombre.includes(filtro.toLowerCase())
-    );
-    console.log(productos);
-    //Creamos el select
-    var lista_productos= document.createElement('select');
-    lista_productos.id= 'lista_producto';
-    lista_productos.size= 5;
-    lista_productos.className= "form-select mt-3 mb-3";
-    lista_productos.required= true;
-    for (i= 0; i < productos.length; i++) {
-        lista_productos[i]= new Option(productos[i]['nombre'], productos[i]['id']);
-    }
-    lista_productos.addEventListener("change", function() {
-        var prod= productos.filter(
-            p => p.id == this.value
-        )[0];
-        console.log(prod);
-        document.getElementById('disponible').value= divisorMiles(prod.stock);
-    });
-    //Reemplazamos el select del html por el creado
-    document.getElementById('lista_producto').parentNode.replaceChild(lista_productos, document.getElementById('lista_producto'));
 }
 
 //Funcion para calcular el costo total
@@ -251,91 +266,6 @@ function anhadirProducto() {
     const canastaJson= JSON.stringify(canasta);
     document.getElementById('canasta').value= canastaJson;
     console.log(canasta);
-}
-
-//Funcion que registra un cliente
-function registrarCliente() {
-    //Obtenemos los valores
-    const ced= document.getElementById('cedula').value.toLowerCase();
-    const nombre= document.getElementById('nombre_client').value.toLowerCase();
-    const apellido= document.getElementById('apellido').value.toLowerCase();
-    const direccion= document.getElementById('direccion').value.toLowerCase();
-    const ruc= document.getElementById('ruc').value.toLowerCase();
-    const fecha_nac= document.getElementById('fech_nac').value.toLowerCase();
-    var comando;
-
-    //Generamos el comando sql
-    if (direccion == undefined || direccion == ""){
-        if (ruc == undefined || ruc == ""){
-            if (fecha_nac == undefined || fecha_nac == ""){
-                comando= "INSERT INTO Clientes(cedula, nombre, apellido) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "');";
-            } else {
-                comando= "INSERT INTO Clientes(cedula, nombre, apellido, fecha_nacimiento) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', '" + "STR_TO_DATE(" + fecha_nac + ", %d/%m/%Y)" + "');";
-            }
-        } else {
-            if (fecha_nac == undefined || fecha_nac == ""){
-                comando= "INSERT INTO Clientes(cedula, nombre, apellido, ruc) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', " + ruc + ");";
-            } else {
-                comando= "INSERT INTO Clientes(cedula, nombre, apellido, ruc, fecha_nacimiento) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', " + ruc + ", '" + "STR_TO_DATE(" + fecha_nac + ", %d/%m/%Y)" + "');";
-            }
-        }
-    } else {
-        if (ruc == undefined || ruc == ""){
-            if (fecha_nac == undefined || fecha_nac == ""){
-                comando= "INSERT INTO Clientes(cedula, nombre, apellido, direccion) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', '" + direccion + "');";
-            } else {
-                comando= "INSERT INTO Clientes(cedula, nombre, apellido, direccion, fecha_nacimiento) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', '" + direccion + "', '" + "STR_TO_DATE(" + fecha_nac + ", %d/%m/%Y)" + "');";
-            }
-        } else {
-            if (fecha_nac == undefined || fecha_nac == ""){
-                comando= "INSERT INTO Clientes(cedula, nombre, apellido, direccion, ruc) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', '" + direccion + "', " + ruc + ");";
-            } else {
-                comando= "INSERT INTO Clientes(cedula, nombre, apellido, direccion, ruc, fecha_nacimiento) VALUES (" + ced + ", '" + nombre + "', '" + apellido + "', '" + direccion + "', " + ruc + ", '" + "STR_TO_DATE(" + fecha_nac + ", %Y-%m-%d)" + "');";
-            }
-        }
-    }
-    console.log(comando);
-
-    //Enviamos el comando al php
-    $.ajax({
-        data: {
-            comando: comando
-        },
-        url: "../php/modificarBdd.php",//archivo que recibirá el/los datos
-        type: "post",
-        error: function (jqXHR, textstatus, errorThrowm) {
-            //parametros que reciben los erroes si hubiera alguno
-            console.log(jqXHR);
-            console.warn(textstatus);
-            console.log(errorThrowm);
-            alert("Error al insertar los datos del nuevo cliente");
-            return
-        },
-        success: function () {            
-            //Guardamos los datos del nuevo cliente
-            cliente= {
-                cedula: ced,
-                nombre: nombre,
-                apellido: apellido,
-                ruc: ruc,
-                direccion: direccion,
-                fecha_nacimiento: fecha_nac,
-                deuda: 0,
-            };
-            clientes.push(cliente);
-            document.getElementById('clienteDialog').close();
-            obtenerCliente();
-        }
-    });
-}
-
-//Funcio para agregar eventos a un dialog
-function cerrarDialog(dialog) {
-    dialog.addEventListener("click", (e) => {
-    if (e.target === dialog) {
-        dialog.close();
-    }
-    });
 }
 
 //Funcion para enviar los datos del formulario principal

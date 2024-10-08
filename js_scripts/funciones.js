@@ -1,3 +1,23 @@
+// Funcion para dividir los numeros con miles
+function divisorMiles(texto) {
+  texto= texto.toString();
+  decimal= texto.split(',')[1];
+  texto= texto.split(',')[0];
+  resultado= "";
+  for (var i, f= texto.length; f >= 0; f= f - 3) {
+      i= (i < 0) ? i= 0 : f - 3;
+      if (resultado != "" && f != 0) {
+          resultado= "." + resultado;
+      }
+      resultado= texto.substring(i, f) + resultado;
+  }
+  //Comprobamos si el numero tiene punto decimal
+  if (decimal != undefined) {
+      resultado= resultado + "," + decimal;
+  }
+  return resultado
+}
+
 // Actualizar hora
 function updateClock() {
     const now = new Date();
@@ -58,7 +78,7 @@ async function obtenerBdd(tabla, filtro= "") {
         sql= sql + " WHERE (" + filtro + ")";
     }
     sql= sql + ";";
-    promesa= await obtencionBdd(sql).then((valor) => datos= valor);
+    await obtencionBdd(sql).then((result) => datos= result);
     return datos;
 }
 
