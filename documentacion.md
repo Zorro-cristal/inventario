@@ -11,23 +11,23 @@ El sistema ABM permite gestionar y agregar las ventas realizadas en una base de 
 ### Tabla `Categoria`
 - **Descripción**: Almacena las categorías de los productos.
 - **Atributos**:
-  - `id` (INT, PK, AUTO_INCREMENT): Código único de la categoría.
-  - `nombre` (VARCHAR(100)): Nombre de la categoría.
+  - `id_categoria` (INT, PK, AUTO_INCREMENT): Código único de la categoría.
+  - `nombre_categoria` (VARCHAR(100)): Nombre de la categoría.
 
 ### Tabla `Proveedor`
 - **Descripción**: Almacena la información de los proveedores.
 - **Atributos**:
-  - `id` (INT, PK, AUTO_INCREMENT): Código único del proveedor.
-  - `nombre` (VARCHAR(100)): Nombre del proveedor.
-  - `telefono` (VARCHAR(15)): Teléfono del proveedor.
-  - `direccion` (VARCHAR(255)): Dirección del proveedor.
+  - `id_proveedor` (INT, PK, AUTO_INCREMENT): Código único del proveedor.
+  - `nombre_proveedor` (VARCHAR(100)): Nombre del proveedor.
+  - `telefono_proveedor` (VARCHAR(15)): Teléfono del proveedor.
+  - `direccion_proveedor` (VARCHAR(255)): Dirección del proveedor.
 
 ### Tabla `Producto`
 - **Descripción**: Almacena la información de los productos.
 - **Atributos**:
-  - `id` (INT, PK, AUTO_INCREMENT): Código único del producto.
-  - `nombre` (VARCHAR(100)): Nombre del producto.
-  - `cantidad` (INT): Cantidad disponible del producto.
+  - `id_producto` (INT, PK, AUTO_INCREMENT): Código único del producto.
+  - `nombre_producto` (VARCHAR(100)): Nombre del producto.
+  - `cantidad_producto` (INT): Cantidad disponible del producto.
   - `precio` (DECIMAL(10, 2)): Precio del producto.
   - `categoria_fk` (INT, FK): Código de la categoría del producto.
   - `proveedor_fk` (INT, FK): Código del proveedor del producto.
@@ -35,22 +35,22 @@ El sistema ABM permite gestionar y agregar las ventas realizadas en una base de 
 ### Tabla `Cliente`
 - **Descripción**: Almacena la información de los clientes.
 - **Atributos**:
-  - `id` (INT, PK, AUTO_INCREMENT): Código único del cliente.
-  - `nombre` (VARCHAR(50)): Nombre del cliente.
-  - `apellido` (VARCHAR(50)): Apellido del cliente.
-  - `direccion` (VARCHAR(255)): Dirección del cliente.
+  - `id_cliente` (INT, PK, AUTO_INCREMENT): Código único del cliente.
+  - `nombre_cliente` (VARCHAR(50)): Nombre del cliente.
+  - `apellido_cliente` (VARCHAR(50)): Apellido del cliente.
+  - `direccion_cliente` (VARCHAR(255)): Dirección del cliente.
   - `ruc` (VARCHAR(20)): RUC del cliente.
 
 ### Tabla `Tipo`
 - **Descripción**: Almacena los tipos de transacciones.
 - **Atributos**:
-  - `id` (INT, PK, AUTO_INCREMENT): Código único del tipo de transacción.
+  - `id_tipo` (INT, PK, AUTO_INCREMENT): Código único del tipo de transacción.
   - `nombre_tipo` (VARCHAR(100)): Nombre del tipo de transacción.
 
 ### Tabla `Transacciones`
 - **Descripción**: Almacena la información de las transacciones.
 - **Atributos**:
-  - `id` (INT, PK, AUTO_INCREMENT): Código único de la transacción.
+  - `id_transacciones` (INT, PK, AUTO_INCREMENT): Código único de la transacción.
   - `tipo_fk` (INT, FK): Código del tipo de transacción.
   - `cliente_fk` (INT, FK): Código del cliente.
   - `fecha` (DATE): Fecha de la transacción.
@@ -58,7 +58,7 @@ El sistema ABM permite gestionar y agregar las ventas realizadas en una base de 
 ### Tabla `Detalles_Transacciones`
 - **Descripción**: Almacena los detalles de cada transacción.
 - **Atributos**:
-  - `id` (INT, PK, AUTO_INCREMENT): Código único del detalle de la transacción.
+  - `id_detalles_transacciones` (INT, PK, AUTO_INCREMENT): Código único del detalle de la transacción.
   - `transaccion_fk` (INT, FK): Código de la transacción.
   - `producto_fk` (INT, FK): Código del producto.
   - `cantidad` (INT): Cantidad del producto en la transacción.
