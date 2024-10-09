@@ -101,6 +101,7 @@ function obtencionBdd(sql) {
         return
       },
       success: function (datos) {
+        console.log(datos)
         datos= JSON.parse(datos);
         resolve(datos);
       }

@@ -36,7 +36,7 @@ async function obtenerCliente() {
     if (cedula.split("-").length > 1) {
         filtro += " AND ruc = " + cedula.split("-")[1];
     }
-    cliente= await obtenerBdd("clientes", filtro) || null;
+    cliente= await obtenerBdd("cliente", filtro) || null;
     if (cliente == null && cliente[0] == undefined) {
         alert("El cliente no existe");
         return;
@@ -71,7 +71,7 @@ async function obtenerProductos() {
     }
 
     // Obtenemos los productos
-    productos= await obtenerBdd("productos p join Categoria c on c.id=p.id_categoria", filtro);
+    productos= await obtenerBdd("producto p join Categoria c on c.id=p.id_categoria", filtro);
     console.log(productos, filtro);
     
     // Actualizamos la tabla
