@@ -83,6 +83,7 @@ async function obtenerBdd(tabla, filtro= "") {
 }
 
 function obtencionBdd(sql) {
+  console.log("Consulta sql: ", sql);
   return new Promise(function (resolve, rejected) {
     $.ajaxSetup({async: false});
     $.ajax({
@@ -102,6 +103,10 @@ function obtencionBdd(sql) {
       },
       success: function (datos) {
         console.log(datos)
+        if (datos === "") {
+            alert("Ningun dato obtenido de la base de datos");
+            resolve([]);
+        }
         datos= JSON.parse(datos);
         resolve(datos);
       }

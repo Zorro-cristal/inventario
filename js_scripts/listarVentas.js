@@ -5,11 +5,15 @@ async function buscarVentas() {
   var cedula= document.getElementById('ced_busc_listado_venta').value || "";
   var nombre= document.getElementById('nombre_client_listado_venta').value || "";
   var fecha= document.getElementById('fech_listado_venta').value || "";
-  filtro += (nombre != "") ? "nombre LIKE '%" + nombre + "%' AND apellido LIKE '%" + apellido + "%'" : "";
+  filtro += (nombre != "") ? "nombre_cliente LIKE '%" + nombre + "%' AND apellido_cliente LIKE '%" + apellido + "%'" : "";
   filtro += (cedula != "") ? " AND cedula = " + cedula : "";
   filtro += (fecha != "") ? " AND fecha = '" + fecha + "'" : "";
   
-  ventas= await obtenerBdd("Ventas", filtro);
+  ventas= await obtenerBdd("Transacciones T join Cliente c on c.cedula=T.cliente_fk", filtro);
+  if (ventas.length == 0) {
+    alert("No se encontro ninguna venta");
+    return;
+  }
 
   actualizarTabla();
 }
@@ -23,7 +27,6 @@ function dialogDetalles(event, element) {
     element => element['id'] == id
   )[0];
 
-  document.getElementById('nro_fact').value= ventas['numero_factura'];
   if (ventas['numero_factura'] == null) {
     document.getElementById('nro_fact').value= "";
   }
@@ -81,7 +84,7 @@ async function paginaCargada() {
 }
 
 //Funcion que actualiza la tabla
-function actualizarTabla() {
+async function actualizarTabla() {
     const pie= document.getElementById("totales_tabla_listado_venta").cloneNode(true);
     var monto_total= 0;
     //ventas= ventasAux;
@@ -91,21 +94,16 @@ function actualizarTabla() {
     var tbody_content= '<tbody id="lista_ventas">';
       //populate_with_new_rows(new_tbody);
       for (i= ventas.length - 1; i >= 0; i--) {
-          var id_vent= ventas[i]['id'];
+          var id_vent= ventas[i]['id_transacciones'];
           var nro_factura= ventas[i]['numero_factura'] || "";
           var fecha= ventas[i]['fecha'];
-          var cliente;
-          for (j= 0; j < clientes.length; j++) {
-            if (clientes[j]['cedula'] == ventas[i]['cliente_fk']) {
-                cliente= clientes[j]['nombre'] + ' ' + clientes[j]['apellido'];
-                break;
-            }
-          }
           var monto= 0;
+
+          const detalle_ventas= await obtenerBdd("detalles_transacciones", "transacciones_fk = " + i);
           for (j= 0; j < detalle_ventas.length; j++) {
             if (detalle_ventas[j]['venta_fk'] == ventas[i]['id']) {
                 var descuento= parseFloat(detalle_ventas[j]['descuento']);
-                var precio= parseFloat(detalle_ventas[j]['precio_venta']);;
+                var precio= parseFloat(detalle_ventas[j]['precio_producto']);;
                 precio= precio - descuento;
                 precio= precio * parseInt(detalle_ventas[j]['cantidad']);
                 monto += precio;
@@ -114,7 +112,7 @@ function actualizarTabla() {
 
           var tr= '<tr onclick="dialogDetalles(event, this)" id= "' + id_vent + '">';
           tr= tr + '<td style= "width: 25%">' + nro_factura + '</td>';
-          tr= tr + '<td style= "width: 45%">' + cliente + '</td>';
+          tr= tr + '<td style= "width: 45%">' + detalle_ventas[j]['nombre_cliente'] + detalle_ventas[j]['apellido_cliente'] + '</td>';
           tr= tr + '<td style= "width: 20%">' + conversorFecha(fecha) + '</td>';
           tr= tr + '<td style= "width: 20%">' + divisorMiles(monto) + '</td>';
           tr= tr + "</tr>";

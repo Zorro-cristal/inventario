@@ -11,14 +11,15 @@ async function cargarPagina() {
     document.getElementById("fecha_venta").value= fecha.toISOString().substring(0, 10);
 
     //Obtenemos los datos de la base de datos
-    const categorias= await obtenerBdd("categorias");
+    const categorias= await obtenerBdd("categoria");
 
     let categorias_opciones= "";
     // Asignar las categorias
+    categorias_opciones += "<option value='' selected>Todos</option>";
     categorias.forEach(cat => {
         categorias_opciones += "<option value='" + cat['id'] + "'>" + cat['nombre'] + "</option>";
     });
-    document.getElementById("categorias_filtro").innerHTML= categorias_opciones;
+    document.getElementById("inptCategoriaProductoVenta").innerHTML= categorias_opciones;
 
     canasta= [];
 }
@@ -37,14 +38,15 @@ async function obtenerCliente() {
         filtro += " AND ruc = " + cedula.split("-")[1];
     }
     cliente= await obtenerBdd("cliente", filtro) || null;
-    if (cliente == null && cliente[0] == undefined) {
+    if (cliente == null || cliente.length == 0) {
         alert("El cliente no existe");
         return;
     } else {
         cliente= cliente[0];
         //Asignamos los datos del cliente
-        document.getElementById('cedula_venta').value= divisorMiles(cliente['cedula']) + "-" + cliente['ruc'];
-        document.getElementById('cliente_nombre_venta').value= cliente['nombre'] + " " +cliente['apellido'];
+        ruc= (cliente['ruc'] != null && cliente['ruc'] != "") ? "-" + cliente['ruc'] : "";
+        document.getElementById('cedula_venta').value= divisorMiles(cliente['cedula']) + ruc;
+        document.getElementById('cliente_nombre_venta').value= cliente['nombre_cliente'] + " " +cliente['apellido_cliente'];
     }
 }
 
@@ -58,28 +60,28 @@ async function obtenerProductos() {
     // Construir el filtro
     let filtro= "";
     if (cod_filtro != "") {
-        filtro += "id = " + cod_filtro + " AND ";
+        filtro += "id_producto = " + cod_filtro + " AND ";
     }
     if (nombre_filtro != "") {
-        filtro += "nombre LIKE '%" + nombre_filtro + "%'" + " AND ";
+        filtro += "nombre_producto LIKE '%" + nombre_filtro + "%'" + " AND ";
     }
-    if (categoria_filtro != "") {
-        //filtro += "categoriaFK = " + categoria_filtro + " AND ";
+    if (categoria_filtro != "" && categoria_filtro != "Cargando...") {
+        filtro += "categoria_fk = " + categoria_filtro + " AND ";
     }
     if (filtro != "") {
         filtro = filtro.substring(0, filtro.length - 4);
     }
 
     // Obtenemos los productos
-    productos= await obtenerBdd("producto p join Categoria c on c.id=p.id_categoria", filtro);
-    console.log(productos, filtro);
+    productos= await obtenerBdd("Producto p join Categoria c on c.id_categoria=p.categoria_fk", filtro);
+    console.log("Productos obtenidos: ",productos, filtro);
     
     // Actualizamos la tabla
     var productos_opciones_tbody= document.createElement("tbody");
     productos_opciones_tbody.id= 'lista_productos_venta';
     productos.forEach(prod => {
         var tr= document.createElement('tr');
-        tr.onclick="agregarQuitarCanasta(" + prod['id'] + ");";
+        tr.onclick="agregarQuitarCanasta(" + prod['id_producto'] + ");";
         
         //Creamos las columnas
         var cod= document.createElement('td');
@@ -89,15 +91,15 @@ async function obtenerProductos() {
         var stock= document.createElement('td');
 
         //Asignamos sus propiedades
-        cod.innerHTML= prod['id'];
+        cod.innerHTML= prod['id_producto'];
         cod.style.width= "10%";
-        nombre.innerHTML= prod['nombre'];
+        nombre.innerHTML= prod['nombre_producto'];
         nombre.style.width= "45%";
         categoria.innerHTML= prod['nombre_categoria'];
         categoria.style.width= "20%";
         precio.innerHTML= divisorMiles(prod['precio'] || 0);
         precio.style.width= "25%";
-        stock.innerHTML= prod['stock'];
+        stock.innerHTML= prod['cantidad'];
         stock.style.width= "5%";
 
         tr.appendChild(cod);
