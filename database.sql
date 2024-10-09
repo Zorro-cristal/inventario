@@ -46,16 +46,17 @@ INSERT INTO `producto` (`id`, `nombre`, `cantidad`, `precio`, `categoria_fk`, `p
 -- Crear tabla Cliente
 CREATE TABLE Cliente (
     cedula INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
     direccion VARCHAR(255),
     ruc VARCHAR(20)
 );
 
 -- Insertar datos de prueba en Cliente
 INSERT INTO `cliente` (`cedula`, `nombre`, `ruc`, `direccion`) VALUES
-(456978, 'Eugenio Benítez', NULL, NULL),
-(4869778, 'Laura Vazquez', 486579, NULL),
-(5412697, 'Diego Santacruz', 5412697, 'Mariscal Estigarribia y Teniente Blas Arevalos , Barrio Santa Librada');
+(456978, 'Eugenio', 'Benítez', NULL, NULL),
+(4869778, 'Laura', 'Vazquez', 486579, NULL),
+(5412697, 'Diego', 'Santacruz', 5412697, 'Mariscal Estigarribia y Teniente Blas Arevalos , Barrio Santa Librada');
 
 -- Crear tabla Tipo
 CREATE TABLE Tipo (

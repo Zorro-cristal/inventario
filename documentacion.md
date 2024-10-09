@@ -36,7 +36,8 @@ El sistema ABM permite gestionar y agregar las ventas realizadas en una base de 
 - **Descripción**: Almacena la información de los clientes.
 - **Atributos**:
   - `id` (INT, PK, AUTO_INCREMENT): Código único del cliente.
-  - `nombre` (VARCHAR(100)): Nombre del cliente.
+  - `nombre` (VARCHAR(50)): Nombre del cliente.
+  - `apellido` (VARCHAR(50)): Apellido del cliente.
   - `direccion` (VARCHAR(255)): Dirección del cliente.
   - `ruc` (VARCHAR(20)): RUC del cliente.
 
