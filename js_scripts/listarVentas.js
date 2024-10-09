@@ -1,15 +1,18 @@
+var ventas;
+var venta_select;
+
 // Funcion para buscar las ventas
 async function buscarVentas() {
-  let filtro= "";
+  let filtro= "t.cliente_fk=c.cedula";
   // Obtener los filtros
   var cedula= document.getElementById('ced_busc_listado_venta').value || "";
   var nombre= document.getElementById('nombre_client_listado_venta').value || "";
   var fecha= document.getElementById('fech_listado_venta').value || "";
-  filtro += (nombre != "") ? "nombre_cliente LIKE '%" + nombre + "%' AND apellido_cliente LIKE '%" + apellido + "%'" : "";
-  filtro += (cedula != "") ? " AND cedula = " + cedula : "";
-  filtro += (fecha != "") ? " AND fecha = '" + fecha + "'" : "";
+  filtro += (nombre != "") ? " AND c.nombre_cliente LIKE '%" + nombre + "%' AND c.apellido_cliente LIKE '%" + apellido + "%'" : "";
+  filtro += (cedula != "") ? " AND c.cedula = " + cedula : "";
+  filtro += (fecha != "") ? " AND t.fecha = '" + fecha + "'" : "";
   
-  ventas= await obtenerBdd("Transacciones T join Cliente c on c.cedula=T.cliente_fk", filtro);
+  ventas= await obtenerBdd("Transacciones t, Cliente c", filtro);
   if (ventas.length == 0) {
     alert("No se encontro ninguna venta");
     return;
@@ -20,33 +23,23 @@ async function buscarVentas() {
 
 //Funcion que muestra el dialog detalle ventas
 function dialogDetalles(event, element) {
-  const id= element.id;
+  venta_select= element.id;
   var new_tbody= document.createElement('tbody');
   new_tbody.id= "detalle_ventas";
-  ventas= ventasAux.filter(
-    element => element['id'] == id
+  const ventasAux= ventas.filter(
+    element => element['id_transacciones'] == venta_select
   )[0];
 
-  if (ventas['numero_factura'] == null) {
-    document.getElementById('nro_fact').value= "";
-  }
-  
-  const cliente= clientes.filter(
-    element => element['cedula'] == venta['cliente_fk']
-  )[0];
-  document.getElementById('client').value= cliente['nombre'] + " " + cliente['apellido'];
+  document.getElementById('nro_fact_detalle').value= ventasAux['numero_factura'] || "";
+  document.getElementById('client_detalle').value= ventasAux['nombre_cliente'] + " " + ventasAux['apellido_cliente'];
 
   var cant_total= 0;
   var descuent_total= 0;
-  detalle_ventas= detalle_ventas.filter(
-    element => element['venta_fk'] == id
-  );
+  detalle_ventas= obtenerBdd("detalles_transacciones", "transaccion_fk = " + venta_select);
 
   var tbody_content= '<tbody id="detalle_ventas">';
   for (i= 0; i < detalle_ventas.length; i++) {
-    var product= productos.filter(
-      element => element['id'] == detalle_ventas[i]['producto_fk']
-    )[0];
+    const product= obtenerBdd("productos", "id_producto = " + detalle_ventas[i]['producto_fk'])[0];
     var tr= '<tr>';
     tr= tr + '<td>' + divisorMiles(detalle_ventas[i]['cantidad']) + '</td>';
     tr= tr + '<td>' + product['nombre'] + '</td>';
@@ -60,14 +53,12 @@ function dialogDetalles(event, element) {
     }
     tbody_content= tbody_content + tr;
   }
+  tbody_content= tbody_content + "<th><td>" + divisorMiles(cant_total) + "</td><td></td><td>" + divisorMiles(descuent_total) + "</td><td>" + divisorMiles(element.cells[3].innerText) + "</td></th>";
   tbody_content= tbody_content + '</tbody>';
   new_tbody.innerHTML= tbody_content;
   document.getElementById('detalle_ventas').parentNode.replaceChild(new_tbody, document.getElementById('detalle_ventas'));
-
-  document.getElementById('id_venta').value= id;
-  document.getElementById('cantidad_total').innerHTML= divisorMiles(cant_total);
-  document.getElementById('descuento_total').innerHTML= divisorMiles(descuent_total);
-  document.getElementById('subTotal_total').innerHTML= divisorMiles(element.cells[3].innerText);
+  document.getElementById('id_venta').value= venta_select;
+  
   //Muestra el dialog con los detalles de la venta
   var dialog= document.getElementById('detalle_ventaDialog');
   dialog.showModal();
@@ -99,11 +90,11 @@ async function actualizarTabla() {
           var fecha= ventas[i]['fecha'];
           var monto= 0;
 
-          const detalle_ventas= await obtenerBdd("detalles_transacciones", "transacciones_fk = " + i);
+          const detalle_ventas= await obtenerBdd("detalles_transacciones d, Producto p", "p.id_producto = d.producto_fk AND d.transaccion_fk = " + i);
           for (j= 0; j < detalle_ventas.length; j++) {
             if (detalle_ventas[j]['venta_fk'] == ventas[i]['id']) {
-                var descuento= parseFloat(detalle_ventas[j]['descuento']);
-                var precio= parseFloat(detalle_ventas[j]['precio_producto']);;
+                var descuento= parseFloat(detalle_ventas[j]['descuento']) || 0;
+                var precio= parseFloat(detalle_ventas[j]['precio']) || 0;
                 precio= precio - descuento;
                 precio= precio * parseInt(detalle_ventas[j]['cantidad']);
                 monto += precio;
@@ -112,8 +103,8 @@ async function actualizarTabla() {
 
           var tr= '<tr onclick="dialogDetalles(event, this)" id= "' + id_vent + '">';
           tr= tr + '<td style= "width: 25%">' + nro_factura + '</td>';
-          tr= tr + '<td style= "width: 45%">' + detalle_ventas[j]['nombre_cliente'] + detalle_ventas[j]['apellido_cliente'] + '</td>';
-          tr= tr + '<td style= "width: 20%">' + conversorFecha(fecha) + '</td>';
+          tr= tr + '<td style= "width: 45%">' + ventas[i]['nombre_cliente'] + ' ' + ventas[i]['apellido_cliente'] + '</td>';
+          tr= tr + '<td style= "width: 20%">' + fecha + '</td>';
           tr= tr + '<td style= "width: 20%">' + divisorMiles(monto) + '</td>';
           tr= tr + "</tr>";
           tbody_content= tbody_content + tr;
@@ -143,6 +134,31 @@ function eliminarVenta() {
       console.warn(textstatus);
       console.log(errorThrowm);
       alert("Error al eliminar los datos de la base de datos");
+      return
+    },
+    success: function () {
+      window.location.replace("./listarVentas.html");
+      //window.location.href("./listarVentas.html");
+    }
+  });
+}
+
+// Funcion para guardar las modificaciones de los detalles de la venta
+function guardarDetalles() {
+  const numero_factura= document.getElementById("nro_fact_detalle").value;
+  $.ajax({
+    url: "../php/actualizarVenta.php",
+    type: "post",
+    data: {
+      "id": venta_select,
+      "nro_factura": numero_factura
+    },
+    error: function (jqXHR, textstatus, errorThrowm) {
+      //parametros que reciben los erroes si hubiera alguno
+      console.log(jqXHR);
+      console.warn(textstatus);
+      console.log(errorThrowm);
+      alert("Error al modificar los datos de la base de datos");
       return
     },
     success: function () {

@@ -3,8 +3,8 @@
     //Obtenemos el id_vent
     $id_vent= $_POST['id'];
     //Eliminamos datos en ambas tablas
-    $comando= "DELETE FROM Detalle_ventas WHEREVenta_fk= " . $id_vent . ";";
+    $comando= "DELETE FROM Detalles_transacciones WHERE transaccion_fk= " . $id_vent . ";";
     modificarBdd($comando);
-    $comando= "DELETE FROM Ventas WHERE id= " . $id_vent . ";";
+    $comando= "DELETE FROM Transacciones WHERE id_transacciones= " . $id_vent . ";";
     modificarBdd($comando);
 ?>

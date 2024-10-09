@@ -71,14 +71,14 @@ function cambiarTema(opc= undefined, inicio= false) {
 }
 
 //Funcion para obtener datos de una tabla
-async function obtenerBdd(tabla, filtro= "") {
+async function obtenerBdd(tabla, filtro= "", campos= "*") {
     var datos;
-    sql= "SELECT * FROM " + tabla;
+    sql= "SELECT " + campos + " FROM " + tabla;
     if (filtro != "") {
         sql= sql + " WHERE (" + filtro + ")";
     }
     sql= sql + ";";
-    await obtencionBdd(sql).then((result) => datos= result);
+    await obtencionBdd(sql).then((result) => {datos= result}).catch((err) => console.log("Error: ",err));
     return datos;
 }
 

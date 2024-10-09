@@ -21,25 +21,26 @@
     </head>
     <body onload="paginaCargada()">
         <!-- Dialogo que muestra informacion de la venta -->
-        <dialog class="container-base-primary" id="detalle_ventaDialog">
+        <dialog class="container-base-primary" id="detalle_ventaDialog" style="width: 100vw;">
             <div class="container-base-secondary">
                 <input type="hidden" id="id_venta"/>
                 <div class="form group">
-                    <label for="nro_fact" class="text-light">Numero factura</label>
-                    <input id="nro_fact" readonly />
+                    <label for="nro_fact_detalle" class="text-light">Numero factura</label>
+                    <input id="nro_fact_detalle" class="form-control"/>
                 </div>
                 <br/>
                 <div class="form group">
-                    <label for="client"  class="text-light">Cliente</label>
-                    <input id="client" readonly />
+                    <label for="client_detalle"  class="text-light">Cliente</label>
+                    <input id="client_detalle" disabledclass="form-control"/>
                 </div>
                 <br/>
                 <div class="form group">
-                    <label for="ruc" class="text-light">Ruc</label>
-                    <input id="ruc" readonly />
+                    <label for="ruc_detalle" class="text-light">Ruc</label>
+                    <input id="ruc_detalle" disabled class="form-control"/>
                 </div>
-                <br/>
-                <table class="table table-hover table-dark m-3" style="width: 98%;">
+            </div>
+            <div class="container-base-secondary">
+                <table class="table-border m-3" style="width: 98%;">
                     <thead>
                         <tr>
                             <th scope="col" style="width: 10%;">Cantidad</th>
@@ -58,9 +59,10 @@
                         <th id="subTotal_total"></th>
                     </tfoot>
                 </table>
-                <div class="d-flex justify-content-around">
-                    <button class="btn btn-primary" onclick="eliminarVenta()">Eliminar venta</button>
-                    <button class="btn btn-primary" onclick="document.getElementById('detalle_ventaDialog').close()">Atras</button>
+                <div class="d-flex justify-content-around" style="width: 100%">
+                    <button type="button" class="btn btn-outline-warning" onclick='eliminarVenta()'>Eliminar Venta</button>
+                    <button type="submit" class="btn btn-outline-success" onclick="guardarDetalles()">Guardar cambios</button>
+                    <button type="button" class="btn btn-outline-danger" onclick="document.getElementById('detalle_ventaDialog').close()">Atras</button>
                 </div>
             </div>
         </dialog>
