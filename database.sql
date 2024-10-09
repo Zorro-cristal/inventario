@@ -53,7 +53,7 @@ CREATE TABLE Cliente (
 );
 
 -- Insertar datos de prueba en Cliente
-INSERT INTO `cliente` (`cedula`, `nombre`, `ruc`, `direccion`) VALUES
+INSERT INTO `cliente` (`cedula`, `nombre`, `apellido`, `ruc`, `direccion`) VALUES
 (456978, 'Eugenio', 'Benítez', NULL, NULL),
 (4869778, 'Laura', 'Vazquez', 486579, NULL),
 (5412697, 'Diego', 'Santacruz', 5412697, 'Mariscal Estigarribia y Teniente Blas Arevalos , Barrio Santa Librada');
