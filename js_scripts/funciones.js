@@ -99,15 +99,15 @@ function obtencionBdd(sql) {
         console.log(errorThrowm);
         alert("Error al obtener los datos de la base de datos");
         rejected(errorThrowm);
-        return
       },
       success: function (datos) {
         console.log(datos)
         if (datos === "") {
             alert("Ningun dato obtenido de la base de datos");
-            resolve([]);
+            datos= [];
+        } else {
+          datos= JSON.parse(datos);
         }
-        datos= JSON.parse(datos);
         resolve(datos);
       }
     });

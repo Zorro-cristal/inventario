@@ -58,28 +58,26 @@ async function obtenerProductos() {
     const categoria_filtro= document.getElementById('inptCategoriaProductoVenta').value;
     
     // Construir el filtro
-    let filtro= "";
+    let filtro= "cantidad > 0";
     if (cod_filtro != "") {
-        filtro += "id_producto = " + cod_filtro + " AND ";
+        filtro += "AND id_producto = " + cod_filtro;
     }
     if (nombre_filtro != "") {
-        filtro += "nombre_producto LIKE '%" + nombre_filtro + "%'" + " AND ";
+        filtro += "AND nombre_producto LIKE '%" + nombre_filtro + "%'";
     }
     if (categoria_filtro != "" && categoria_filtro != "Cargando...") {
-        filtro += "categoria_fk = " + categoria_filtro + " AND ";
-    }
-    if (filtro != "") {
-        filtro = filtro.substring(0, filtro.length - 4);
+        filtro += "AND categoria_fk = " + categoria_filtro;
     }
 
     // Obtenemos los productos
-    productos= await obtenerBdd("Producto p join Categoria c on c.id_categoria=p.categoria_fk", filtro);
+    const productos= await obtenerBdd("producto", filtro);
     console.log("Productos obtenidos: ",productos, filtro);
     
     // Actualizamos la tabla
     var productos_opciones_tbody= document.createElement("tbody");
     productos_opciones_tbody.id= 'lista_productos_venta';
-    productos.forEach(prod => {
+    productos.forEach(async prod => {
+        const categoriaBdd= await obtenerBdd("categoria", "id = " + prod['categoria_fk'])[0];
         var tr= document.createElement('tr');
         tr.onclick="agregarQuitarCanasta(" + prod['id_producto'] + ");";
         
@@ -95,7 +93,7 @@ async function obtenerProductos() {
         cod.style.width= "10%";
         nombre.innerHTML= prod['nombre_producto'];
         nombre.style.width= "45%";
-        categoria.innerHTML= prod['nombre_categoria'];
+        categoria.innerHTML= categoriaBdd['nombre_categoria'];
         categoria.style.width= "20%";
         precio.innerHTML= divisorMiles(prod['precio'] || 0);
         precio.style.width= "25%";
