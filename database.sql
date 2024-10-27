@@ -32,6 +32,7 @@ CREATE TABLE Producto (
     cantidad INT NOT NULL,
     precio DECIMAL(10, 2) NOT NULL,
     categoria_fk INT,
+    impuesto INT NOT NULL,
     proveedor_fk INT,
     FOREIGN KEY (categoria_fk) REFERENCES Categoria(id_categoria),
     FOREIGN KEY (proveedor_fk) REFERENCES Proveedor(id_proveedor)
@@ -81,12 +82,13 @@ CREATE TABLE Transacciones (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Insertar datos de prueba en Transacciones
-INSERT INTO Transacciones (cliente_fk, fecha, tipo_fk, categoria_fk) VALUES (1, '2024-09-22 09:00:00', 1, 1);
+INSERT INTO Transacciones (cliente_fk, fecha, tipo_fk, categoria_fk) VALUES (4360067, '2024-09-22 09:00:00', 1, 1);
 
 -- Crear tabla Detalles_Transacciones
 CREATE TABLE Detalles_Transacciones (
     id_detalles_transacciones INT AUTO_INCREMENT PRIMARY KEY,
     transaccion_fk INT,
+    num_factura INT UNSIGNED,
     producto_fk INT,
     cantidad INT NOT NULL,
     descuento DECIMAL(10, 2) DEFAULT 0,
@@ -95,4 +97,4 @@ CREATE TABLE Detalles_Transacciones (
 );
 
 -- Insertar datos de prueba en Detalles_Transacciones
-INSERT INTO Detalles_Transacciones (transaccion_fk, producto_fk, cantidad, descuento) VALUES (1, 1, 2, 99.99);
+INSERT INTO Detalles_Transacciones (transaccion_fk, producto_fk, cantidad, descuento) VALUES (1, 5, 2, 2500);

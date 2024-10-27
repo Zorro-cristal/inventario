@@ -29,9 +29,11 @@ function dialogDetalles(event, element) {
   const ventasAux= ventas.filter(
     element => element['id_transacciones'] == venta_select
   )[0];
-
-  document.getElementById('nro_fact_detalle').value= ventasAux['numero_factura'] || "";
+console.log(ventasAux);
+  document.getElementById('nro_fact_detalle').value= ventasAux['num_factura'] || "";
   document.getElementById('client_detalle').value= ventasAux['nombre_cliente'] + " " + ventasAux['apellido_cliente'];
+  ruc= ventasAux['ruc'] == null ? "" : "-" + ventasAux['ruc'];
+  document.getElementById('ruc_detalle').value= ventasAux['cedula'] + ruc;
 
   var cant_total= 0;
   var descuent_total= 0;
