@@ -1,16 +1,19 @@
 // Funcion para dividir los numeros con miles
 function divisorMiles(texto) {
   texto= texto.toString();
-  decimal= texto.split(',')[1];
-  texto= texto.split(',')[0];
+  decimal= texto.split('.')[1];
+  entero= texto.split('.')[0];
   resultado= "";
-  for (var i, f= texto.length; f >= 0; f= f - 3) {
+
+  for (var i=0, f= entero.length; f >= 0; f= f - 3) {
       i= (i < 0) ? i= 0 : f - 3;
-      if (resultado != "" && f != 0) {
+      if (resultado != "" && f > 0) {
+        console.log(i, f)
           resultado= "." + resultado;
       }
-      resultado= texto.substring(i, f) + resultado;
+      resultado= entero.substring(i, f) + resultado;
   }
+  
   //Comprobamos si el numero tiene punto decimal
   if (decimal != undefined) {
       resultado= resultado + "," + decimal;
@@ -61,7 +64,6 @@ function cambiarTema(opc= undefined, inicio= false) {
             btn.style.display= "";
         });
     }
-    
 
     body.classList.remove(`${tema_actual}-mode`);
     body.classList.add(`${nuevo_tema}-mode`);
