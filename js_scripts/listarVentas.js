@@ -22,14 +22,14 @@ async function buscarVentas() {
 }
 
 //Funcion que muestra el dialog detalle ventas
-function dialogDetalles(event, element) {
+async function dialogDetalles(event, element) {
   venta_select= element.id;
   var new_tbody= document.createElement('tbody');
   new_tbody.id= "detalle_ventas";
   const ventasAux= ventas.filter(
     element => element['id_transacciones'] == venta_select
   )[0];
-console.log(ventasAux);
+
   document.getElementById('nro_fact_detalle').value= ventasAux['num_factura'] || "";
   document.getElementById('client_detalle').value= ventasAux['nombre_cliente'] + " " + ventasAux['apellido_cliente'];
   ruc= ventasAux['ruc'] == null ? "" : "-" + ventasAux['ruc'];
@@ -37,25 +37,25 @@ console.log(ventasAux);
 
   var cant_total= 0;
   var descuent_total= 0;
-  detalle_ventas= obtenerBdd("detalles_transacciones", "transaccion_fk = " + venta_select);
-
+  var precio_total= 0;
+  filtro= "dt.producto_fk= p.id_producto AND dt.transaccion_fk = " + venta_select;
+  detalle_ventas= await obtenerBdd("detalles_transacciones dt, producto p", filtro);
+console.log(detalle_ventas);
   var tbody_content= '<tbody id="detalle_ventas">';
   for (i= 0; i < detalle_ventas.length; i++) {
-    const product= obtenerBdd("productos", "id_producto = " + detalle_ventas[i]['producto_fk'])[0];
     var tr= '<tr>';
     tr= tr + '<td>' + divisorMiles(detalle_ventas[i]['cantidad']) + '</td>';
-    tr= tr + '<td>' + product['nombre'] + '</td>';
-    tr= tr + '<td>' + divisorMiles(detalle_ventas[i]['descuento']) + '</td>';
-    aux= parseInt(detalle_ventas[i]['cantidad']) * (parseFloat(detalle_ventas[i]['precio_venta']) - parseFloat(detalle_ventas[i]['descuento']));
-    tr= tr + '<td>' + divisorMiles(aux) + '</td>';
+    tr= tr + '<td>' + detalle_ventas[i]['nombre_producto'] + '</td>';
+    tr= tr + '<td>' + divisorMiles(detalle_ventas[i]['descuento'] || 0) + '</td>';
+    subTotal= parseInt(detalle_ventas[i]['cantidad']) * (parseFloat(detalle_ventas[i]['precio']) - parseFloat(detalle_ventas[i]['descuento']));
+    tr= tr + '<td>' + divisorMiles(subTotal) + '</td>';
     tr= tr + '</tr>';
-    if(detalle_ventas[i]['id_venta'] == id) {
-      cant_total= cant_total + parseFloat(detalle_ventas[i]['cantidad']);
-      descuent_total= descuent_total + parseFloat(detalle_ventas[i]['descuento']);
-    }
+    cant_total += parseFloat(detalle_ventas[i]['cantidad']);
+    descuent_total += parseFloat(detalle_ventas[i]['descuento']);
+    precio_total += subTotal;
     tbody_content= tbody_content + tr;
   }
-  tbody_content= tbody_content + "<th><td>" + divisorMiles(cant_total) + "</td><td></td><td>" + divisorMiles(descuent_total) + "</td><td>" + divisorMiles(element.cells[3].innerText) + "</td></th>";
+  tbody_content= tbody_content + "<tr><th>" + divisorMiles(cant_total) + "</th><th></th><th>" + divisorMiles(descuent_total) + "</th><th>" + divisorMiles(precio_total) + "</th></tr>";
   tbody_content= tbody_content + '</tbody>';
   new_tbody.innerHTML= tbody_content;
   document.getElementById('detalle_ventas').parentNode.replaceChild(new_tbody, document.getElementById('detalle_ventas'));

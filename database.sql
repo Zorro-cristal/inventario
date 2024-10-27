@@ -29,7 +29,7 @@ INSERT INTO `proveedor` (`nombre_proveedor`, `direccion_proveedor`, `telefono_pr
 CREATE TABLE Producto (
     id_producto INT AUTO_INCREMENT PRIMARY KEY,
     nombre_producto VARCHAR(100) NOT NULL,
-    cantidad INT NOT NULL,
+    cantidad_disponible INT NOT NULL,
     precio DECIMAL(10, 2) NOT NULL,
     categoria_fk INT,
     impuesto INT NOT NULL,
@@ -97,4 +97,4 @@ CREATE TABLE Detalles_Transacciones (
 );
 
 -- Insertar datos de prueba en Detalles_Transacciones
-INSERT INTO Detalles_Transacciones (transaccion_fk, producto_fk, cantidad, descuento) VALUES (1, 5, 2, 2500);
+INSERT INTO Detalles_Transacciones (transaccion_fk, producto_fk, cantidad, descuento) VALUES (2, 5, 2, 500);
