@@ -44,6 +44,7 @@
         $result= mysqli_query($conn, $sql);
         if (!$result) {
             echo '<dialog open>Error al modificar la base de datos</dialog>';
+            echo $sql;
             die("Error al modificar: " . $conn->error);
         }
 

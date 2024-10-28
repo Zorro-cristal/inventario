@@ -78,17 +78,17 @@ CREATE TABLE Transacciones (
   `cliente_fk` int(9) NOT NULL,
   `tipo_fk` int(7) NOT NULL,
   `categoria_fk` int(8) NOT NULL,
+  num_factura INT UNSIGNED NOT NULL,
   `fecha` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Insertar datos de prueba en Transacciones
-INSERT INTO Transacciones (cliente_fk, fecha, tipo_fk, categoria_fk) VALUES (4360067, '2024-09-22 09:00:00', 1, 1);
+INSERT INTO Transacciones (cliente_fk, fecha, tipo_fk, categoria_fk, num_factura) VALUES (4360067, '2024-09-22 09:00:00', 1, 1,125);
 
 -- Crear tabla Detalles_Transacciones
 CREATE TABLE Detalles_Transacciones (
     id_detalles_transacciones INT AUTO_INCREMENT PRIMARY KEY,
     transaccion_fk INT,
-    num_factura INT UNSIGNED,
     producto_fk INT,
     cantidad INT NOT NULL,
     descuento DECIMAL(10, 2) DEFAULT 0,
@@ -97,4 +97,4 @@ CREATE TABLE Detalles_Transacciones (
 );
 
 -- Insertar datos de prueba en Detalles_Transacciones
-INSERT INTO Detalles_Transacciones (transaccion_fk, producto_fk, cantidad, descuento) VALUES (2, 5, 2, 500);
+INSERT INTO Detalles_Transacciones (transaccion_fk, producto_fk, cantidad, descuento) VALUES (1, 5, 2, 500);

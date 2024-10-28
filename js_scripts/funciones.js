@@ -1,24 +1,30 @@
 // Funcion para dividir los numeros con miles
-function divisorMiles(texto) {
-  texto= texto.toString();
-  decimal= texto.split('.')[1];
-  entero= texto.split('.')[0];
-  resultado= "";
+function divisorMiles(texto, eliminar= false) {
+  if (eliminar) {
+    texto= texto.toString();
+    texto= texto.replace('.', '');
+    return texto;
+  } else {
+    texto= texto.toString();
+    decimal= texto.split('.')[1];
+    entero= texto.split('.')[0];
+    resultado= "";
 
-  for (var i=0, f= entero.length; f >= 0; f= f - 3) {
-      i= (i < 0) ? i= 0 : f - 3;
-      if (resultado != "" && f > 0) {
-        console.log(i, f)
-          resultado= "." + resultado;
-      }
-      resultado= entero.substring(i, f) + resultado;
+    for (var i=0, f= entero.length; f >= 0; f= f - 3) {
+        i= (i < 0) ? i= 0 : f - 3;
+        if (resultado != "" && f > 0) {
+          console.log(i, f)
+            resultado= "." + resultado;
+        }
+        resultado= entero.substring(i, f) + resultado;
+    }
+    
+    //Comprobamos si el numero tiene punto decimal
+    if (decimal != undefined) {
+        resultado= resultado + "," + decimal;
+    }
+    return resultado
   }
-  
-  //Comprobamos si el numero tiene punto decimal
-  if (decimal != undefined) {
-      resultado= resultado + "," + decimal;
-  }
-  return resultado
 }
 
 // Actualizar hora
