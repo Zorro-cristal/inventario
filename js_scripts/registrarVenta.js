@@ -58,7 +58,7 @@ async function obtenerProductos() {
     const categoria_filtro= document.getElementById('inptCategoriaProductoVenta').value;
     
     // Construir el filtro
-    let filtro= "cantidad > 0";
+    let filtro= "cantidad_disponible > 0";
     if (cod_filtro != "") {
         filtro += "AND id_producto = " + cod_filtro;
     }
@@ -77,9 +77,9 @@ async function obtenerProductos() {
     var productos_opciones_tbody= document.createElement("tbody");
     productos_opciones_tbody.id= 'lista_productos_venta';
     productos.forEach(async prod => {
-        const categoriaBdd= await obtenerBdd("categoria", "id = " + prod['categoria_fk'])[0];
+        const categoriaBdd= await obtenerBdd("Categoria", "id_categoria = " + prod['categoria_fk']);
         var tr= document.createElement('tr');
-        tr.onclick="agregarQuitarCanasta(" + prod['id_producto'] + ");";
+        tr.onclick= function () {agregarQuitarCanasta(prod['id_producto']);};
         
         //Creamos las columnas
         var cod= document.createElement('td');
@@ -93,11 +93,11 @@ async function obtenerProductos() {
         cod.style.width= "10%";
         nombre.innerHTML= prod['nombre_producto'];
         nombre.style.width= "45%";
-        categoria.innerHTML= categoriaBdd['nombre_categoria'];
+        categoria.innerHTML= categoriaBdd[0]['nombre_categoria'];
         categoria.style.width= "20%";
         precio.innerHTML= divisorMiles(prod['precio'] || 0);
         precio.style.width= "25%";
-        stock.innerHTML= prod['cantidad'];
+        stock.innerHTML= prod['cantidad_disponible'];
         stock.style.width= "5%";
 
         tr.appendChild(cod);
@@ -115,81 +115,124 @@ async function obtenerProductos() {
 
 // Agregar o quitar de la canasta
 function agregarQuitarCanasta(id) {
-    if (canasta.findIndex(element => element['id'] == id) == -1) {
+    pos= canasta.findIndex(element => element['id'] == id);
+    if (pos == -1) {
         canasta.push({
             'id': id,
-            'cantidad': 1
+            'cantidad': 1,
+            'descuento': 0,
         });
     } else {
-        canasta.splice(canasta.findIndex(element => element['id'] == id), 1);
+        canasta[pos]['cantidad']++;
     }
     //Actualizamos la tabla
     actualizarTabla();
 }
 
 //Funcion para actualizar tabla
-function actualizarTabla() {
+async function actualizarTabla() {
     const tbody= document.getElementById('canasta_body');
     var new_tbody= document.createElement('tbody');
     new_tbody.id= "canasta_body";
     var cantidad_total= 0;
     var subTotal_total= 0;
-    //Agregamos los productos a la tabla
-    for (i= canasta.length - 1; i >= 0; i--) {
+    //Agregamos los productos a la tabla si existen
+    for (let i= canasta.length - 1; i >= 0; i--) {
         //Obtenemos mas informacion del producto
-        var productPos;
-        productPos= productos.findIndex(
-            element => element['id'] == canasta[i]['id']
-        );
+        const productPos= await obtenerBdd("producto", "id_producto = " + canasta[i]['id']);
 
         var tr= document.createElement('tr');
         //Creamos las columnas
         var cantidad= document.createElement('td');
         var nombre= document.createElement('td');
         var precio= document.createElement('td');
-        var subTotal= document.createElement('td');
+        var descuento= document.createElement('td');
+        var coliva0= document.createElement('td');
+        var coliva5= document.createElement('td');
+        var coliva10= document.createElement('td');
         var boton= document.createElement('button');
         var tdboton= document.createElement('td');
         //Les asignamos sus propiedades
         cantidad_total= cantidad_total + parseInt(canasta[i]['cantidad']);
-        cantidad.innerHTML= "<input type='number'  value= '" + canasta[i]['cantidad'] + "' min= '0' style='width: 100%;' onchange='canasta[id]['cantidad']= this.value;'/>";
+        let input = document.createElement('input');
+        input.type = 'number';
+        input.value = canasta[i]['cantidad'];
+        input.min = '0';
+        input.style.width = '100%';
+        input.onchange = function() {
+            canasta[i]['cantidad'] = this.value;
+        };
+        cantidad.appendChild(input);
         cantidad.style.width= "15%";
-        nombre.innerHTML= productos[productPos]['nombre'];
+        nombre.innerHTML= productPos[0]['nombre_producto'];
         nombre.style.width= "35%";
-        precio.innerHTML= divisorMiles(canasta[i]['precio']);
+        precio.innerHTML= divisorMiles(productPos[0]['precio']);
         precio.style.width= "20%";
-        var sub= parseFloat(canasta[i]['precio']);
+        let input2 = document.createElement('input');
+        input2.type = 'number';
+        input2.value = canasta[i]['descuento'];
+        input2.min = '0';
+        input2.style.width = '100%';
+        input2.onchange = function() {
+            canasta[i]['descuento'] = this.value;
+        };
+        descuento.appendChild(input2);
+        var sub= parseFloat(productPos[0]['precio']);
         sub= sub - parseFloat(canasta[i]['descuento']);
         sub= sub * parseInt(canasta[i]['cantidad']);
-        subTotal.innerHTML= divisorMiles(sub);
-        subTotal_total= subTotal_total + sub;
-        boton.innerHTML= "Eliminar de la lista";
-        boton.className= "btn btn-primary";
-        boton.onclick= (e) => {eliminarProductoLista(this)};;
+        iva= parseFloat(productPos[0]['impuesto']);
+        iva0= 0;
+        iva5= 0;
+        iva10= 0;
+        switch (iva) {
+            case 0:
+                iva0= sub;
+                break;
+            case 5:
+                iva5= sub * 1.05;
+                break;
+            case 10:
+                iva10= sub * 1.1;
+            default:
+                alert("El impuesto del producto no es valido")
+                break;
+        }
+        subTotal_total= subTotal_total + iva0 + iva5 + iva10;
+        coliva0.innerHTML= iva0 == 0 ? "" : divisorMiles(iva0);
+        coliva5.innerHTML= iva5 == 0 ? "" : divisorMiles(iva5);
+        coliva10.innerHTML= iva10 == 0 ? "" : divisorMiles(iva10);
+        boton.innerHTML= '<svg xmlns="http://www.w3.org/2000/svg" width="16" style="color:red;" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16"><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/></svg>';
+        boton.classList.add("btn", "btn-outline-danger");
+        boton.onclick = (function(canasta) {
+            return function() {
+                eliminarProducto(canasta[i]['id']);
+            };
+        })(canasta);
+        console.log(boton);
+        tdboton.appendChild(boton);
         tdboton.style.width= "15%";
         //Le agregamos los hijos al tr
-        tr.appendChild(cantidad);
         tr.appendChild(nombre);
+        tr.appendChild(cantidad);
+        tr.appendChild(descuento);
         tr.appendChild(precio);
-        tr.appendChild(subTotal);
+        tr.appendChild(coliva0);
+        tr.appendChild(coliva5);
+        tr.appendChild(coliva10);
         tr.appendChild(tdboton);
         //Agregamos el hijo al tbody
         new_tbody.appendChild(tr);
     }
     tbody.parentNode.replaceChild(new_tbody, tbody);
 
-    //Actualizamos el pie de la tabla
-    document.getElementById('cant_total').innerHTML= divisorMiles(cantidad_total);
-    document.getElementById('total').innerHTML= divisorMiles(subTotal_total);
-
     document.getElementById('productoDialog').close();
 }
 
 //Funcion para eliminar producto de la lista
-function eliminarProducto(boton) {
-    var pos= boton.parentNode.rowIndex;
-    const element= canasta[pos];
-    canasta.splice(element['id'], element['id'] + 1);
+function eliminarProducto(pos) {
+    console.log(canasta, pos);
+    canasta= canasta.filter(c => c.id != pos);
+    console.log(canasta);
     actualizarTabla();
 }
 
@@ -260,11 +303,44 @@ function anhadirProducto() {
 
 //Funcion para enviar los datos del formulario principal
 function enviarDatos() {
+    console.log(canasta);
+    let datos;
     if (canasta.length > 0) {
-        document.getElementById("form_principal").action= "../php/registrarNuevaVenta.php";
+        $.ajaxSetup({async: false});
+        $.ajax({
+            url: "../php/registrarNuevaVenta.php",
+            type: "post",
+            data: {
+                "fecha": document.getElementById("fecha_venta").value,
+                "cedula": divisorMiles(document.getElementById("cedula_venta").value, true),
+                "num_factura": 132,
+                "canasta": canasta
+            },
+            error: function (jqXHR, textstatus, errorThrowm) {
+                //parametros que reciben los erroes si hubiera alguno
+                console.log(jqXHR);
+                console.log(jqXHR.responseText);
+                console.warn(textstatus);
+                console.log(errorThrowm);
+                alert("Error al obtener los datos de la base de datos");
+            },
+            success: function (datos) {
+                console.log(datos)
+                if (datos === "") {
+                    alert("Ningun dato obtenido de la base de datos");
+                    datos= [];
+                } else {
+                    datos= JSON.parse(datos);
+                    limpiarCamposVenta();
+                    alert("Venta registrada con exito");
+                }
+            }
+        });
+        $.ajaxSetup({async: true});
     } else {
         alert("No existe ningun producto cargado en el carro");
     }
+    return datos;
 }
 
 // Funcion para limpiar los campos
@@ -274,6 +350,7 @@ function limpiarCamposVenta() {
     document.getElementById('cliente_nombre_venta').value= "";
     canasta= [];
     cliente= null;
+    actualizarTabla();
 
     document.getElementById('inptCodigoProductoVenta').value= "";
     document.getElementById('inptNombreProductoVenta').value= "";

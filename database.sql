@@ -91,6 +91,7 @@ CREATE TABLE Detalles_Transacciones (
     transaccion_fk INT,
     producto_fk INT,
     cantidad INT NOT NULL,
+    precio_venta DECIMAL(10, 2) NOT NULL,
     descuento DECIMAL(10, 2) DEFAULT 0,
     FOREIGN KEY (transaccion_fk) REFERENCES Transacciones(id_transacciones),
     FOREIGN KEY (producto_fk) REFERENCES Producto(id_producto)

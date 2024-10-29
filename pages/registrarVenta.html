@@ -20,6 +20,49 @@
         </script>
     </head>
     <body onload="cargarPagina();">
+        <dialog class="container-base-primary" id="productoDialog">
+            <div class="d-flex justify-content-around">
+                <h3 class="h3 text-light">Agregar producto a la lista</h3>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label for="nombre_product_canasto" class="text-light">Nombre del producto:</label>
+                <input id="nombre_product_canasto" class="form-control" placeholder="Ingrese el nombre del producto" onkeyup="actualizarSelect()" onchange="actualizarSelect()" />
+            </div>
+            <div class="form-group">
+                <label class="text-light" for="disponible_canasto">Disponible en stock:</label>
+                <input id="disponible_canasto" class="col-md-7" value="0" type="number" readonly />
+            </div>
+            <br/>
+            <div class="form-group">
+                <label for="cant_canasto" class="text-light">Ingrese la cantidad comprada:</label>
+                <input id="cant_canasto" class="form-control col-md-7" placeholder="Ingrese la cantidad comprada" type="number" required onkeyup="calcularDescuento();calcularCosto();calcularSubtotal();" onchange="calcularCosto();calcularDescuento();calcularSubtotal();"/>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label for="descuento_canasto" class="text-light">Ingrese el descuento por unidad:</label>
+                <input id="descuento_canasto" class="form-control col-md-7" placeholder="Ingrese el descuento por unidad" type="number" value="0" onkeyup="calcularDescuento();calcularSubtotal()" onchange="calcularDescuento();calcularSubtotal();"/>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label class="text-light col-md-7" for="total_desc">Total del descuento:</label>
+                <input id="total_desc" class="col-md-5" value="0" type="number" readonly />
+            </div>
+            <br/>
+            <div class="form-group">
+                <label class="text-light col-md-5">Total costo:</label>
+                <input id="total_prec" class="col-md-7" type="number" readonly value="0" />
+            </div>
+            <br/>
+            <div class="form-group">
+                <label class="text-light col-md-5" for="sub_total">SubTotal:</label>
+                <input id="sub_total" class="col-md-7" type="number" readonly value="0"/>
+            </div>
+            <div class="mt-3 d-flex justify-content-around">
+                <button class="btn btn-primary" onclick="anhadirProducto()">Agregar producto</button>
+                <button class="btn btn-primary" onclick="document.getElementById('productoDialog').close()">Cancelar</button>
+            </div>
+        </dialog>
         <header class="d-flex flex-wrap py-1 mb-2 border-bottom container-base">
             <div class="justify-content-center" style="width: 90%;">
                 <h1 class="h1 d-flex justify-content-center">Datos de la venta</h1>
@@ -119,7 +162,7 @@
                                 <th rowspan="2" style="width: 5%">Descuento</th>
                                 <th rowspan="2" style="width: 20%">Precio unit.</th>
                                 <th class="text-center" style="width: 24%" colspan="3">IVA</th>
-                                <th rowspan="2" style="width: 20%">SubTotal</th>
+                                <th rowspan="2"></th>
                             </tr>
                             <tr>
                                 <th style="width: 8%">Exenta</th>
@@ -127,7 +170,7 @@
                                 <th style="width: 8%">10%</th>
                             </tr>
                         </thead>
-                        <tbody id="detalleVenta">
+                        <tbody id="canasta_body">
                             <tr id="totalesTablaVenta">
                                 <th style="width: 26%"></th>
                                 <th style="width: 5%">0</th>
@@ -136,7 +179,7 @@
                                 <th style="width: 8%">0</th>
                                 <th style="width: 8%">0</th>
                                 <th style="width: 8%">0</th>
-                                <th style="width: 20%">0</th>
+                                <th></th>
                             </tr>
                         </tbody>
                     </table>
