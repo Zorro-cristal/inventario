@@ -12,7 +12,7 @@ async function buscarVentas() {
   filtro += (cedula != "") ? " AND c.cedula = " + cedula : "";
   filtro += (fecha != "") ? " AND t.fecha = '" + fecha + "'" : "";
   
-  ventas= await obtenerBdd("Transacciones t, Cliente c", filtro);
+  ventas= await obtenerBdd("Transacciones t, Clientes c", filtro);
   if (ventas.length == 0) {
     alert("No se encontro ninguna venta");
     return;
@@ -39,7 +39,7 @@ async function dialogDetalles(event, element) {
   var descuent_total= 0;
   var precio_total= 0;
   filtro= "dt.producto_fk= p.id_producto AND dt.transaccion_fk = " + venta_select;
-  detalle_ventas= await obtenerBdd("detalles_transacciones dt, producto p", filtro);
+  detalle_ventas= await obtenerBdd("detalles_transacciones dt, productos p", filtro);
 console.log(detalle_ventas);
   var tbody_content= '<tbody id="detalle_ventas">';
   for (i= 0; i < detalle_ventas.length; i++) {
@@ -92,7 +92,7 @@ async function actualizarTabla() {
           var fecha= ventas[i]['fecha'];
           var monto= 0;
 
-          const detalle_ventas= await obtenerBdd("detalles_transacciones d, Producto p", "p.id_producto = d.producto_fk AND d.transaccion_fk = " + i);
+          const detalle_ventas= await obtenerBdd("detalles_transacciones d, Productos p", "p.id_producto = d.producto_fk AND d.transaccion_fk = " + i);
           for (j= 0; j < detalle_ventas.length; j++) {
             if (detalle_ventas[j]['venta_fk'] == ventas[i]['id']) {
                 var descuento= parseFloat(detalle_ventas[j]['descuento']) || 0;
