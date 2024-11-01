@@ -11,13 +11,13 @@ async function cargarPagina() {
     document.getElementById("fecha_venta").value= fecha.toISOString().substring(0, 10);
 
     //Obtenemos los datos de la base de datos
-    const categorias= await obtenerBdd("categoria");
+    const categorias= await obtenerBdd("categorias");
 
     let categorias_opciones= "";
     // Asignar las categorias
     categorias_opciones += "<option value='' selected>Todos</option>";
     categorias.forEach(cat => {
-        categorias_opciones += "<option value='" + cat['id'] + "'>" + cat['nombre'] + "</option>";
+        categorias_opciones += "<option value='" + cat['id_categoria'] + "'>" + cat['nombre_categoria'] + "</option>";
     });
     document.getElementById("inptCategoriaProductoVenta").innerHTML= categorias_opciones;
 
@@ -70,7 +70,7 @@ async function obtenerProductos() {
     }
 
     // Obtenemos los productos
-    const productos= await obtenerBdd("producto", filtro);
+    const productos= await obtenerBdd("productos", filtro);
     console.log("Productos obtenidos: ",productos, filtro);
     
     // Actualizamos la tabla

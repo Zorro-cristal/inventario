@@ -1,3 +1,4 @@
+use inventario;
 -- Crear tabla Categoria
 CREATE TABLE Categorias (
     id_categoria INT AUTO_INCREMENT PRIMARY KEY,
@@ -102,4 +103,4 @@ CREATE TABLE Detalles_Transacciones (
 );
 
 -- Insertar datos de prueba en Detalles_Transacciones
-INSERT INTO Detalles_Transacciones (transaccion_fk, producto_fk, cantidad, descuento) VALUES (3, 3, 2, 500);
+INSERT INTO Detalles_Transacciones (transaccion_fk, producto_fk, cantidad, descuento) VALUES (1, 3, 2, 500);

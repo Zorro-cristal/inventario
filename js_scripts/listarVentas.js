@@ -88,7 +88,7 @@ async function actualizarTabla() {
       //populate_with_new_rows(new_tbody);
       for (i= ventas.length - 1; i >= 0; i--) {
           var id_vent= ventas[i]['id_transacciones'];
-          var nro_factura= ventas[i]['numero_factura'] || "";
+          var nro_factura= ventas[i]['num_factura'] || "";
           var fecha= ventas[i]['fecha'];
           var monto= 0;
 
