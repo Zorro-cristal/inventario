@@ -1,8 +1,8 @@
 // Funcion para dividir los numeros con miles
 function divisorMiles(texto, eliminar= false) {
   if (eliminar) {
-    texto= texto.toString();
-    texto= texto.replace('.', '');
+    texto= texto.replaceAll('.', '');
+    texto= texto.replaceAll(',', '.');
     return texto;
   } else {
     texto= texto.toString();
@@ -109,8 +109,9 @@ function obtencionBdd(sql) {
         rejected(errorThrowm);
       },
       success: function (datos) {
-        console.log(datos)
-        if (datos === "") {
+        console.log("respuesta obtenida: ",datos)
+        if (datos == "") {
+            console.error("Ningun dato obtenido");
             alert("Ningun dato obtenido de la base de datos");
             datos= [];
         } else {

@@ -11,7 +11,7 @@ async function cargarPagina() {
     document.getElementById("fecha_venta").value= fecha.toISOString().substring(0, 10);
 
     //Obtenemos los datos de la base de datos
-    const categorias= await obtenerBdd("categoria");
+    const categorias= await obtenerBdd("categorias");
 
     let categorias_opciones= "";
     // Asignar las categorias
@@ -37,7 +37,7 @@ async function obtenerCliente() {
     if (cedula.split("-").length > 1) {
         filtro += " AND ruc = " + cedula.split("-")[1];
     }
-    cliente= await obtenerBdd("cliente", filtro) || null;
+    cliente= await obtenerBdd("clientes", filtro) || null;
     if (cliente == null || cliente.length == 0) {
         alert("El cliente no existe");
         return;
@@ -70,16 +70,16 @@ async function obtenerProductos() {
     }
 
     // Obtenemos los productos
-    const productos= await obtenerBdd("producto", filtro);
+    const productos= await obtenerBdd("productos", filtro);
     console.log("Productos obtenidos: ",productos, filtro);
     
     // Actualizamos la tabla
     var productos_opciones_tbody= document.createElement("tbody");
     productos_opciones_tbody.id= 'lista_productos_venta';
     productos.forEach(async prod => {
-        const categoriaBdd= await obtenerBdd("Categoria", "id_categoria = " + prod['categoria_fk']);
+        const categoriaBdd= await obtenerBdd("Categorias", "id_categoria = " + prod['categoria_fk']);
         var tr= document.createElement('tr');
-        tr.onclick= function () {agregarQuitarCanasta(prod['id_producto']);};
+        tr.onclick= function () {agregarQuitarCanasta(prod['id_producto'], prod['precio']);};
         
         //Creamos las columnas
         var cod= document.createElement('td');
@@ -114,13 +114,14 @@ async function obtenerProductos() {
 }
 
 // Agregar o quitar de la canasta
-function agregarQuitarCanasta(id) {
+function agregarQuitarCanasta(id,precio_venta) {
     pos= canasta.findIndex(element => element['id'] == id);
     if (pos == -1) {
         canasta.push({
             'id': id,
             'cantidad': 1,
             'descuento': 0,
+            'precio': precio_venta
         });
     } else {
         canasta[pos]['cantidad']++;
@@ -139,7 +140,7 @@ async function actualizarTabla() {
     //Agregamos los productos a la tabla si existen
     for (let i= canasta.length - 1; i >= 0; i--) {
         //Obtenemos mas informacion del producto
-        const productPos= await obtenerBdd("producto", "id_producto = " + canasta[i]['id']);
+        const productPos= await obtenerBdd("productos", "id_producto = " + canasta[i]['id']);
 
         var tr= document.createElement('tr');
         //Creamos las columnas
@@ -275,35 +276,8 @@ function calcularSubtotal() {
     }
 }
 
-//Funcion para agregar producto al canasto
-function anhadirProducto() {
-    const id= document.getElementById('lista_producto').value;
-    const cant= document.getElementById('cant').value;
-    var descuento= document.getElementById('descuento').value;
-    if (descuento == "" || descuento == undefined) {
-        descuento= 0;
-    }
-    const precio_vent= productos.filter(
-        element => element['id'] == id
-    )[0]['precio_venta'];
-    const element= {
-        id: id,
-        cantidad: cant,
-        descuento: descuento,
-        precio: precio_vent
-    };
-    canasta.push(element);
-    actualizarTabla();
-
-    //Actualizamos tambien el input canasta
-    const canastaJson= JSON.stringify(canasta);
-    document.getElementById('canasta').value= canastaJson;
-    console.log(canasta);
-}
-
 //Funcion para enviar los datos del formulario principal
 function enviarDatos() {
-    console.log(canasta);
     let datos;
     if (canasta.length > 0) {
         $.ajaxSetup({async: false});
@@ -314,7 +288,8 @@ function enviarDatos() {
                 "fecha": document.getElementById("fecha_venta").value,
                 "cedula": divisorMiles(document.getElementById("cedula_venta").value, true),
                 "num_factura": 132,
-                "canasta": canasta
+                "canasta": JSON.stringify(canasta),
+                "deuda": 0
             },
             error: function (jqXHR, textstatus, errorThrowm) {
                 //parametros que reciben los erroes si hubiera alguno
@@ -326,11 +301,12 @@ function enviarDatos() {
             },
             success: function (datos) {
                 console.log(datos)
-                if (datos === "") {
+                datos = JSON.parse(datos);
+                console.log(datos)
+                if (datos[1] !== "exito") {
                     alert("Ningun dato obtenido de la base de datos");
                     datos= [];
                 } else {
-                    datos= JSON.parse(datos);
                     limpiarCamposVenta();
                     alert("Venta registrada con exito");
                 }

@@ -12,7 +12,7 @@ async function buscarVentas() {
   filtro += (cedula != "") ? " AND c.cedula = " + cedula : "";
   filtro += (fecha != "") ? " AND t.fecha = '" + fecha + "'" : "";
   
-  ventas= await obtenerBdd("Transacciones t, Clientes c", filtro);
+  ventas= await obtenerBdd("Transacciones t, Clientes c", filtro, "id_transacciones,num_factura,fecha,nombre_cliente,apellido_cliente");
   if (ventas.length == 0) {
     alert("No se encontro ninguna venta");
     return;
@@ -39,7 +39,7 @@ async function dialogDetalles(event, element) {
   var descuent_total= 0;
   var precio_total= 0;
   filtro= "dt.producto_fk= p.id_producto AND dt.transaccion_fk = " + venta_select;
-  detalle_ventas= await obtenerBdd("detalles_transacciones dt, productos p", filtro);
+  detalle_ventas= await obtenerBdd("detalles_transacciones dt, productos p", filtro, "dt.cantidad,p.nombre_producto,dt.descuento,dt.precio_venta");
 console.log(detalle_ventas);
   var tbody_content= '<tbody id="detalle_ventas">';
   for (i= 0; i < detalle_ventas.length; i++) {
@@ -47,7 +47,7 @@ console.log(detalle_ventas);
     tr= tr + '<td>' + divisorMiles(detalle_ventas[i]['cantidad']) + '</td>';
     tr= tr + '<td>' + detalle_ventas[i]['nombre_producto'] + '</td>';
     tr= tr + '<td>' + divisorMiles(detalle_ventas[i]['descuento'] || 0) + '</td>';
-    subTotal= parseInt(detalle_ventas[i]['cantidad']) * (parseFloat(detalle_ventas[i]['precio']) - parseFloat(detalle_ventas[i]['descuento']));
+    subTotal= parseInt(detalle_ventas[i]['cantidad']) * (parseFloat(detalle_ventas[i]['precio_venta']) - parseFloat(detalle_ventas[i]['descuento']));
     tr= tr + '<td>' + divisorMiles(subTotal) + '</td>';
     tr= tr + '</tr>';
     cant_total += parseFloat(detalle_ventas[i]['cantidad']);
@@ -88,15 +88,15 @@ async function actualizarTabla() {
       //populate_with_new_rows(new_tbody);
       for (i= ventas.length - 1; i >= 0; i--) {
           var id_vent= ventas[i]['id_transacciones'];
-          var nro_factura= ventas[i]['numero_factura'] || "";
+          var nro_factura= ventas[i]['num_factura'] || "";
           var fecha= ventas[i]['fecha'];
           var monto= 0;
 
-          const detalle_ventas= await obtenerBdd("detalles_transacciones d, Productos p", "p.id_producto = d.producto_fk AND d.transaccion_fk = " + i);
+          const detalle_ventas= await obtenerBdd("detalles_transacciones d, Productos p", "p.id_producto = d.producto_fk AND d.transaccion_fk = " + i, "transaccion_fk,precio_venta,descuento,cantidad");
           for (j= 0; j < detalle_ventas.length; j++) {
-            if (detalle_ventas[j]['venta_fk'] == ventas[i]['id']) {
+            if (detalle_ventas[j]['venta_fk'] == ventas[i]['id_transacciones']) {
                 var descuento= parseFloat(detalle_ventas[j]['descuento']) || 0;
-                var precio= parseFloat(detalle_ventas[j]['precio']) || 0;
+                var precio= parseFloat(detalle_ventas[j]['precio_venta']) || 0;
                 precio= precio - descuento;
                 precio= precio * parseInt(detalle_ventas[j]['cantidad']);
                 monto += precio;

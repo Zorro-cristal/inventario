@@ -1,6 +1,6 @@
 <?php
-    $display_errors = ini_get('display_errors');
-    ini_set('display_errors', 0);
+    //$display_errors = ini_get('display_errors');
+    //ini_set('display_errors', 0);
     include './funcionesbdd.php';
     require('./fpdf.php');
     //Definicion de variables
@@ -39,11 +39,16 @@
     $canasta= $_POST['canasta'];
     $canasta= json_decode($canasta, true);
     $total= 0;
+    if (count($canasta) < 1) {
+        $informacion =array("1" => "error","2" => "Ningun producto cargado");
+        echo json_encode($informacion);	
+        exit();
+    }
     //echo json_encode($canasta);
     for ($i= 0; $i < count($canasta); ++$i) {
         $comando= "INSERT INTO detalles_transacciones(producto_fk,transaccion_fk, cantidad, descuento, precio_venta) VALUES (";
-        echo "<br/>Insertando en la tablaDetalle_ventas<br/>";
-        echo $comando;
+        // echo "<br/>Insertando en la tablaDetalle_ventas<br/>";
+        
         if ($canasta[$i]['descuento'] == "" || isset($canasta[$i]['descuento'])){
             $comando= $comando . $canasta[$i]['id'] . ", " . $idVenta . ", " . $canasta[$i]['cantidad'] . ", 0, " . $canasta[$i]['precio'] . ")";
             //Se genera el monto total para casos de deudas
@@ -56,14 +61,14 @@
         modificarBdd($comando);
         $total= $total + floatval($monto);
         //Se resta el producto del stock actual
-        $comando= 'SELECT stock FROM Productos WHERE id=' . $canasta[$i]['id'];
+        $comando= 'SELECT cantidad_disponible as stock FROM productos WHERE id_producto=' . $canasta[$i]['id'];
         $stock= conectarBdd($comando);
         $stock= (int)$stock[0]['stock'];
         if ($stock < $canasta[$i]['cantidad']) {
-            $comando= 'UPDATE Producto SET cantidad_disponible= 0 WHERE id_producto= ' . $canasta[$i]['id'] . ';';
+            $comando= 'UPDATE Productos SET cantidad_disponible= 0 WHERE id_producto= ' . $canasta[$i]['id'] . ';';
         } else{
             $stock= $stock - (int)$canasta[$i]['cantidad'];
-            $comando= 'UPDATE Producto SET cantidad_disponible= ' . $stock . ' WHERE id_producto= ' . $canasta[$i]['id'] . ';';
+            $comando= 'UPDATE Productos SET cantidad_disponible= ' . $stock . ' WHERE id_producto= ' . $canasta[$i]['id'] . ';';
         }
         //echo "<br/>Se actualiza el stock<br/>";
         //echo $comando;
@@ -71,8 +76,8 @@
     }
     //Se genera deuda
     $deuda= $_POST['deuda'];
-    if (!empty($deuda)) {
-        $comando= 'UPDATE Cliente SET deuda= ' . $total . ' WHERE cedula=' . $cedula;
+    if (!empty($deuda) || $deuda != 0) {
+        $comando= 'UPDATE Clientes SET deuda= ' . $total . ' WHERE cedula=' . $cedula;
         //echo "<br/>Se genera dueda? " . $deuda . "<br/>";
         //echo $comando;
         modificarBdd($comando);
@@ -86,10 +91,10 @@
     /*$comando= "SELECT establecimiento, punto_expedicion, nro_venta FROM Usuarios WHERE alias= '" . $alias . "';";
     $factura= conectarBdd($comando)[0];*/
     
-    $comando= "SELECT * FROM Transacciones WHERE id= ". $idVenta;
+    $comando= "SELECT * FROM Transacciones WHERE id_transacciones= ". $idVenta;
     $venta= conectarBdd($comando)[0];
     //echo json_encode($venta) . "<br/>";
-    $nro_venta= intval($factura['nro_venta']) + 1;
+    $nro_venta= intval($venta['num_factura']) + 1;
     
     //generamos el numero de factura y actualizamos los datos de laVenta
     //$nro_factura= sprintf("%'.03d", intval($factura['establecimiento'])) . "-" . sprintf("%'.03d", intval($factura['punto_expedicion'])) . "-" . sprintf("%'.07d", $num_factura);
@@ -101,13 +106,13 @@
     $comando= "SELECT * FROM Clientes WHERE cedula= ". $cedula;
     $cliente= conectarBdd($comando)[0];
 
-    $comando= "SELECT p.nombre, p.impuesto, dv.cantidad, dv.descuento, dv.precio_venta FROM detalles_transacciones dv JOIN Productos p ON p.id=dv.producto_fk WHERE transaccion_fk= " . $idVenta;
+    $comando= "SELECT p.nombre_producto, p.impuesto, dv.cantidad, dv.descuento, dv.precio_venta FROM detalles_transacciones dv JOIN Productos p ON p.id_producto=dv.producto_fk WHERE transaccion_fk= " . $idVenta;
     $detalle_ventas= conectarBdd($comando);
     
-    //$comando= "SELECT cod FROM Timbrados WHERE ((fech_autorizacion < '" . $fecha . "') AND (fech_vencimiento > '" . $fecha . "'));";
+    /*$comando= "SELECT cod FROM Timbrados WHERE ((fech_autorizacion < '" . $fecha . "') AND (fech_vencimiento > '" . $fecha . "'));";
     $emp_timbrado= conectarBdd($comando)[0];
     $emp_timbrado= $emp_timbrado['cod'];
-    //echo $emp_timbrado . "<br/>";
+    //echo $emp_timbrado . "<br/>";*/
     
     //Generamos el pdf
     $fech= explode("-", $fecha);
@@ -117,6 +122,7 @@
         $client_ruc= $client_ruc . '-' . $cliente['ruc'];
     }
 
-    echo '{"idTransaccion": '. $idVenta . '}';
+    $informacion =array("1" => "exito","2" => $idVenta);
+    echo json_encode($informacion);	
     exit();
 ?>

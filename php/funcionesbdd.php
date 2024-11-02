@@ -1,33 +1,42 @@
-<?php
-    $servername= "localhost";
-    $user= "root";
-    $contras= "";
-    $dbname= "inventario";
-    $puerto= 3306;
-    function conectarBdd($sql) {
-        GLOBAL $servername, $user, $contras, $dbname, $puerto;
-        $datos= array();
+    <?php
+        $servername= "localhost";
+        $user= "root";
+        $contras= "";
+        $dbname= "inventario";
+        $puerto= 3306;
+        function conectarBdd($sql) {
+            GLOBAL $servername, $user, $contras, $dbname, $puerto;
+            $datos= array();
+            error_reporting(E_ALL);
+            ini_set('display_errors', 1);
 
-        //Crear conexion
-        $conn= mysqli_connect($servername, $user, $contras, $dbname, $puerto);
+            //Crear conexion
+            $conn= mysqli_connect($servername, $user, $contras, $dbname, $puerto);
 
-        //En caso de error en la conexion
-        if (!$conn) {
-            echo '<dialog open>Error al conectar con la base de datos</dialog>';
-            die("Conexion fallida: " . mysqli_connect_error());
+            //En caso de error en la conexion
+            if (!$conn) {
+                echo '<dialog open>Error al conectar con la base de datos</dialog>';
+                die("Conexion fallida: " . mysqli_connect_error());
+            }
+            mysqli_set_charset($conn, "utf8");
+
+            //Ejecutamos el comando y obtenemos el resultado si es que hay
+            $result= mysqli_query($conn, $sql);
+
+            // Verifica si la consulta fue exitosa
+            if ($result === false) {
+                // Imprimir el error de la consulta
+                die("Error en la consulta: " . mysqli_error($conn));
+            }
+
+            while ($row = mysqli_fetch_assoc($result)) {
+                $datos[]= $row;
+            }
+
+            //Cerramos la conexion
+            mysqli_close($conn);
+            return $datos;
         }
-
-        //Ejecutamos el comando y obtenemos el resultado si es que hay
-        $result= mysqli_query($conn, $sql);
-        while ($row = mysqli_fetch_assoc($result)) {
-            $datos[]= $row;
-        }
-
-        //Cerramos la conexion
-        mysqli_close($conn);
-
-        return $datos;
-    }
 
     function modificarBdd($sql) {
         GLOBAL $servername, $user, $contras, $dbname;

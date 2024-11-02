@@ -1,6 +1,6 @@
 <?php
     include './funcionesbdd.php';
-    $ventas= conectarBdd("SELECT * FROM Ventas");
+    $ventas= conectarBdd("SELECT * FROM Transacciones");
     $detalle_ventas= conectarBdd("SELECT * FROM Detalle_transacciones");
     $cliente= conectarBdd("SELECT * FROM Clientes");
     $producto= conectarBdd("SELECT * FROM Productos");
