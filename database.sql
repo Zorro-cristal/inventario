@@ -1,4 +1,3 @@
--- Active: 1728359040015@@127.0.0.1@3306@inventario
 use inventario;
 -- Crear tabla Categoria
 CREATE TABLE Categorias (
@@ -39,9 +38,9 @@ CREATE TABLE Productos (
 );
 
 -- Insertar datos de prueba en Producto
-INSERT INTO `productos` (`nombre_producto`, `cantidad_disponible`, `precio`, `categoria_fk`, `proveedor_fk`) VALUES ('hoja oficio', 100, 500.00, 4, 1);
-INSERT INTO `productos` (`nombre_producto`, `cantidad_disponible`, `precio`, `categoria_fk`, `proveedor_fk`) VALUES ('Cuaderno de una raya', 50, 10000.00, 1, 2);
-INSERT INTO `productos` (`nombre_producto`, `cantidad_disponible`, `precio`, `categoria_fk`, `proveedor_fk`) VALUES ('Abaco juego didáctico', 5, 35000.00, 3, 3);
+INSERT INTO `productos` (`id_producto`,`nombre_producto`, `cantidad_disponible`, `precio`, `categoria_fk`, `proveedor_fk`) VALUES (1,'hoja oficio', 100, 500.00, 4, 1);
+INSERT INTO `productos` (`id_producto`,`nombre_producto`, `cantidad_disponible`, `precio`, `categoria_fk`, `proveedor_fk`) VALUES (2,'Cuaderno de una raya', 50, 10000.00, 1, 2);
+INSERT INTO `productos` (`id_producto`,`nombre_producto`, `cantidad_disponible`, `precio`, `categoria_fk`, `proveedor_fk`) VALUES (3,'Abaco juego didáctico', 5, 35000.00, 3, 3);
 
 -- Crear tabla Cliente
 CREATE TABLE Clientes (
@@ -83,7 +82,7 @@ CREATE TABLE Transacciones (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Insertar datos de prueba en Transacciones
-INSERT INTO Transacciones (cliente_fk, fecha, tipo_fk, categoria_fk, num_factura) VALUES (4360067, '2024-09-22 09:00:00', 1, 1,125);
+INSERT INTO Transacciones (id_transacciones, cliente_fk, fecha, tipo_fk, categoria_fk, num_factura) VALUES (1,4360067, '2024-09-22 09:00:00', 1, 1,125);
 
 -- Crear tabla Detalles_Transacciones
 CREATE TABLE Detalles_Transacciones (

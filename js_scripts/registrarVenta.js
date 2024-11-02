@@ -17,7 +17,7 @@ async function cargarPagina() {
     // Asignar las categorias
     categorias_opciones += "<option value='' selected>Todos</option>";
     categorias.forEach(cat => {
-        categorias_opciones += "<option value='" + cat['id'] + "'>" + cat['nombre'] + "</option>";
+        categorias_opciones += "<option value='" + cat['id_categoria'] + "'>" + cat['nombre_categoria'] + "</option>";
     });
     document.getElementById("inptCategoriaProductoVenta").innerHTML= categorias_opciones;
 
