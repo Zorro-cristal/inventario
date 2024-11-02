@@ -1,3 +1,5 @@
+-- Active: 1728359040015@@127.0.0.1@3306@inventario
+use inventario;
 -- Crear tabla Categoria
 CREATE TABLE Categorias (
     id_categoria INT AUTO_INCREMENT PRIMARY KEY,
@@ -5,11 +7,10 @@ CREATE TABLE Categorias (
 );
 
 -- Insertar datos de prueba en Categoria
-INSERT INTO `categorias` (`nombre_categoria`) VALUES
-('escolar'),
-('oficina'),
-('Juegos Didacticos'),
-('articulos varios');
+INSERT INTO `categorias` (`id_categoria`,`nombre_categoria`) VALUES (1,'escolar');
+INSERT INTO `categorias` (`id_categoria`,`nombre_categoria`) VALUES (2,'oficina');
+INSERT INTO `categorias` (`id_categoria`,`nombre_categoria`) VALUES (3,'Juegos Didacticos');
+INSERT INTO `categorias` (`id_categoria`,`nombre_categoria`) VALUES (4,'articulos varios');
 
 -- Crear tabla Proveedor
 CREATE TABLE Proveedores (
@@ -20,10 +21,9 @@ CREATE TABLE Proveedores (
 );
 
 -- Insertar datos de prueba en Proveedor
-INSERT INTO `proveedores` (`nombre_proveedor`, `direccion_proveedor`, `telefono_proveedor`) VALUES
-('Provin', 'Mcal. López y Cerro Corá, Barrio Centro - Villarri', 2147483647),
-('Matiplast', 'Maelo Gómez, Barrio Centro - Villarrica', 54144704),
-('Fortis', 'Ruta PY 02 Mcal Estigarribia c/ Ayolas, Coronel Ov', 217289141);
+INSERT INTO `proveedores` (`nombre_proveedor`, `direccion_proveedor`, `telefono_proveedor`) VALUES ('Provin', 'Mcal. López y Cerro Corá, Barrio Centro - Villarri', 2147483647);
+INSERT INTO `proveedores` (`nombre_proveedor`, `direccion_proveedor`, `telefono_proveedor`) VALUES ('Matiplast', 'Maelo Gómez, Barrio Centro - Villarrica', 54144704);
+INSERT INTO `proveedores` (`nombre_proveedor`, `direccion_proveedor`, `telefono_proveedor`) VALUES ('Fortis', 'Ruta PY 02 Mcal Estigarribia c/ Ayolas, Coronel Ov', 217289141);
 
 -- Crear tabla Producto
 CREATE TABLE Productos (
@@ -39,10 +39,9 @@ CREATE TABLE Productos (
 );
 
 -- Insertar datos de prueba en Producto
-INSERT INTO `productos` (`nombre_producto`, `cantidad_disponible`, `precio`, `categoria_fk`, `proveedor_fk`) VALUES
-('hoja oficio', 100, 500.00, 4, 1),
-('Cuaderno de una raya', 50, 10000.00, 1, 2),
-('Abaco juego didáctico', 5, 35000.00, 3, 3);
+INSERT INTO `productos` (`nombre_producto`, `cantidad_disponible`, `precio`, `categoria_fk`, `proveedor_fk`) VALUES ('hoja oficio', 100, 500.00, 4, 1);
+INSERT INTO `productos` (`nombre_producto`, `cantidad_disponible`, `precio`, `categoria_fk`, `proveedor_fk`) VALUES ('Cuaderno de una raya', 50, 10000.00, 1, 2);
+INSERT INTO `productos` (`nombre_producto`, `cantidad_disponible`, `precio`, `categoria_fk`, `proveedor_fk`) VALUES ('Abaco juego didáctico', 5, 35000.00, 3, 3);
 
 -- Crear tabla Cliente
 CREATE TABLE Clientes (
@@ -54,11 +53,10 @@ CREATE TABLE Clientes (
 );
 
 -- Insertar datos de prueba en Cliente
-INSERT INTO `clientes` (`cedula`, `nombre_cliente`, `apellido_cliente`, `ruc`, `direccion_cliente`) VALUES
-(456978, 'Eugenio', 'Benítez', NULL, NULL),
-(4869778, 'Laura', 'Vazquez', 1, NULL),
-(5412697, 'Diego', 'Santacruz', 2, 'Mariscal Estigarribia y Teniente Blas Arevalos , Barrio Santa Librada'),
-(4360067, 'Alejandro', 'Alvarez', 0, 'Rubio Ñu, Barrio Ybaroty');
+INSERT INTO `clientes` (`cedula`, `nombre_cliente`, `apellido_cliente`, `ruc`, `direccion_cliente`) VALUES (456978, 'Eugenio', 'Benítez', NULL, NULL);
+INSERT INTO `clientes` (`cedula`, `nombre_cliente`, `apellido_cliente`, `ruc`, `direccion_cliente`) VALUES (4869778, 'Laura', 'Vazquez', 1, NULL);
+INSERT INTO `clientes` (`cedula`, `nombre_cliente`, `apellido_cliente`, `ruc`, `direccion_cliente`) VALUES (5412697, 'Diego', 'Santacruz', 2, 'Mariscal Estigarribia y Teniente Blas Arevalos , Barrio Santa Librada');
+INSERT INTO `clientes` (`cedula`, `nombre_cliente`, `apellido_cliente`, `ruc`, `direccion_cliente`) VALUES (4360067, 'Alejandro', 'Alvarez', 0, 'Rubio Ñu, Barrio Ybaroty');
 
 -- Crear tabla Tipo
 CREATE TABLE Tipos (
@@ -67,19 +65,17 @@ CREATE TABLE Tipos (
 );
 
 -- Insertar datos de prueba en Tipo
-INSERT INTO `tipos` (`nombre_tipo`) VALUES
-('venta de articulo'),
-('compra de producto'),
-('Servicio de fotocopia'),
-('Servicio varios ');
+INSERT INTO `tipos` (`nombre_tipo`) VALUES ('venta de articulo');
+INSERT INTO `tipos` (`nombre_tipo`) VALUES ('compra de producto');
+INSERT INTO `tipos` (`nombre_tipo`) VALUES ('Servicio de fotocopia');
+INSERT INTO `tipos` (`nombre_tipo`) VALUES ('Servicio varios');
 
 -- Crear tabla Transacciones
 CREATE TABLE Transacciones (
   `id_transacciones` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `cliente_fk` int(9) NOT NULL,
   `tipo_fk` int(7) NOT NULL,
-  `categoria_fk` int(8) NOT NULL,
-  num_factura INT UNSIGNED NOT NULL,
+  `num_factura` INT UNSIGNED NOT NULL,
   `fecha` varchar(20) NOT NULL,
   FOREIGN KEY (cliente_fk) REFERENCES Clientes(cedula),
   FOREIGN KEY (tipo_fk) REFERENCES Tipos(id_tipo),
@@ -102,4 +98,4 @@ CREATE TABLE Detalles_Transacciones (
 );
 
 -- Insertar datos de prueba en Detalles_Transacciones
-INSERT INTO Detalles_Transacciones (transaccion_fk, producto_fk, cantidad, descuento) VALUES (3, 3, 2, 500);
+INSERT INTO Detalles_Transacciones (transaccion_fk, producto_fk, cantidad, descuento) VALUES (1, 3, 2, 500);
