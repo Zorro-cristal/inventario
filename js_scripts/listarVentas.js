@@ -2,7 +2,7 @@ var ventas;
 var venta_select;
 
 // Funcion para buscar las ventas
-async function buscarVentas() {
+async function buscarVentas(exportarCSV= false) {
   let filtro= "t.cliente_fk=c.cedula";
   // Obtener los filtros
   var cedula= document.getElementById('ced_busc_listado_venta').value || "";
@@ -12,13 +12,52 @@ async function buscarVentas() {
   filtro += (cedula != "") ? " AND c.cedula = " + cedula : "";
   filtro += (fecha != "") ? " AND t.fecha = '" + fecha + "'" : "";
   
-  ventas= await obtenerBdd("Transacciones t, Clientes c", filtro, "id_transacciones,num_factura,fecha,nombre_cliente,apellido_cliente");
+  const campos= "id_transacciones,num_factura,fecha,nombre_cliente,apellido_cliente";
+  ventas= await obtenerBdd("Transacciones t, Clientes c", filtro, campos);
   if (ventas.length == 0) {
     alert("No se encontro ninguna venta");
     return;
   }
 
   actualizarTabla();
+
+  if (exportarCSV) {
+    console.log("Generando csv");
+    $.ajax({
+      url: '../php/exportarCSV.php',
+      type: 'post',
+      data: {
+        "tabla": "Transacciones t, Clientes c",
+        "filtros": filtro,
+        "campos": campos
+      },
+      success: function (response) {
+        console.log("Respuesta: " + response);
+        var downloadLink = document.createElement("a");
+        var fileData = ['\ufeff'+response];
+
+        var blobObject = new Blob(fileData,{
+          type: "text/csv;charset=utf-8;"
+        });
+
+        var url = URL.createObjectURL(blobObject);
+        downloadLink.href = url;
+        downloadLink.download = "informeVentas.csv";
+
+        /*
+        * Actually download CSV
+        */
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR);
+        console.log(textStatus);
+        console.log(errorThrown);
+      }
+    })
+  }
 }
 
 //Funcion que muestra el dialog detalle ventas
@@ -119,6 +158,7 @@ async function actualizarTabla() {
       new_tbody.innerHTML= tbody_content;
       tbody.parentNode.replaceChild(new_tbody, tbody);
       document.getElementById('monto_total').innerText= divisorMiles(monto_total);
+      document.getElementById("btnExportarCSV").disabled= false;
   }
 
 //Funcion para eliminar la venta
