@@ -1,3 +1,32 @@
+// Funcion para dividir los numeros con miles
+function divisorMiles(texto, eliminar= false) {
+  if (eliminar) {
+    texto= texto.replaceAll('.', '');
+    texto= texto.replaceAll(',', '.');
+    return texto;
+  } else {
+    texto= texto.toString();
+    decimal= texto.split('.')[1];
+    entero= texto.split('.')[0];
+    resultado= "";
+
+    for (var i=0, f= entero.length; f >= 0; f= f - 3) {
+        i= (i < 0) ? i= 0 : f - 3;
+        if (resultado != "" && f > 0) {
+          console.log(i, f)
+            resultado= "." + resultado;
+        }
+        resultado= entero.substring(i, f) + resultado;
+    }
+    
+    //Comprobamos si el numero tiene punto decimal
+    if (decimal != undefined) {
+        resultado= resultado + "," + decimal;
+    }
+    return resultado
+  }
+}
+
 // Actualizar hora
 function updateClock() {
     const now = new Date();
@@ -41,7 +70,6 @@ function cambiarTema(opc= undefined, inicio= false) {
             btn.style.display= "";
         });
     }
-    
 
     body.classList.remove(`${tema_actual}-mode`);
     body.classList.add(`${nuevo_tema}-mode`);
@@ -51,18 +79,19 @@ function cambiarTema(opc= undefined, inicio= false) {
 }
 
 //Funcion para obtener datos de una tabla
-async function obtenerBdd(tabla, filtro= "") {
+async function obtenerBdd(tabla, filtro= "", campos= "*") {
     var datos;
-    sql= "SELECT * FROM " + tabla;
+    sql= "SELECT " + campos + " FROM " + tabla;
     if (filtro != "") {
         sql= sql + " WHERE (" + filtro + ")";
     }
     sql= sql + ";";
-    promesa= await obtencionBdd(sql).then((valor) => datos= valor);
+    await obtencionBdd(sql).then((result) => {datos= result}).catch((err) => console.log("Error: ",err));
     return datos;
 }
 
 function obtencionBdd(sql) {
+  console.log("Consulta sql: ", sql);
   return new Promise(function (resolve, rejected) {
     $.ajaxSetup({async: false});
     $.ajax({
@@ -78,10 +107,16 @@ function obtencionBdd(sql) {
         console.log(errorThrowm);
         alert("Error al obtener los datos de la base de datos");
         rejected(errorThrowm);
-        return
       },
       success: function (datos) {
-        datos= JSON.parse(datos);
+        console.log("respuesta obtenida: ",datos)
+        if (datos == "") {
+            console.error("Ningun dato obtenido");
+            alert("Ningun dato obtenido de la base de datos");
+            datos= [];
+        } else {
+          datos= JSON.parse(datos);
+        }
         resolve(datos);
       }
     });

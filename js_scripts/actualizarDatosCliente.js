@@ -9,7 +9,7 @@ if (validarRol("administrador") || validarRol("empleado")) {
 async function obtenerCliente() {
     var cedula= document.getElementById('cedula').value;
     document.getElementById('buscarClienteDialog').close();
-    cliente= await obtenerBdd("Clientes", "cedula = " + cedula);
+    cliente= await obtenerBdd("Cliente", "cedula = " + cedula);
     cliente= cliente[0];
     if (cliente == undefined) {
         var mensaje= document.getElementById('mensaje');

@@ -21,45 +21,49 @@
     </head>
     <body onload="paginaCargada()">
         <!-- Dialogo que muestra informacion de la venta -->
-        <dialog class="imagen-fondo" id="detalle_ventaDialog">
-            <input type="hidden" id="id_venta"/>
-            <div class="form group">
-                <label for="nro_fact" class="text-light">Numero factura</label>
-                <input id="nro_fact" readonly />
+        <dialog class="container-base-primary" id="detalle_ventaDialog" style="width: 100vw;">
+            <div class="container-base-secondary">
+                <input type="hidden" id="id_venta"/>
+                <div class="form group">
+                    <label for="nro_fact_detalle" class="text-light">Numero factura</label>
+                    <input id="nro_fact_detalle" class="form-control"/>
+                </div>
+                <br/>
+                <div class="form group">
+                    <label for="client_detalle"  class="text-light">Cliente</label>
+                    <input id="client_detalle" disabledclass="form-control"/>
+                </div>
+                <br/>
+                <div class="form group">
+                    <label for="ruc_detalle" class="text-light">Ruc</label>
+                    <input id="ruc_detalle" disabled class="form-control"/>
+                </div>
             </div>
-            <br/>
-            <div class="form group">
-                <label for="client"  class="text-light">Cliente</label>
-                <input id="client" readonly />
-            </div>
-            <br/>
-            <div class="form group">
-                <label for="ruc" class="text-light">Ruc</label>
-                <input id="ruc" readonly />
-            </div>
-            <br/>
-            <table class="table table-hover table-dark m-3" style="width: 98%;">
-                <thead>
-                    <tr>
-                        <th scope="col" style="width: 10%;">Cantidad</th>
-                        <th scope="col" style="width: 50%;">Producto</th>
-                        <th scope="col" style="width: 20%;">Descuento</th>
-                        <th scope="col" style="width: 20%;">SubTotal</th>
-                    </tr>
-                </thead>
-                <tbody id="detalle_ventas">
-                    <!-- Informacion de la venta seleccionada -->
-                </tbody>
-                <tfoot>
-                    <th id="cantidad_total"></th>
-                    <th></th>
-                    <th id="descuento_total"></th>
-                    <th id="subTotal_total"></th>
-                </tfoot>
-            </table>
-            <div class="d-flex justify-content-around">
-                <button class="btn btn-primary" onclick="eliminarVenta()">Eliminar venta</button>
-                <button class="btn btn-primary" onclick="document.getElementById('detalle_ventaDialog').close()">Atras</button>
+            <div class="container-base-secondary">
+                <table class="table-border m-3" style="width: 98%;">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width: 10%;">Cantidad</th>
+                            <th scope="col" style="width: 50%;">Producto</th>
+                            <th scope="col" style="width: 20%;">Descuento</th>
+                            <th scope="col" style="width: 20%;">SubTotal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="detalle_ventas">
+                        <!-- Informacion de la venta seleccionada -->
+                    </tbody>
+                    <tfoot>
+                        <th id="cantidad_total"></th>
+                        <th></th>
+                        <th id="descuento_total"></th>
+                        <th id="subTotal_total"></th>
+                    </tfoot>
+                </table>
+                <div class="d-flex justify-content-around" style="width: 100%">
+                    <button type="button" class="btn btn-outline-warning" onclick='eliminarVenta()'>Eliminar Venta</button>
+                    <button type="submit" class="btn btn-outline-success" onclick="guardarDetalles()">Guardar cambios</button>
+                    <button type="button" class="btn btn-outline-danger" onclick="document.getElementById('detalle_ventaDialog').close()">Atras</button>
+                </div>
             </div>
         </dialog>
         <header class="d-flex flex-wrap py-1 mb-2 border-bottom container-base">
@@ -95,17 +99,23 @@
         <main>
             <div class="card container-base-primary grid p-1 mt-4">
                 <div class="card-body container-base-secondary">
-                    <div class="row justify-content-around">
-                        <label for="ced_busc_listado_venta" class="form-label">Ingrese la cedula del cliente:</label>
-                        <input id="ced_busc_listado_venta" class="form-control" placeholder="Cedula del cliente" type="number" onkeyup="filtraCed(this.value)" onchange="filtraCed(this.value)"/>
+                    <div class="row justify-content-around p-1">
+                        <div class="col-6">
+                            <div class="row justify-content-around">
+                                <label for="ced_busc_listado_venta" class="form-label">Ingrese la cedula del cliente:</label>
+                                <input id="ced_busc_listado_venta" class="form-control" placeholder="Cedula-ruc" onkeyup="(event.keyCode === 13) && buscarVentas()"/>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row justify-content-around" class="form-label">
+                                <label for="fech_listado_venta" class="form-label">Ingrese la fecha de la venta:</label>
+                                <input id="fech_listado_venta" class="form-control" placeholder="fecha de ventas" type="date" onkeyup="(event.keyCode === 13) && buscarVentas()"/>
+                            </div>
+                        </div>
                     </div>
-                    <div class="row justify-content-around">
+                    <div class="row justify-content-around p-1">
                         <label for="nombre_client_listado_venta" class="form-label">Ingrese el nombre o apellido del cliente:</label>
-                        <input id="nombre_client_listado_venta" class="form-control" placeholder="Nombre o apellido del cliente" onkeyup="filtraNombre(this.value)" onchange="filtraNombre(this.value)"/>
-                    </div>
-                    <div class="row justify-content-around" class="form-label">
-                        <label for="fech_listado_venta" class="form-label">Ingrese la fecha de la venta:</label>
-                        <input id="fech_listado_venta" class="form-control" placeholder="fecha de ventas" type="date" onkeyup="filtraFech(this.value)" onchange="filtraFech(this.value)"/>
+                        <input id="nombre_client_listado_venta" class="form-control" placeholder="Nombre o apellido del cliente" onkeyup="(event.keyCode === 13) && buscarVentas()"/>
                     </div>
                 </div>
             </div>
@@ -128,7 +138,7 @@
                                     Listado de productos vendidos
                                 </td>
                             </tr>
-                            <tr id="totalesTablaListadoVenta">
+                            <tr id="totales_tabla_listado_venta">
                                 <th colspan="3" style="text-align: right;">Total ingreso:</th>
                                 <th id="monto_total">0</th>
                             </tr>
@@ -136,9 +146,6 @@
                     </table>
                     <p class="text-sm-left font-weight-bold ms-3">*Seleccione una venta para ver mas informacion o eliminarla</p>
                 </div>
-            </div>
-            <div class="m-3 d-flex justify-content-around">
-                <button class="btn btn-primary" onclick='location.href= "../index.html"'>Volver al inicio</button>
             </div>
         </main>
         <script type="text/javascript" src="../js_scripts/jquery.js"></script>
