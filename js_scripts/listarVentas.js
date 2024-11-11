@@ -12,7 +12,7 @@ async function buscarVentas(exportarCSV= false) {
   filtro += (cedula != "") ? " AND c.cedula = " + cedula : "";
   filtro += (fecha != "") ? " AND t.fecha = '" + fecha + "'" : "";
   
-  const campos= "id_transacciones,num_factura,fecha,nombre_cliente,apellido_cliente";
+  const campos= "id_transacciones,num_factura,fecha,nombre_cliente,apellido_cliente,c.ruc,c.cedula,(select sum(dt.cantidad*pr.precio*((pr.impuesto/100)+1)) from detalles_transacciones dt, productos pr where dt.transaccion_fk = t.id_transacciones and dt.producto_fk=pr.id_producto) as subtotal";
   ventas= await obtenerBdd("Transacciones t, Clientes c", filtro, campos);
   if (ventas.length == 0) {
     alert("No se encontro ninguna venta");
@@ -132,25 +132,25 @@ async function actualizarTabla() {
           var monto= 0;
 
           const detalle_ventas= await obtenerBdd("detalles_transacciones d, Productos p", "p.id_producto = d.producto_fk AND d.transaccion_fk = " + i, "transaccion_fk,precio_venta,descuento,cantidad");
+          console.log("detalle_ventas:", detalle_ventas);
           for (j= 0; j < detalle_ventas.length; j++) {
             if (detalle_ventas[j]['venta_fk'] == ventas[i]['id_transacciones']) {
                 var descuento= parseFloat(detalle_ventas[j]['descuento']) || 0;
                 var precio= parseFloat(detalle_ventas[j]['precio_venta']) || 0;
                 precio= precio - descuento;
-                precio= precio * parseInt(detalle_ventas[j]['cantidad']);
+                precio= precio * parseFloat(detalle_ventas[j]['cantidad']);
                 monto += precio;
             }
           }
-
           var tr= '<tr onclick="dialogDetalles(event, this)" id= "' + id_vent + '">';
           tr= tr + '<td style= "width: 25%">' + nro_factura + '</td>';
           tr= tr + '<td style= "width: 45%">' + ventas[i]['nombre_cliente'] + ' ' + ventas[i]['apellido_cliente'] + '</td>';
           tr= tr + '<td style= "width: 20%">' + fecha + '</td>';
-          tr= tr + '<td style= "width: 20%">' + divisorMiles(monto) + '</td>';
+          tr= tr + '<td style= "width: 20%">' + divisorMiles(ventas[i]['subtotal']) + '</td>';
           tr= tr + "</tr>";
           tbody_content= tbody_content + tr;
 
-          monto_total += monto;
+          monto_total += parseFloat(ventas[i]['subtotal']);
       }
       pie.children[1].innerHTML= divisorMiles(monto_total);
       tbody_content += "<tr>" + pie.innerHTML + "</tr>";

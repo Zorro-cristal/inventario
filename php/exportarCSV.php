@@ -28,10 +28,12 @@ header('Expires: 0');
 
     // Generamos el csv
     $csv = fopen('php://output', 'w+');
-    $campos= str_replace(",", ";", $campos);
-    fputs($csv, $campos."\n");
 
     foreach ($datos as $key => $value) {
+        if ($key == 0) {
+            // Agrega el encabezado
+            fputcsv($csv, array_keys($value), ';');
+        }
         fputcsv($csv, $value, ';');
     }
 

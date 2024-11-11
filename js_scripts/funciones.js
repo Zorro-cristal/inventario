@@ -1,11 +1,16 @@
 // Funcion para dividir los numeros con miles
-function divisorMiles(texto, eliminar= false) {
-  if (eliminar) {
+function divisorMiles(texto, eliminarFormato= false) {
+  if (eliminarFormato) {
     texto= texto.replaceAll('.', '');
     texto= texto.replaceAll(',', '.');
     return texto;
   } else {
     texto= texto.toString();
+    if (texto.split('.').length > 1) {
+      // Se redondea el numero de ser necesario
+      texto= parseFloat(texto).toFixed(2);
+      texto= texto.toString();
+    }
     decimal= texto.split('.')[1];
     entero= texto.split('.')[0];
     resultado= "";
@@ -86,7 +91,7 @@ async function obtenerBdd(tabla, filtro= "", campos= "*") {
         sql= sql + " WHERE (" + filtro + ")";
     }
     sql= sql + ";";
-    await obtencionBdd(sql).then((result) => {datos= result}).catch((err) => console.log("Error: ",err));
+    await obtencionBdd(sql).then((result) => {datos= result}).catch((err) => console.error("Error: ",err, sql));
     return datos;
 }
 
