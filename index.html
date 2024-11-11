@@ -2,119 +2,124 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu del programa</title>
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-</head>
-<body>
-    <main style="background-image: url('./assets/fondo_principal.jpg'); background-size: cover; height: 91vh;">
-        <div class="d-flex justify-content-end">
-            <div class="btn-group">
-              <button type="button" class="btn btn-outline-secondary" onclick='localStorage.removeItem("alias");window.location.replace("./index.html");'>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-lock" viewBox="0 0 16 16">
-                <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5v-1a1.9 1.9 0 0 1 .01-.2 4.49 4.49 0 0 1 1.534-3.693C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm7 0a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2Zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1Z"></path>
-                </svg>
-              </button>
-            </div>
-          </div>
-        <div class="ms-5">
-            <div class="card bg-secondary bg-opacity-10" style="width: 300px;">
-                <div class="card-body">
-                    <button type="button" class="btn btn-primary bg-gradient m-2" onclick="location.href='./pages/registrarVenta.html'">
-                        Registrar una nueva venta
-                    </button>
-                    <button type="button" class="btn btn-primary bg-gradient m-2" onclick="location.href='./pages/listarDeudas.html'">
-                        Ver deudas
-                    </button>
-                    <button class="btn btn-primary bg-gradient m-2" onclick="location.href='./pages/actualizarDatosCliente.html'" id="modificarClienteBoton">
-                        Actualizar datos del cliente
-                    </button>
-                    <br/>
-                    <button type="button" class="btn btn-primary bg-gradient m-2" onclick="location.href='./pages/listarInventario.html'">
-                        Ver inventario
-                    </button>
-                </div>
-            </div> 
-            <div style="margin: 2%;"></div>
-            <div class="card bg-secondary bg-opacity-10" style="width: 300px;" id="funciones_administrador">
-                <div class="card-body">
-                    <button type="button" class="btn btn-primary bg-gradient m-2" onclick="location.href='./pages/agregarProducto.html'">
-                        Registrar entrada de productos
-                    </button>
-                    <button type="button" class="btn btn-primary bg-gradient m-2" onclick="location.href='./pages/listarVentas.html'">
-                        Ver ventas
-                    </button>
-                    <button type="button" class="btn btn-primary bg-gradient m-2" onclick="location.href='./pages/actualizarDatosProveedor.html'" id="modificarProveedorBoton">
-                        Actualizar datos del proveedor
-                    </button>
-                    <button type="button" class="btn btn-primary bg-gradient m-2" onclick="location.href='./pages/actualizar_timbrado.html'">
-                        Actualizar datos del timbrado
-                    </button>
-                </div>
-            </div>
-        </div>
-    </main>
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 bg-dark bg-gradient mt-0 mb-0">
-        <div class="col-md-4 d-flex align-items-center ms-3">  
-            <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-                <i class="bi bi-bootstrap-fill"></i>
-            </a>
-            <span class="mb-3 mb-md-0 text-muted">© 2022 By Zorro Cristal</span>
-        </div>
-        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex me-3">
-            <li class="ms-3"><a class="text-muted" href="https://www.facebook.com/Zorro.cristal">
-                <i class="bi bi-facebook"></i>
-            </a></li>
-            <li class="ms-3"><a class="text-muted" href="https://www.instagram.com/ale_guaitenho/">
-                <i class="bi bi-instagram"></i>
-            </a></li>
-            <li class="ms-3"><a class="text-muted" href="https://wa.me/595983510916">
-                <i class="bi bi-whatsapp"></i>
-            </a></li>
-            <li class="ms-3"><a class="text-muted" href="https://github.com/Zorro-cristal">
-                <i class="bi bi-github"></i>
-            </a></li>
-        </ul>
-    </footer>
+    <title>Menu</title>
     <script type="text/javascript" src="./js_scripts/jquery.js"></script>
+    <!-- Bootstrap CSS configuraciones -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    
+    <link href="./css/main.css" type="text/css" rel="stylesheet"/>
+    <script type="text/javascript" src="./js_scripts/funciones.js"></script>
+</head>
+<body onload="cambiarTema(undefined, true);">
+    <!-- Barra de menú -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Sistema</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu_principal" aria-controls="menu_principal" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu_principal">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <!-- Menú de Ventas -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="./pages/registrarVenta.html" style="text-decoration: none;" id="menu_registroventa">
+                            <img src="./assets/icons8-boleto-100.png" alt="Venta" class="nav-icon">Nueva Venta
+                        </a>
+                    </li>
+
+                    <!-- Menú de Registrar Productos o servicios -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="menu_registrocompra" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="./assets/icons8-maquina-de-copiar-100.png" alt="Servicio" class="nav-icon">Productos/Servicios
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="menu_registrocompra">
+                            <a class="dropdown-item" href="#">Listar productos y servicios</a>
+                            <a class="dropdown-item" href="#">Registrar un nuevo servicio</a>
+                            <a class="dropdown-item" href="#" id="jmi_nuevoproducto">Registrar nuevo producto</a>
+                        </div>
+                    </li>
+                    
+                    <!-- Menú de Registrar Compra -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="menu_registrocompra" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="./assets/icons8-producto-100.png" alt="Producto" class="nav-icon">Compras
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="menu_registrocompra">
+                            <a class="dropdown-item" href="#" id="jmi_nuevoproducto">Registrar una compra</a>
+                            <a class="dropdown-item" href="#">Listar compras</a>
+                        </div>
+                    </li>
+
+                    <!-- Menú de Proveedores -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="menu_proveedores" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="./assets/icons8-proveedor-100.png" alt="Proveedor" class="nav-icon">Proveedores
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="menu_proveedores">
+                            <a class="dropdown-item" href="#" id="jmi_proveedor">Registrar nuevo proveedor</a>
+                            <a class="dropdown-item" href="#">Actualizar datos del proveedor</a>
+                        </div>
+                    </li>
+
+                    <!-- Menú de Generar Informes -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="./pages/listarVentas.html" style="text-decoration:none;" id="jmi_generarinformes">
+                            <img src="./assets/icons8-pdf-100.png" alt="Informes" class="nav-icon">Generar Informes
+                        </a>
+                        <!-- <div class="dropdown-menu" aria-labelledby="jmi_generarinformes">
+                            <a class="dropdown-item" href="#"><img src="./assets/icons8-pdf-100.png" alt="PDF" class="nav-icon">PDF</a>
+                            <a class="dropdown-item" href="#"><img src="./assets/icons8-microsoft-excel-2019-100.png" alt="Excel" class="nav-icon">Excel</a>
+                        </div> -->
+                    </li>
+                </ul>
+                <ul>
+
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <div class="nav-link">
+                                <!-- Reloj en la ventana principal -->
+                                <span class="clock" id="clock"></span>
+                            </div>
+                        </li>
+                        <li class="nav-item light-btn">
+                            <a class="nav-link" onclick="cambiarTema(opc= 'light')">
+                                <img src="./assets/icons8-dia.png" alt="Claro" class="nav-icon">
+                            </a>
+                        </li>
+                        <li class="nav-item dark-btn">
+                            <a class="nav-link" onclick="cambiarTema(opc= 'dark')">
+                                <img src="./assets/icons8-noche.png" alt="Oscuro" class="nav-icon">
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="menu_salir">
+                                <img src="./assets/icons8-x-100.png" alt="Salir" class="nav-icon">
+                            </a>
+                        </li>
+                    </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-menu">
+        <!-- Logo en el centro de la pantalla -->
+        <div class="container text-center">
+            <img src="./assets/logo.png" alt="Logo" class="logo">
+        </div>
+
+    </main>
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Script para mostrar la hora -->
     <script>
-        try {
-            //Extraemos el alias del usuario
-            user= location.search.split('usuario')[1];
-            user= user.substring(1);
-            //Guardamos el dato en el localStorage
-            localStorage.setItem("alias", user);
-            //Obtenemos el rol
-            $.ajax({
-                url: "./php/obtenerRol.php",
-                type: "post",
-                data: {
-                    'usuario': user
-                },
-                error: function (jqXHR, textstatus, errorThrowm) {
-                    //parametros que reciben los erroes si hubiera alguno
-                    console.log(jqXHR);
-                    console.warn(textstatus);
-                    console.log(errorThrowm);
-                    alert("Error al obtener los datos de la base de datos");
-                    return
-                },
-                success: function (datos) {
-                    alias= JSON.parse(datos)[0].alias.toString();
-                    if (alias != "administrador") {
-                        document.getElementById('funciones_administrador').remove();
-                    }
-                }
-            });
-        } catch (error) {
-            console.log(error);
-            if (localStorage.getItem("alias", user) == null || user == undefined) {
-                window.location.replace("./login.html");
-            }
-        }
+        setInterval(updateClock, 1000);
+        updateClock(); // Inicializa el reloj inmediatamente
     </script>
 </body>
 </html>

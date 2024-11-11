@@ -8,102 +8,53 @@
         <script type="text/javascript" src="../js_scripts/jquery.js"></script>
         <script type="text/javascript" src="../js_scripts/funciones.js"></script>
         <script type="text/javascript" src="../js_scripts/registrarVenta.js"></script>
-        <!-- CSS only -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+        <!-- Bootstrap CSS configuraciones -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <link href="../css/main.css" type="text/css" rel="stylesheet"/>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const temaActual = localStorage.getItem("tema") || 'light';
+                document.body.classList.add(`${temaActual}-mode`);
+            });
+        </script>
+        <script src="../js_scripts/jquery.js"></script>
     </head>
-    <body onload="cargarPagina()">
-        <!-- Dialog para redirigir a deuda -->
-        <dialog style="background-image: url('../assets/fondo_secundario_oscuro.jpg'); background-size: cover;" id="deudaDialog">
-            <div class="d-flex justify-content-around">
-                <span class="badge badge-danger">
-                    <h1 class="h1 text-danger">El cliente tiene una deuda pendiente</h1>
-                </span>
-            </div>
-            <div class="mt-3 d-flex justify-content-around">
-                <button type="button" class="btn btn-primary" onclick='location.href= "./listarDeudas.html";'>Redirigir a pago de deudas</button>
-                <button type="button" class="btn btn-primary" onclick="location.href= '../index.html';">Cancelar venta</button>
-            </div>
-        </dialog>
-        <!-- Dialog para agregar un cliente nuevo -->
-        <dialog style="background-image: url('../assets/fondo_secundario_oscuro.jpg'); background-size: cover;" id="clienteDialog">
-            <div class="d-flex justify-content-around">
-                <span class="badge badge-danger">
-                    <h1 class="h1 text-danger">El cliente no existe</h1>
-                </span>
-            </div>
-            <h4 class="h4 text-light">Ingrese los datos para agregarlo</h4>
-            <form method="dialog">
-                <div class="form-group">
-                    <label for="nombre_client" class="text-light">Nombre:</label>
-                    <input id="nombre_client" class="form-control" placeholder="Ingrese el nombre del cliente" required/>
-                </div>
-                </br>
-                <div class="form-group">
-                    <label for="apellido" class="text-light">Apellido:</label>
-                    <input id="apellido" class="form-control" placeholder="Ingrese el apellido del cliente" required/>
-                </div>
-                </br>
-                <div class="form-group">
-                    <label for="ruc" class="text-light">Ruc:</label>
-                    <input id="ruc" class="form-control" placeholder="Ingrese el ruc del cliente" type="number" maxlength="1" />
-                </div>
-                </br>
-                <div class="form-group">
-                    <label for="direccion" class="text-light">Direccion:</label>
-                    <input id="direccion" class="form-control" placeholder="Ingrese la direccion del cliente" />
-                </div>
-                </br>
-                <div class="form-group">
-                    <label for="fech_nac" class="text-light">Fecha de nacimiento:</label>
-                    <input id="fech_nac" class="form-control" placeholder="Ingrese la fecha de nacimiento del cliente" type="date"/>
-                </div>
-                </br>
-                <div class="mt-3 d-flex justify-content-around">
-                    <button class="btn btn-primary" id="guardarCliente" onclick="registrarCliente()">Guardar cliente</button>
-                    <button class="btn btn-primary" id="limpiarCliente" onclick="limpiarDatosCliente()">Limpiar datos</button>
-                </div>
-            </form>
-        </dialog>
-        <!-- Dialog para agregar un producto al canasto -->
-        <dialog style="background-image: url('../assets/fondo_secundario_oscuro.jpg'); background-size: cover;" id="productoDialog">
+    <body onload="cargarPagina();">
+        <dialog class="container-base-primary" id="productoDialog">
             <div class="d-flex justify-content-around">
                 <h3 class="h3 text-light">Agregar producto a la lista</h3>
             </div>
-            </br>
+            <br/>
             <div class="form-group">
-                <label for="nombre_product" class="text-light">Nombre para filtrar:</label>
-                <input id="nombre_product" class="form-control" placeholder="Ingrese el nombre del producto" onkeyup="actualizarSelect()" onchange="actualizarSelect()" />
+                <label for="nombre_product_canasto" class="text-light">Nombre del producto:</label>
+                <input id="nombre_product_canasto" class="form-control" placeholder="Ingrese el nombre del producto" onkeyup="actualizarSelect()" onchange="actualizarSelect()" />
             </div>
-            <select class="form-select mt-3 mb-3 form-select-lg" size="3" id="lista_producto" required>
-                <option>Cargando productos...</option>
-            </select>
-            </br>
             <div class="form-group">
-                <label class="text-light" for="disponible">Disponible en stock:</label>
-                <input id="disponible" class="col-md-7" value="0" type="number" readonly />
+                <label class="text-light" for="disponible_canasto">Disponible en stock:</label>
+                <input id="disponible_canasto" class="col-md-7" value="0" type="number" readonly />
             </div>
-            </br>
+            <br/>
             <div class="form-group">
-                <label for="cant" class="text-light">Ingrese la cantidad comprada:</label>
-                <input id="cant" class="form-control col-md-7" placeholder="Ingrese la cantidad comprada" type="number" required onkeyup="calcularDescuento();calcularCosto();calcularSubtotal();" onchange="calcularCosto();calcularDescuento();calcularSubtotal();"/>
+                <label for="cant_canasto" class="text-light">Ingrese la cantidad comprada:</label>
+                <input id="cant_canasto" class="form-control col-md-7" placeholder="Ingrese la cantidad comprada" type="number" required onkeyup="calcularDescuento();calcularCosto();calcularSubtotal();" onchange="calcularCosto();calcularDescuento();calcularSubtotal();"/>
             </div>
-            </br>
+            <br/>
             <div class="form-group">
-                <label for="descuento" class="text-light">Ingrese el descuento por unidad:</label>
-                <input id="descuento" class="form-control col-md-7" placeholder="Ingrese el descuento por unidad" type="number" value="0" onkeyup="calcularDescuento();calcularSubtotal()" onchange="calcularDescuento();calcularSubtotal();"/>
+                <label for="descuento_canasto" class="text-light">Ingrese el descuento por unidad:</label>
+                <input id="descuento_canasto" class="form-control col-md-7" placeholder="Ingrese el descuento por unidad" type="number" value="0" onkeyup="calcularDescuento();calcularSubtotal()" onchange="calcularDescuento();calcularSubtotal();"/>
             </div>
-            </br>
+            <br/>
             <div class="form-group">
                 <label class="text-light col-md-7" for="total_desc">Total del descuento:</label>
                 <input id="total_desc" class="col-md-5" value="0" type="number" readonly />
             </div>
-            </br>
+            <br/>
             <div class="form-group">
                 <label class="text-light col-md-5">Total costo:</label>
                 <input id="total_prec" class="col-md-7" type="number" readonly value="0" />
             </div>
-            </br>
+            <br/>
             <div class="form-group">
                 <label class="text-light col-md-5" for="sub_total">SubTotal:</label>
                 <input id="sub_total" class="col-md-7" type="number" readonly value="0"/>
@@ -113,102 +64,139 @@
                 <button class="btn btn-primary" onclick="document.getElementById('productoDialog').close()">Cancelar</button>
             </div>
         </dialog>
-        <main style="background-image: url('../assets/fondo_secundario_claro.jpg'); background-size: cover;">
-            <form method="post" action="enviarDatos()" id="form_principal">
-                <input type="hidden" name="alias" id="alias"/>
-                <div class="ms-3 me-3">
-                    <h1 class="h1 d-flex justify-content-center">Datos del cliente</h1>
-                    <br/>
-                    <div class="form-group">
-                        <label for="cedula">Ingrese la cedula del cliente:</label>
-                        <div class="col-md-7">
-                            <input id="cedula" class="form-control" placeholder="Ingrese la cedula del cliente" required name="cedula"/>
+        <header class="d-flex flex-wrap py-1 mb-2 border-bottom container-base">
+            <div class="justify-content-center" style="width: 90%;">
+                <h1 class="h1 d-flex justify-content-center">Datos de la venta</h1>
+            </div>
+            <div>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="flex-direction: row;">
+                    <li class="nav-item">
+                        <div class="nav-link">
+                            <!-- Reloj en la ventana principal -->
+                            <span class="clock" id="clock"></span>
                         </div>
-                        <button type="button" class="btn btn-primary" id="select_client" onclick="obtenerCliente()">Seleccionar cliente</button>
+                    </li>
+                    <li class="nav-item light-btn">
+                        <a class="nav-link" onclick="cambiarTema(opc= 'light')">
+                            <img src="../assets/icons8-dia.png" alt="Claro" class="nav-icon">
+                        </a>
+                    </li>
+                    <li class="nav-item dark-btn">
+                        <a class="nav-link" onclick="cambiarTema(opc= 'dark')">
+                            <img src="../assets/icons8-noche.png" alt="Oscuro" class="nav-icon">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html" id="menu_atras">
+                            <img src="../assets/icons8-atras.png" alt="Atras" class="nav-icon">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <main>
+            <!-- <form method="post" action="enviarDatos()" id="form_principal"> -->
+            <div class="card container-base-primary grid p-1 mt-4">
+                <div class="card-body container-base-secondary">
+                    <div class="row justify-content-around">
+                        <div class="col-6">
+                            <label for="cedula" class="form-label">Cedula/ruc del cliente:</label>
+                            <div class="align-middle">
+                                <input id="cedula_venta" class="form-control" placeholder="Cedula-ruc" required name="cedula" onkeyup="(event.keyCode === 13) && obtenerCliente()"/>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label for="fecha" class="form-label">Fecha:</label>
+                            <input id="fecha_venta" class="form-control" placeholder="dd/mm/aaaa" required name="fecha" type="date"/>
+                        </div>
                     </div>
-                    </br>
-                    <table class="table table-hover table-dark">
-                        <thead>
-                            <tr>
-                                <th scope="col" style="width: 40%;">Nombre</th>
-                                <th scope="col" style="width: 20%;">Ruc</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr id="clienteInfo">
-                                <td style="width: 40%;"></td>
-                                <td style="width: 20%;"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="form-group">
-                        <label for="fecha">Ingrese la fecha de la venta:</label>
-                        <input type="date" id="fecha" class="form-control col-md-4" name="fecha" />
+                    <div class="row justify-content-around pt-1">
+                        <div class="col-11 justify-content-around">
+                            <label for="cliente_nombre_venta" class="form-label">Nombre del cliente:</label>
+                            <input id="cliente_nombre_venta" class="form-control" placeholder="Nombre del cliente" required name="clienteNombre" disabled/>
+                        </div>
                     </div>
                 </div>
-                <div class="ms-3 me-3">
-                    <h1>Lista de productos</h1>
-                    <table class="table table-hover table-dark">
+            </div>
+
+            <div class="card container-base-primary grid p-1 mt-4">
+                <div class="card-body container-base-secondary">
+                    <table class="table border">
                         <thead>
                             <tr>
-                                <th scope="col" style="width: 15%;">Cantidad</th>
-                                <th scope="col" style="width: 35%;">Nombre</th>
-                                <th scope="col" style="width: 20%;">Precio unitario</th>
-                                <th scope="col" style="width: 15%;">Sub Total</th>
-                                <th style="width: 15%;"></th>
+                                <th style="width: 10%">Cod.</th>
+                                <th style="width: 45%">Nombre</th>
+                                <th style="width: 20%">Categoria</th>
+                                <th style="width: 5%">Disponible</th>
+                                <th style="width: 25%">Precio</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">
+                                    <input class="form-control" type="number" name="inptCodigoProductoVenta" id="inptCodigoProductoVenta" placeholder="Cod." style="width: 100%;" onkeyup="event.keyCode === 13 && obtenerProductos()">
+                                </th>
+                                <th scope="col">
+                                    <input class="form-control" type="text" name="inptNombreProductoVenta" id="inptNombreProductoVenta" placeholder="Ingrese el nombre de un producto" style="width: 100%;" onkeyup="event.keyCode === 13 && obtenerProductos()">
+                                </th>
+                                <th scope="col">
+                                    <select class="form-select" name="inptCategoriaProductoVenta" id="inptCategoriaProductoVenta" onchange="obtenerProductos()">
+                                        <option selected>Cargando...</option>
+                                    </select>
+                                </th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista_productos_venta" style="max-height: 50vh; overflow-y: scroll;">
+                            <tr><td colspan="5">Aqui irian los productos</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card container-base-primary grid p-1 mt-4">
+                <div class="card-body container-base-secondary">
+                    <table class="table border">
+                        <thead>
+                            <tr>
+                                <th rowspan="2" style="width: 26%">Nombre producto</th>
+                                <th rowspan="2" style="width: 5%">Cant.</th>
+                                <th rowspan="2" style="width: 5%">Descuento</th>
+                                <th rowspan="2" style="width: 20%">Precio unit.</th>
+                                <th class="text-center" style="width: 24%" colspan="3">IVA</th>
+                                <th rowspan="2"></th>
+                            </tr>
+                            <tr>
+                                <th style="width: 8%">Exenta</th>
+                                <th style="width: 8%">5%</th>
+                                <th style="width: 8%">10%</th>
                             </tr>
                         </thead>
                         <tbody id="canasta_body">
-                            <!--Filas de cada producto-->
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <!--Resultado de los productos-->
-                                <th id="cant_total" style="width: 10%;"></th>
-                                <th style="text-align: right;" colspan="2">Total:</th>
-                                <th id="total" colspan="2"></th>
+                            <tr id="totalesTablaVenta">
+                                <th style="width: 26%"></th>
+                                <th style="width: 5%">0</th>
+                                <th style="width: 5%">0</th>
+                                <th style="width: 20%"></th>
+                                <th style="width: 8%">0</th>
+                                <th style="width: 8%">0</th>
+                                <th style="width: 8%">0</th>
+                                <th></th>
                             </tr>
-                        </tfoot>
+                        </tbody>
                     </table>
-                </div>
-                <div class="form-control d-flex justify-content-around ms-3" style="width: 250px;">
-                    <label for="deuda">¿El cliente generara deuda?</label>
-                    <input id="deuda" type="checkbox" name="deuda"/>
                 </div>
                 <!-- Ocultamos el valor de la canasta para que reciba el php -->
                 <div>
                     <input type="hidden" id="canasta" name="canasta" />
                     <input type="hidden" id="usuario" name="usuario" />
                 </div>
-                <div class="mt-3 d-flex justify-content-around">
-                    <button type="button" class="btn btn-primary" onclick='cargarProducto()'>Agregar producto</button>
-                    <button type="submit" class="btn btn-primary">Registrar Venta</button>
-                    <button type="button" class="btn btn-primary" onclick='location.href= "../index.html";'>Cancelar Venta</button>
+                <br/>
+                <div class="d-flex justify-content-around" style="width: 100%">
+                    <button type="button" class="btn btn-outline-warning" onclick='limpiarCamposVenta()'>Limpiar</button>
+                    <button type="submit" class="btn btn-outline-success" onclick="enviarDatos()">Registrar Venta</button>
+                    <button type="button" class="btn btn-outline-danger" onclick='limpiarCamposVenta();location.href= "../index.html";'>Cancelar Venta</button>
                 </div>
-                </br>
-            </form>
-        </main>
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 bg-dark bg-gradient mt-0 mb-0">
-            <div class="col-md-4 d-flex align-items-center ms-3">  
-                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-                    <i class="bi bi-bootstrap-fill"></i>
-                </a>
-                <span class="mb-3 mb-md-0 text-muted">© 2022 By Zorro Cristal</span>
             </div>
-            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex me-3">
-                <li class="ms-3"><a class="text-muted" href="https://www.facebook.com/Zorro.cristal">
-                    <i class="bi bi-facebook"></i>
-                </a></li>
-                <li class="ms-3"><a class="text-muted" href="https://www.instagram.com/ale_guaitenho/">
-                    <i class="bi bi-instagram"></i>
-                </a></li>
-                <li class="ms-3"><a class="text-muted" href="https://wa.me/595983510916">
-                    <i class="bi bi-whatsapp"></i>
-                </a></li>
-                <li class="ms-3"><a class="text-muted" href="https://github.com/Zorro-cristal">
-                    <i class="bi bi-github"></i>
-                </a></li>
-            </ul>
-        </footer>
+        </main>
     </body>
 </html>

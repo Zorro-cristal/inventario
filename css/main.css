@@ -1,0 +1,119 @@
+/* Temas de Bootstrap */
+.light-mode {
+    --bg-color: #e2e2e2;
+    --bg-fondo: url('../assets/fondo_secundario_claro.png');
+    --card-primary-color: #354980;
+    --card-select-color: #17254d;
+    --card-secondary-color: #30b3d1;
+    --text-color: #000000 !important;
+    --bg-nav: #202f5a;
+    --box-shadow: 0px 5px 5px #30b3d1;
+}
+
+.dark-mode {
+    --bg-color: #000000;
+    --bg-fondo: url('../assets/fondo_secundario_oscuro.png');
+    --card-primary-color: #354980;
+    --card-select-color: #17254d;
+    --card-secondary-color: #30b3d1;
+    --text-color: #e2e2e2 !important;
+    --bg-nav: #354980;
+    --box-shadow: 0px 5px 5px #30b3d1;
+}
+
+main {
+    width: 90%
+}
+
+.main-menu {
+    margin-top: 56.5px;
+}
+
+/* Tablas */
+table, thead, tr ,td, tfoot {
+    border-collapse: collapse;
+    border: 1px solid var(--text-color) !important;
+    color: var(--text-color) !important;
+}
+
+.container-base-primary {
+    background-color: var(--card-primary-color) !important;
+    align-items: center;
+}
+
+.container-base-secondary {
+    background-color: var(--card-secondary-color) !important;
+    margin: 1rem !important;
+    width: 95%;
+}
+
+.form-control {
+    width: 95% !important;
+}
+
+.form-control:focus {
+    border-color: var(--card-primary-color);
+    box-shadow: var(--card-secondary-color);
+}
+
+.form-label {
+    color: var(--text-color) !important;
+}
+
+/* Fondo de la ventana principal */
+body {
+    background-image: var(--bg-fondo);
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+header {
+    background-color: var(--card-primary-color);
+    color: var(--text-color);
+    width: 100%;
+    box-shadow: var(--box-shadow);
+}
+
+/* Centrar logo en el medio */
+.logo {
+    width: 150px; /* Ajusta el tamaño del logo */
+    height: auto;
+    background-color: none !important;
+}
+
+/* Barra de menú personalizada */
+.navbar {
+    background-color: var(--card-primary-color);
+    width: 100%;
+}
+
+.navbar a, .navbar-nav, .nav-link, .navbar-nav, .nav-item, .dropdown-item, .dropdown-menu{
+    color: var(--text-color) !important;
+    background-color: var(--card-primary-color) !important;
+}
+
+.nav-link:hover, .dropdown-item:hover {
+    background-color: var(--card-select-color) !important;
+}
+
+/* Estilos para íconos de menú */
+.nav-icon {
+    width: 20px;
+    margin-right: 10px;
+}
+
+/* Estilo de la hora */
+.clock {
+    color: var(--text-color);
+    font-size: 18px;
+}
+
+/* Otros componentes */
+span, p {
+    color: var(--text-color);
+}
