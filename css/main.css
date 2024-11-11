@@ -73,7 +73,7 @@ body {
 }
 
 header {
-    background-color: var(--bg-nav);
+    background-color: var(--card-primary-color);
     color: var(--text-color);
     width: 100%;
     box-shadow: var(--box-shadow);

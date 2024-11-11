@@ -161,7 +161,7 @@ async function actualizarTabla() {
         input.min = '0';
         input.style.width = '100%';
         input.onchange = function() {
-            canasta[i]['cantidad'] = this.value;
+            canasta[i]['cantidad'] = this.value;actualizarTabla();
         };
         cantidad.appendChild(input);
         cantidad.style.width= "15%";
@@ -175,7 +175,7 @@ async function actualizarTabla() {
         input2.min = '0';
         input2.style.width = '100%';
         input2.onchange = function() {
-            canasta[i]['descuento'] = this.value;
+            canasta[i]['descuento'] = this.value;actualizarTabla();
         };
         descuento.appendChild(input2);
         var sub= parseFloat(productPos[0]['precio']);
