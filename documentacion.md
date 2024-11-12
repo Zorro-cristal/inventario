@@ -1,4 +1,4 @@
-SISTEMA DE GESTIÓN ABM PARA VENTAS 
+# SISTEMA DE GESTIÓN ABM PARA VENTAS
 Este sistema permite la administración de ventas a través de un modelo ABM (Alta, Baja y Modificación) de datos, almacenando la información en una base de datos y presentando funcionalidades para gestionar categorías de productos, proveedores, clientes, transacciones, y detalles de ventas.
 
 # Descripcion
