@@ -1,3 +1,53 @@
+// Funcion para mostrar mensaje
+function mostrarMensaje(tipo,titulo, contenido) {
+  let toastContainer = document.getElementById('toastContainer');
+  if (!toastContainer) {
+      toastContainer = document.createElement('div');
+      toastContainer.id = 'toastContainer';
+      toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+      document.body.appendChild(toastContainer);
+  }
+
+  // Crear el elemento toast dinámicamente
+  const toastElement = document.createElement('div');
+  toastElement.className = 'toast';
+  toastElement.setAttribute('role', 'alert');
+  toastElement.setAttribute('aria-live', 'assertive');
+  toastElement.setAttribute('aria-atomic', 'true');
+
+  var color="";
+  switch (tipo) {
+    case "error":
+      color= "red";
+      break;
+    case "advertencia":
+      color= "yellow";
+      break;
+    case "informacion":
+      color= "blue";
+      break;
+    default:
+      color= "blue";
+      break;
+  }
+  toastElement.innerHTML = `
+      <div class="toast-header"  style="background-color:${color};">
+          <strong class="me-auto" style="color:white;">${titulo}</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+      </div>
+      <div class="toast-body">
+          ${contenido}
+      </div>
+  `;
+
+  // Agregar el toast al contenedor
+  toastContainer.appendChild(toastElement);
+
+  // Mostrar el toast
+  const toast = new bootstrap.Toast(toastElement);
+  toast.show();
+}
+
 // Funcion para dividir los numeros con miles
 function divisorMiles(texto, eliminarFormato= false) {
   if (eliminarFormato) {
