@@ -14,7 +14,7 @@ async function paginaCargada() {
     tbody= document.querySelector('tbody');
 
     //Obtenemos la lista de inventario
-    obtenerOpciones("categorias", "_categoria").then((response) => {
+    obtenerOpciones("categorias", "categoria").then((response) => {
       document.getElementById("inptCategoriaProductoInventario").innerHTML= response;
     });
 

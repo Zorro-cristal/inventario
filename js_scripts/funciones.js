@@ -8,8 +8,8 @@ async function obtenerOpciones(tabla,campo) {
   // Asignar las opciones
   registros_opciones += "<option value='' selected>Todos</option>";
   registros.forEach(reg => {
-      clave_id= "id" + campo;
-      clave_nombre= "nombre" + campo;
+      clave_id= "id_" + campo;
+      clave_nombre= "nombre_" + campo;
       registros_opciones += "<option value='" + reg[clave_id] + "'>" + reg[clave_nombre] + "</option>";
   });
 
