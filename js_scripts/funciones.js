@@ -1,3 +1,22 @@
+// Funcion para obtener opciones de categoria
+async function obtenerOpciones(tabla,campo) {
+  //Obtenemos los datos de la base de datos
+  const registros= await obtenerBdd(tabla);
+  console.log("registros: ",registros);
+
+  let registros_opciones= "";
+  // Asignar las opciones
+  registros_opciones += "<option value='' selected>Todos</option>";
+  registros.forEach(reg => {
+      clave_id= "id" + campo;
+      clave_nombre= "nombre" + campo;
+      registros_opciones += "<option value='" + reg[clave_id] + "'>" + reg[clave_nombre] + "</option>";
+  });
+
+  console.log(registros_opciones);
+  return registros_opciones;
+}
+
 // Funcion para mostrar mensaje
 function mostrarMensaje(tipo,titulo, contenido) {
   let toastContainer = document.getElementById('toastContainer');
@@ -146,7 +165,6 @@ async function obtenerBdd(tabla, filtro= "", campos= "*") {
 }
 
 function obtencionBdd(sql) {
-  console.log("Consulta sql: ", sql);
   return new Promise(function (resolve, rejected) {
     $.ajaxSetup({async: false});
     $.ajax({
@@ -164,9 +182,8 @@ function obtencionBdd(sql) {
         rejected(errorThrowm);
       },
       success: function (datos) {
-        console.log("respuesta obtenida: ",datos)
-        if (datos == "") {
-            console.error("Ningun dato obtenido");
+        console.log(datos)
+        if (datos === "") {
             alert("Ningun dato obtenido de la base de datos");
             datos= [];
         } else {

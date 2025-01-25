@@ -37,6 +37,7 @@
             mysqli_close($conn);
             return $datos;
         }
+        $conn->set_charset('utf8');
 
     function modificarBdd($sql) {
         GLOBAL $servername, $user, $contras, $dbname;

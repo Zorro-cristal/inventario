@@ -14,19 +14,24 @@ async function paginaCargada() {
     tbody= document.querySelector('tbody');
 
     //Obtenemos la lista de inventario
-    //inventarioAux= await obtenerBdd("Productos");
-    inventarioAux= await obtenerBdd("Productos", "stock > 0");
-    inventarios= inventarioAux; 
+    obtenerOpciones("categorias", "_categoria").then((response) => {
+      document.getElementById("inptCategoriaProductoInventario").innerHTML= response;
+    });
 
-    cargarLista();
+    //inventarioAux= await obtenerBdd("Productos");
+    await obtenerBdd("Productos p, Categorias c", "p.categoria_fk = c.id_categoria AND cantidad_disponible > 0").then(function (response) {
+      inventarios= response;
+      inventarioAux= response;
+      cargarLista();
+    });
 }
 
 //Filtrar Inventario
-function filtrar(valor) {
+function filtrar(valor, campo) {
     var filtro = valor.toLowerCase();
     if (filtro != "") {
         inventarios= inventarios.filter(
-            obj => obj['nombre'].includes(filtro)
+            obj => obj[campo].toLowerCase().includes(filtro.toLowerCase())
         );
         cargarLista();
     } else {
@@ -42,19 +47,15 @@ function cargarLista() {
   var tbody_content= "<tbody>";
   //populate_with_new_rows(new_tbody);
   for (i= 0; i < inventarios.length; i++) {
-      var nombre= inventarios[i].nombre;
-      var descripcion= inventarios[i].descripcion;
-      if (descripcion == null) {
-        descripcion= "";
-      }
-      var stock= divisorMiles(inventarios[i].stock);
-      var precio= divisorMiles(inventarios[i].precio_venta);
-      var id= inventarios[i].id;
-      var tr= '<tr onclick= "modificarDatos(event, this.attributes.id.nodeValue)" id="'+ id +'"><td style="width: 30%;">'+ nombre +'</td><td style="width: 45%;">'+ descripcion +'</td><td style="width: 10%;">'+ stock +'</td><td style="width: 15%;">'+ precio +'</td></tr>';
+      var nombre= inventarios[i].nombre_producto;
+      var cantidad_disponible= divisorMiles(inventarios[i].cantidad_disponible);
+      var precio= divisorMiles(inventarios[i].precio);
+      var categoria= inventarios[i].nombre_categoria;
+      var id= inventarios[i].id_producto;
+      var tr= '<tr onclick= "modificarDatos(event, this.attributes.id.nodeValue)" id="'+ id +'"><td style="width: 30%;">'+ nombre +'</td><td style="width: 45%;">'+ categoria +'</td><td style="width: 10%;">'+ cantidad_disponible +'</td><td style="width: 15%;">'+ precio +'</td></tr>';
       tbody_content= tbody_content + tr;
   }
   tbody_content= tbody_content + "</tbody>";
-  console.log(tbody_content);
   new_tbody.innerHTML= tbody_content;
   //Reemplazamos el cuerpo viejo con el nuevo
   document.querySelector('tbody').parentNode.replaceChild(new_tbody, tbody);

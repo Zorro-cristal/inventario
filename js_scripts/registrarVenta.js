@@ -11,16 +11,10 @@ async function cargarPagina() {
     document.getElementById("fecha_venta").value= fecha.toISOString().substring(0, 10);
 
     //Obtenemos los datos de la base de datos
-    const categorias= await obtenerBdd("categorias");
-
-    let categorias_opciones= "";
-    // Asignar las categorias
-    categorias_opciones += "<option value='' selected>Todos</option>";
-    categorias.forEach(cat => {
-        categorias_opciones += "<option value='" + cat['id_categoria'] + "'>" + cat['nombre_categoria'] + "</option>";
+    obtenerOpciones("categorias", "_categoria").then((response) => {
+        document.getElementById("inptCategoriaProductoVenta").innerHTML= response;
     });
-    document.getElementById("inptCategoriaProductoVenta").innerHTML= categorias_opciones;
-
+    
     canasta= [];
 }
 

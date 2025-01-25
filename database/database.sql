@@ -20,7 +20,8 @@ CREATE TABLE Proveedores (
 );
 
 -- Insertar datos de prueba en Proveedor
-INSERT INTO `proveedores` (`nombre_proveedor`, `direccion_proveedor`, `telefono_proveedor`) VALUES ('Provin', 'Mcal. López y Cerro Corá, Barrio Centro - Villarri', 2147483647);
+INSERT INTO `proveedores` (`nombre_proveedor`, `direccion_proveedor`, `telefono_proveedor`) VALUES
+('Provin', 'Mcal. López y Cerro Corá, Barrio Centro - Villarri', 2147483647);
 INSERT INTO `proveedores` (`nombre_proveedor`, `direccion_proveedor`, `telefono_proveedor`) VALUES ('Matiplast', 'Maelo Gómez, Barrio Centro - Villarrica', 54144704);
 INSERT INTO `proveedores` (`nombre_proveedor`, `direccion_proveedor`, `telefono_proveedor`) VALUES ('Fortis', 'Ruta PY 02 Mcal Estigarribia c/ Ayolas, Coronel Ov', 217289141);
 
@@ -52,7 +53,8 @@ CREATE TABLE Clientes (
 );
 
 -- Insertar datos de prueba en Cliente
-INSERT INTO `clientes` (`cedula`, `nombre_cliente`, `apellido_cliente`, `ruc`, `direccion_cliente`) VALUES (456978, 'Eugenio', 'Benítez', NULL, NULL);
+INSERT INTO `clientes` (`cedula`, `nombre_cliente`, `apellido_cliente`, `ruc`, `direccion_cliente`) VALUES
+(456978, 'Eugenio', 'Benítez', NULL, NULL);
 INSERT INTO `clientes` (`cedula`, `nombre_cliente`, `apellido_cliente`, `ruc`, `direccion_cliente`) VALUES (4869778, 'Laura', 'Vazquez', 1, NULL);
 INSERT INTO `clientes` (`cedula`, `nombre_cliente`, `apellido_cliente`, `ruc`, `direccion_cliente`) VALUES (5412697, 'Diego', 'Santacruz', 2, 'Mariscal Estigarribia y Teniente Blas Arevalos , Barrio Santa Librada');
 INSERT INTO `clientes` (`cedula`, `nombre_cliente`, `apellido_cliente`, `ruc`, `direccion_cliente`) VALUES (4360067, 'Alejandro', 'Alvarez', 0, 'Rubio Ñu, Barrio Ybaroty');
