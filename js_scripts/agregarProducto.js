@@ -73,9 +73,9 @@ function mostrarNuevoProveedorDialog(evento) {
   });
 }
 
-//Funcion para mostrar nuevo producto dialog
-function mostrarNuevoProductoDialog(evento) {
-  const dialog= document.getElementById("nuevoProveedorDialog");
+//Funcion para mostrar nueva categoria dialog
+function mostraNuevaCategoriaDialog(evento) {
+  const dialog= document.getElementById("nuevoCategoriaDialog");
   dialog.showModal();
   evento.preventDefault();
   dialog.addEventListener("click", (e) => {

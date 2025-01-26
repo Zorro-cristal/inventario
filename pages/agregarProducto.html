@@ -14,6 +14,21 @@
         <script type="text/javascript" src="../js_scripts/agregarProducto.js"></script>
     </head>
     <body onload="paginaCargada()">
+        <!-- Ventana para agregar una nueva categoria a la base de datos -->
+        <dialog style="background-image: url('../assets/fondo_secundario_oscuro.jpg'); background-size: cover;" id="nuevoCategoriaDialog">
+            <form action="../php/agregarNuevaCategoria.php" method="post">
+                <div class="form-group">
+                    <input type="hidden" name="id_cat" value=0>
+                    <label for="nombre_prov" class="text-light">Nombre:</label>
+                    <input id="nombre_prov" class="form-control" placeholder="Ingrese el nombre" required name="nombre_cat"/>
+                </div>
+                <br/>
+                <div class="mt-3 d-flex justify-content-around">
+                    <button type="submit" class="btn btn-primary" id="guardarDialog" data-toggle="modal">Guardar</button>
+                    <button type="reset" class="btn btn-primary">Limpiar</button>
+                </div>
+            </form>
+        </dialog>
         <!-- Ventana para agregar un nuevo proveedor a la base de datos -->
         <dialog style="background-image: url('../assets/fondo_secundario_oscuro.jpg'); background-size: cover;" id="nuevoProveedorDialog">
             <form action="../php/agregarNuevoProveedor.php" method="post">
