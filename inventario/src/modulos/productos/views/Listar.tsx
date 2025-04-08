@@ -1,7 +1,8 @@
-import { Box, Button, CircularProgress, Grid2, Stack } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { Box, Button, CircularProgress, Grid2, IconButton, Stack } from "@mui/material";
+import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { Producto } from "../../../models/productos";
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 export default function ListadoProductos() {
     const [cargando, setCargando]= useState(true);
@@ -11,8 +12,26 @@ export default function ListadoProductos() {
         { field: 'id_producto', headerName: 'ID', flex: 0.1 },
         { field: 'nombre_producto', headerName: 'Nombre', flex: 0.2 },
         { field: 'descripcion_producto', headerName: 'Descripción', flex: 0.3 },
-        { field: 'cantidad_disponible', headerName: 'Cantidad Disponible', flex: 0.2 },
+        { field: 'cantidad_disponible', headerName: 'Cantidad Disponible', flex: 0.1 },
         { field: 'precio_venta', headerName: 'Precio de Venta', flex: 0.2 },
+        {
+            field: 'acciones',
+            headerName: 'Acciones',
+            flex: 0.1,
+            renderCell: (params) => (
+              <IconButton
+                color="primary"
+                size="large"
+                onClick={() => {
+                    const id_producto= params.row.id_producto;
+                    console.log("Editando producto", id_producto);
+                }}
+              >
+                <EditOutlinedIcon fontSize="inherit" />
+              </IconButton>
+            ),
+          },
+        
     ];
 
     function cargarListado() {
@@ -55,9 +74,20 @@ export default function ListadoProductos() {
             : <DataGrid 
                 columns={columnas}
                 rows= {productos}
-                getRowId={(row) => row.id_producto}
+                getRowId={(row) => row.id_producto} // Indica el campo id
+                getRowSpacing={(params) => ({ top: params.isFirstVisible ? 0 : 5, bottom: params.isLastVisible ? 0 : 5 })} // Espacio entre filas
+                sx={{
+                    ['& .'+gridClasses.row]: {
+                        color: "white"
+                    },
+                    ['& .MuiToolbar-root']: {
+                        color: "white"
+                    },
+                    ['& .MuiDataGrid-selectedRowCount']: {
+                        color: "white"
+                    },
+                }}
                 >
-                
             </DataGrid>}
             <Grid2
                 container
