@@ -3,8 +3,11 @@ import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { Producto } from "../../../models/productos";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import { useNavigate } from 'react-router-dom';
 
 export default function ListadoProductos() {
+    const navigate = useNavigate();
+
     const [cargando, setCargando]= useState(true);
     const [productos, setProductos]= useState<Producto[]>([]);
 
@@ -22,10 +25,7 @@ export default function ListadoProductos() {
               <IconButton
                 color="primary"
                 size="large"
-                onClick={() => {
-                    const id_producto= params.row.id_producto;
-                    console.log("Editando producto", id_producto);
-                }}
+                onClick={() => navigate(`/productos/${params.id}`)}
               >
                 <EditOutlinedIcon fontSize="inherit" />
               </IconButton>
@@ -97,10 +97,10 @@ export default function ListadoProductos() {
                 alignItems="center"
                 marginTop={2}
             > 
-                <Grid2 item xs={6}> 
+                <Grid2 size={{xs: 6}}> 
                     <Button>Agregar producto</Button>
                 </Grid2>
-                <Grid2 item xs={6}> 
+                <Grid2 size={{xs: 6}}> 
                     <Button>Volver</Button>
                 </Grid2>
             </Grid2> 

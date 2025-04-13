@@ -1,15 +1,11 @@
 import { Paper } from "@mui/material";
 import { camposProducto, Producto } from "../../../models/productos";
 import { Formulario } from "../../../views/Formulario";
-import { ChangeEvent } from "react";
+import { useParams } from "react-router";
+import { guardarproducto, obtener_producto } from "../funciones/abm";
 
-function guardarproducto(evento: ChangeEvent<HTMLInputElement>): boolean {
-    evento.preventDefault();
-    console.log("Guardando producto", evento);
-    return false;
-}
-
-export default function EditarProducto({id_producto}: {id_producto: number}) {
+export default function EditarProducto() {
+    const parametros = useParams();
     let producto: Producto= {
         id_producto : 0,
         nombre_producto : "",
@@ -19,7 +15,10 @@ export default function EditarProducto({id_producto}: {id_producto: number}) {
     };
     let titulo= "";
 
-    if (id_producto != 0) {
+    if (parametros.id != undefined && parseInt(parametros.id) != 0) {
+        titulo= "Modificar el producto";
+        producto= obtener_producto(parseInt(parametros.id));
+    } else {
         producto = {
             id_producto : 0,
             nombre_producto : "",
@@ -27,9 +26,7 @@ export default function EditarProducto({id_producto}: {id_producto: number}) {
             cantidad_disponible : 0,
             precio_venta : 0
         };
-        titulo= "Agregar nuevo producto"
-    } else {
-        titulo= "Modificar el producto"
+        titulo= "Agregar nuevo producto";
     }
 
     return (<Paper elevation={3}>
