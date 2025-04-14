@@ -3,34 +3,38 @@ import { camposProducto, Producto } from "../../../models/productos";
 import { Formulario } from "../../../views/Formulario";
 import { useParams } from "react-router";
 import { guardarproducto, obtener_producto } from "../funciones/abm";
+import { useEffect, useState } from "react";
 
 export default function EditarProducto() {
     const parametros = useParams();
-    let producto: Producto= {
+    const [cargado, setCargado]= useState(false);
+    const [producto, setProducto]= useState<Producto>({
         id_producto : 0,
         nombre_producto : "",
         descripcion_producto : "",
         cantidad_disponible : 0,
         precio_venta : 0
-    };
-    let titulo= "";
+    });
+    const [titulo, setTitulo]= useState("Agregar nuevo producto");
 
-    if (parametros.id != undefined && parseInt(parametros.id) != 0) {
-        titulo= "Modificar el producto";
-        producto= obtener_producto(parseInt(parametros.id));
+    useEffect(() => {
+        if (parametros.id != undefined && parseInt(parametros.id) != 0) {
+            setTitulo("Modificar el producto");
+            obtener_producto(parseInt(parametros.id)).then((data: Producto) => {
+                setProducto(data);
+                setCargado(true);
+            });
+        } else {
+            setCargado(true);
+        }
+    }, []);
+
+    if (cargado) {
+        return (<Paper elevation={3}>
+            <h1>{titulo}</h1>
+            <Formulario valores={producto} campos={camposProducto} funcionSubmit={guardarproducto}/>
+        </Paper>);
     } else {
-        producto = {
-            id_producto : 0,
-            nombre_producto : "",
-            descripcion_producto : "",
-            cantidad_disponible : 0,
-            precio_venta : 0
-        };
-        titulo= "Agregar nuevo producto";
+        return (<div><h1>Cargando...</h1></div>);
     }
-
-    return (<Paper elevation={3}>
-        <h1>{titulo}</h1>
-        <Formulario valores={producto} campos={camposProducto} funcionSubmit= {guardarproducto}/>
-    </Paper>);
 }

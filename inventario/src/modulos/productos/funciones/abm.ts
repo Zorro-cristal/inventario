@@ -1,3 +1,4 @@
+import { ChangeEvent } from "react";
 import { Producto } from "../../../models/productos";
 
 export function guardarproducto(evento: ChangeEvent<HTMLInputElement>): boolean {
@@ -6,7 +7,7 @@ export function guardarproducto(evento: ChangeEvent<HTMLInputElement>): boolean 
     return false;
 }
 
-export function obtener_producto(id: number): Producto {
+export async function obtener_producto(id: number): Promise<Producto> {
     return {
         id_producto : id,
         nombre_producto : "",
