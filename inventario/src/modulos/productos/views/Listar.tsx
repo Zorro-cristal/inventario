@@ -2,10 +2,9 @@ import { CircularProgress, Stack } from "@mui/material";
 import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { Producto } from "../../../models/productos";
-import { useNavigate } from 'react-router-dom';
+import Cargando from "../../../views/Cargando";
 
 export default function TablaProductos({funcionSeleccionar}: {funcionSeleccionar?: () => void}) {
-    const navigate = useNavigate();
 
     const [cargando, setCargando]= useState(true);
     const [productos, setProductos]= useState<Producto[]>([]);
@@ -45,15 +44,7 @@ export default function TablaProductos({funcionSeleccionar}: {funcionSeleccionar
     return (
         <>
             {cargando
-            ? <Stack
-                direction="row"
-                sx={{
-                    justifyContent: "space-around",
-                    alignItems: "center",
-                }}
-            >
-                <CircularProgress size="3rem" />
-            </Stack>
+            ? <Cargando/>
             : <DataGrid 
                 columns={columnas}
                 rows= {productos}
