@@ -3,7 +3,7 @@ import Cargando from "../../../views/Cargando";
 import { useEffect, useState } from "react";
 import { Cliente } from "../../../models/clientes";
 
-export default function ListarClientes() {
+export default function TablaClientes() {
     const [cargando, setCargando] = useState(true);
     const [clientes, setClientes] = useState<Cliente[]>([]);
 

@@ -4,6 +4,7 @@ import { Formulario } from "../../../views/Formulario";
 import { useParams } from "react-router";
 import { guardarproducto, obtener_producto } from "../funciones/abm";
 import { useEffect, useState } from "react";
+import Cargando from "../../../views/Cargando";
 
 export default function EditarProducto() {
     const parametros = useParams();
@@ -35,6 +36,6 @@ export default function EditarProducto() {
             <Formulario valores={producto} campos={camposProducto} funcionSubmit={guardarproducto}/>
         </Paper>);
     } else {
-        return (<div><h1>Cargando...</h1></div>);
+        return (<Cargando />);
     }
 }

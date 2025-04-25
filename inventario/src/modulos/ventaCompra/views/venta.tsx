@@ -5,7 +5,7 @@ import { useState } from "react";
 import { buscarCliente } from "../../clientes/funciones/abm";
 import TablaProductos from "../../productos/views/Listar";
 
-export default function Venta() {
+export default function Venta({setVentaVista}: {setVentaVista: (value: boolean) => void}) {
     const [nombreCliente, setNombreCliente]= useState("");
     const [tituloBoton, setTituloBoton]= useState("Agregar cliente");
     const [productosCargados, setProductosCargados]= useState([
@@ -128,7 +128,7 @@ export default function Venta() {
                     alignItems="center"
                     marginTop={2}>
                     <Button variant="contained" color="success" onClick={() => {}}>Imprimir</Button>
-                    <Button variant="contained" color="error" onClick={() => {}}>Cancelar</Button>
+                    <Button variant="contained" color="error" onClick={() => {setVentaVista(false);}}>Cancelar</Button>
                 </Grid2>
         </>
     );
