@@ -1,7 +1,7 @@
 import { Box, Button, Grid2 } from "@mui/material";
 import TablaProductos from "../modulos/productos/views/Listar";
 
-export default function ListadoProductos() {
+export default function ListadoProductos({setProductoVista}: {setProductoVista: (value: boolean) => void}) {
     return (
         <Box>
             <h1>Listado Productos</h1>
