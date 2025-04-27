@@ -15,9 +15,9 @@ export function Principal({
         clienteVista: {clienteVista: boolean, setClienteVista: (value: boolean) => void}
     }) {
     return (<>
-        {ventaVista && <Venta setVentaVista={setVentaVista}/>}
-        {productoVista && <ListadoProductos setProductoVista={setProductoVista}/>}
-        {proveedorVista && <ListadoProovedores setProveedorVista={setProveedorVista}/>}
-        {clienteVista && <ListadoClientes setClienteVista={setClienteVista}/>}
+        {ventaVista && <div style={{position: 'absolute', zIndex: 10}}><Venta setVentaVista={setVentaVista}/></div>}
+        {productoVista && <div style={{position: 'absolute', zIndex: 20}}><ListadoProductos setProductoVista={setProductoVista}/></div>}
+        {proveedorVista && <div style={{position: 'absolute', zIndex: 2}}><ListadoProovedores setProveedorVista={setProveedorVista}/></div>}
+        {clienteVista && <div style={{position: 'absolute', zIndex: 2}}><ListadoClientes setClienteVista={setClienteVista}/></div>}
     </>);
 }
