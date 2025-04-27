@@ -14,13 +14,22 @@ createRoot(document.getElementById('root')!).render(
 function App() {
   const [ventaVista, setVentaVista] = useState(false);
   const [productoVista, setProductoVista] = useState(false);
+  const [proveedorVista, setProveedorVista] = useState(false);
+  const [clienteVista, setClienteVista] = useState(false);
 
   return (
       <BrowserRouter>
-          <MenuAplicacion setVentaVista={setVentaVista} />
-          <Principal 
-            ventaVista={{ventaVista, setVentaVista}} 
-            productoVista= {{productoVista, setProductoVista}}/>
+          <MenuAplicacion 
+            setVentaVista={setVentaVista}
+            setProductoVista={setProductoVista}
+            setProveedorVista={setProveedorVista}
+            setClienteVista={setClienteVista}
+            />
+            <Principal 
+              ventaVista={{ventaVista, setVentaVista}} 
+              productoVista= {{productoVista, setProductoVista}}
+              proveedorVista= {{proveedorVista, setProveedorVista}}
+              clienteVista= {{clienteVista, setClienteVista}}/>
       </BrowserRouter>
   );
 }

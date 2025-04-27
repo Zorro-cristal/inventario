@@ -4,9 +4,15 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
 export default function MenuAplicacion({ 
-    setVentaVista 
+    setVentaVista,
+    setProductoVista,
+    setProveedorVista,
+    setClienteVista
 }: {
     setVentaVista: (value: boolean) => void;
+    setProductoVista: (value: boolean) => void;
+    setProveedorVista: (value: boolean) => void;
+    setClienteVista: (value: boolean) => void;
 }) {
     const [anchorEl, setAnchorEl] = useState<EventTarget | null>(null);
     const [opcionMenu, setOpcionMenu] = useState('');
@@ -57,9 +63,9 @@ export default function MenuAplicacion({
                         anchorEl={anchorEl}
                         onClose={() => { mostrarOcultarMenu("gestionar", null); }}
                     >
-                        <MenuItem onClick={() => {setVentaVista(true);mostrarOcultarMenu("gestionar", null);}}>Productos</MenuItem>
-                        <MenuItem onClick={() => {setVentaVista(true);mostrarOcultarMenu("gestionar", null);}}>Clientes</MenuItem>
-                        <MenuItem onClick={() => {setVentaVista(true);mostrarOcultarMenu("gestionar", null);}}>Proveedores</MenuItem>
+                        <MenuItem onClick={() => {setProductoVista(true);mostrarOcultarMenu("gestionar", null);}}>Productos</MenuItem>
+                        <MenuItem onClick={() => {setClienteVista(true);mostrarOcultarMenu("gestionar", null);}}>Clientes</MenuItem>
+                        <MenuItem onClick={() => {setProveedorVista(true);mostrarOcultarMenu("gestionar", null);}}>Proveedores</MenuItem>
                     </Menu>
                     <Button variant="contained" color="primary" onClick={() => { setVentaVista(false); }}>Ayuda</Button>
                 </Grid2>

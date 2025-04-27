@@ -18,7 +18,7 @@ export default function ListadoProductos({setProductoVista}: {setProductoVista: 
                     <Button>Agregar producto</Button>
                 </Grid2>
                 <Grid2 size={{xs: 6}}> 
-                    <Button>Volver</Button>
+                    <Button onClick={() => setProductoVista(false)}>Volver</Button>
                 </Grid2>
             </Grid2> 
         </Box>
