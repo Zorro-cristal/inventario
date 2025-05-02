@@ -13,6 +13,7 @@ createRoot(document.getElementById('root')!).render(
 
 function App() {
   const [ventaVista, setVentaVista] = useState(false);
+  const [compraVista, setCompraVista] = useState(false);
   const [productoVista, setProductoVista] = useState(false);
   const [proveedorVista, setProveedorVista] = useState(false);
   const [clienteVista, setClienteVista] = useState(false);
@@ -21,12 +22,14 @@ function App() {
       <BrowserRouter>
           <MenuAplicacion 
             setVentaVista={setVentaVista}
+            setCompraVista={setCompraVista}
             setProductoVista={setProductoVista}
             setProveedorVista={setProveedorVista}
             setClienteVista={setClienteVista}
             />
             <Principal 
               ventaVista={{ventaVista, setVentaVista}} 
+              compraVista={{compraVista, setCompraVista}}
               productoVista= {{productoVista, setProductoVista}}
               proveedorVista= {{proveedorVista, setProveedorVista}}
               clienteVista= {{clienteVista, setClienteVista}}/>

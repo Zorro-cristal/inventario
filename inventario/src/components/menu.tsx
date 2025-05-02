@@ -5,11 +5,13 @@ import MenuItem from '@mui/material/MenuItem';
 
 export default function MenuAplicacion({ 
     setVentaVista,
+    setCompraVista,
     setProductoVista,
     setProveedorVista,
     setClienteVista
 }: {
     setVentaVista: (value: boolean) => void;
+    setCompraVista: (value: boolean) => void;
     setProductoVista: (value: boolean) => void;
     setProveedorVista: (value: boolean) => void;
     setClienteVista: (value: boolean) => void;
@@ -49,7 +51,7 @@ export default function MenuAplicacion({
                         onClose={() => { mostrarOcultarMenu("ventasCompras", null); }}
                     >
                         <MenuItem onClick={() => {setVentaVista(true);mostrarOcultarMenu("ventasCompras", null);}}>Cargar Venta</MenuItem>
-                        <MenuItem onClick={() => {setVentaVista(false);mostrarOcultarMenu("ventasCompras", null);}}>Cargar Compra</MenuItem>
+                        <MenuItem onClick={() => {setCompraVista(true);mostrarOcultarMenu("ventasCompras", null);}}>Cargar Compra</MenuItem>
                     </Menu>
                     <Button
                         variant="outlined"
