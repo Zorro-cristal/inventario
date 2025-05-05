@@ -17,6 +17,7 @@ function App() {
   const [productoVista, setProductoVista] = useState(false);
   const [proveedorVista, setProveedorVista] = useState(false);
   const [clienteVista, setClienteVista] = useState(false);
+  const [usuarioVista, setUsuarioVista] = useState(false);
 
   return (
       <BrowserRouter>
@@ -26,13 +27,15 @@ function App() {
             setProductoVista={setProductoVista}
             setProveedorVista={setProveedorVista}
             setClienteVista={setClienteVista}
+            setUsuarioVista={setUsuarioVista}
             />
             <Principal 
               ventaVista={{ventaVista, setVentaVista}} 
               compraVista={{compraVista, setCompraVista}}
               productoVista= {{productoVista, setProductoVista}}
               proveedorVista= {{proveedorVista, setProveedorVista}}
-              clienteVista= {{clienteVista, setClienteVista}}/>
+              clienteVista= {{clienteVista, setClienteVista}}
+              usuarioVista= {{usuarioVista, setUsuarioVista}}/>
       </BrowserRouter>
   );
 }
