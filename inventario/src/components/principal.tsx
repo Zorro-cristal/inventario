@@ -1,3 +1,4 @@
+import { Paper } from "@mui/material";
 import Compra from "../modulos/ventaCompra/views/compra";
 import Venta from "../modulos/ventaCompra/views/venta";
 import ListadoClientes from "./listarClientes";
@@ -21,11 +22,11 @@ export function Principal({
         usuarioVista: {usuarioVista: boolean, setUsuarioVista: (value: boolean) => void}
     }) {
     return (<>
-        {ventaVista && <div style={{position: 'absolute', zIndex: 10}}><Venta setVentaVista={setVentaVista}/></div>}
-        {compraVista && <div style={{position: 'absolute', zIndex: 10}}><Compra setCompraVista={setCompraVista}/></div>}
-        {productoVista && <div style={{position: 'absolute', zIndex: 20}}><ListadoProductos setProductoVista={setProductoVista}/></div>}
-        {proveedorVista && <div style={{position: 'absolute', zIndex: 20}}><ListadoProovedores setProveedorVista={setProveedorVista}/></div>}
-        {clienteVista && <div style={{position: 'absolute', zIndex: 20}}><ListadoClientes setClienteVista={setClienteVista}/></div>}
-        {usuarioVista && <div style={{position: 'absolute', zIndex: 20}}><ListadoUsuarios setUsuarioVista={setUsuarioVista}/></div>}
+        {ventaVista && <div style={{position: 'absolute', zIndex: 10}}><Paper elevation={6}><Venta setVentaVista={setVentaVista}/></Paper></div>}
+        {compraVista && <div style={{position: 'absolute', zIndex: 10}}><Paper elevation={6}><Compra setCompraVista={setCompraVista}/></Paper></div>}
+        {productoVista && <div style={{position: 'absolute', zIndex: 20}}><Paper elevation={12}><ListadoProductos setProductoVista={setProductoVista}/></Paper></div>}
+        {proveedorVista && <div style={{position: 'absolute', zIndex: 20}}><Paper elevation={12}><ListadoProovedores setProveedorVista={setProveedorVista}/></Paper></div>}
+        {clienteVista && <div style={{position: 'absolute', zIndex: 20}}><Paper elevation={12}><ListadoClientes setClienteVista={setClienteVista}/></Paper></div>}
+        {usuarioVista && <div style={{position: 'absolute', zIndex: 20}}><Paper elevation={12}><ListadoUsuarios setUsuarioVista={setUsuarioVista}/></Paper></div>}
     </>);
 }

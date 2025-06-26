@@ -2,22 +2,33 @@ import { useState } from 'react';
 import { Button, Grid2 } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import zIndex from '@mui/material/styles/zIndex';
 
 export default function MenuAplicacion({ 
     setVentaVista,
     setCompraVista,
     setProductoVista,
     setProveedorVista,
-    setClienteVista
+    setClienteVista,
+    setUsuarioVista
 }: {
     setVentaVista: (value: boolean) => void;
     setCompraVista: (value: boolean) => void;
     setProductoVista: (value: boolean) => void;
     setProveedorVista: (value: boolean) => void;
     setClienteVista: (value: boolean) => void;
+    setUsuarioVista: (value: boolean) => void;
 }) {
     const [anchorEl, setAnchorEl] = useState<EventTarget | null>(null);
     const [opcionMenu, setOpcionMenu] = useState('');
+
+    const estilo = {
+        top: 0,
+        right: 0,
+        position: 'fixed',
+        width: '100vw',
+        zIndex: 1000
+    };
 
     function mostrarOcultarMenu(menu: string, evento: EventTarget | null) {
         setAnchorEl(evento);
@@ -29,12 +40,12 @@ export default function MenuAplicacion({
     }
 
     return (
-        <>
+        <div style={estilo}>
             <Grid2 container spacing={2} sx={{ padding: 2 }}>
                 <Grid2 size={{xs: 2}}>
                     <img src="/imagenes/logo.png" alt="Logo" style={{ width: '100%' }} />
                 </Grid2>
-                <Grid2 size={{xs: 6}}>
+                <Grid2 size={{xs: 7}}>
                     <Button
                         variant="outlined"
                         color="primary"
@@ -68,13 +79,14 @@ export default function MenuAplicacion({
                         <MenuItem onClick={() => {setProductoVista(true);mostrarOcultarMenu("gestionar", null);}}>Productos</MenuItem>
                         <MenuItem onClick={() => {setClienteVista(true);mostrarOcultarMenu("gestionar", null);}}>Clientes</MenuItem>
                         <MenuItem onClick={() => {setProveedorVista(true);mostrarOcultarMenu("gestionar", null);}}>Proveedores</MenuItem>
+                        <MenuItem onClick={() => {setUsuarioVista(true);mostrarOcultarMenu("gestionar", null);}}>Usuarios</MenuItem>
                     </Menu>
                     <Button variant="contained" color="primary" onClick={() => { setVentaVista(false); }}>Ayuda</Button>
                 </Grid2>
-                <Grid2 size={{xs: 3}}>
+                <Grid2 size={{xs: 3}} textAlign="end">
                     <Button variant="contained" color="primary" href="/login">Cerrar Sesion</Button>
                 </Grid2>
             </Grid2>
-        </>
+        </div>
     );
 }
