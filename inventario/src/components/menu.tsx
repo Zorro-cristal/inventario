@@ -22,7 +22,7 @@ export default function MenuAplicacion({
     const [anchorEl, setAnchorEl] = useState<EventTarget | null>(null);
     const [opcionMenu, setOpcionMenu] = useState('');
 
-    const estilo = {
+    const estilo: React.CSSProperties = {
         top: 0,
         right: 0,
         position: 'fixed',

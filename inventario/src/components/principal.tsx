@@ -21,12 +21,20 @@ export function Principal({
         clienteVista: {clienteVista: boolean, setClienteVista: (value: boolean) => void},
         usuarioVista: {usuarioVista: boolean, setUsuarioVista: (value: boolean) => void}
     }) {
+
+        const estiloVentana: React.CSSProperties= {
+            top: 50, 
+            width: '100vw',
+            position: 'absolute',
+            zIndex: 10,
+        };
+
     return (<>
-        {ventaVista && <div style={{position: 'absolute', zIndex: 10}}><Paper elevation={6}><Venta setVentaVista={setVentaVista}/></Paper></div>}
-        {compraVista && <div style={{position: 'absolute', zIndex: 10}}><Paper elevation={6}><Compra setCompraVista={setCompraVista}/></Paper></div>}
-        {productoVista && <div style={{position: 'absolute', zIndex: 20}}><Paper elevation={12}><ListadoProductos setProductoVista={setProductoVista}/></Paper></div>}
-        {proveedorVista && <div style={{position: 'absolute', zIndex: 20}}><Paper elevation={12}><ListadoProovedores setProveedorVista={setProveedorVista}/></Paper></div>}
-        {clienteVista && <div style={{position: 'absolute', zIndex: 20}}><Paper elevation={12}><ListadoClientes setClienteVista={setClienteVista}/></Paper></div>}
-        {usuarioVista && <div style={{position: 'absolute', zIndex: 20}}><Paper elevation={12}><ListadoUsuarios setUsuarioVista={setUsuarioVista}/></Paper></div>}
+        {ventaVista && <div style={estiloVentana}><Paper elevation={6} style={{marginInline: 'auto'}}><Venta setVentaVista={setVentaVista}/></Paper></div>}
+        {compraVista && <div style={estiloVentana}><Paper elevation={6} style={{marginInline: 'auto'}}><Compra setCompraVista={setCompraVista}/></Paper></div>}
+        {productoVista && <div style={estiloVentana}><Paper elevation={12} style={{marginInline: 'auto', width: '70vw'}}><ListadoProductos setProductoVista={setProductoVista}/></Paper></div>}
+        {proveedorVista && <div style={estiloVentana}><Paper elevation={12} style={{marginInline: 'auto', width: '70vw'}}><ListadoProovedores setProveedorVista={setProveedorVista}/></Paper></div>}
+        {clienteVista && <div style={estiloVentana}><Paper elevation={12} style={{marginInline: 'auto', width: '70vw'}}><ListadoClientes setClienteVista={setClienteVista}/></Paper></div>}
+        {usuarioVista && <div style={estiloVentana}><Paper elevation={12} style={{marginInline: 'auto', width: '70vw'}}><ListadoUsuarios setUsuarioVista={setUsuarioVista}/></Paper></div>}
     </>);
 }
