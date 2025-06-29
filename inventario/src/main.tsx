@@ -4,6 +4,8 @@ import { BrowserRouter } from "react-router";
 import './index.css';
 import { Principal } from './components/principal.tsx';
 import MenuAplicacion from './components/menu.tsx';
+import Rutas_principales from './rutas_principales.tsx';
+import { Paper } from '@mui/material';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -11,31 +13,31 @@ createRoot(document.getElementById('root')!).render(
   </StrictMode>,
 )
 
+export const informacion_empresa= {
+  razon_social: 'nombre legal empresa',
+  ruc: '123456789-0',
+  direccion: 'sobre la calle entre la esquina y la otra esquina',
+  ciudad: 'Villarrica - Paraguay',
+  telefono: '+595989123456'
+}
+
 function App() {
-  const [ventaVista, setVentaVista] = useState(false);
-  const [compraVista, setCompraVista] = useState(false);
-  const [productoVista, setProductoVista] = useState(false);
-  const [proveedorVista, setProveedorVista] = useState(false);
-  const [clienteVista, setClienteVista] = useState(false);
-  const [usuarioVista, setUsuarioVista] = useState(false);
+
+  const estiloVentana: React.CSSProperties= {
+      top: 50, 
+      width: '100vw',
+      position: 'absolute',
+      zIndex: 10,
+  };
 
   return (
       <BrowserRouter>
-          <MenuAplicacion 
-            setVentaVista={setVentaVista}
-            setCompraVista={setCompraVista}
-            setProductoVista={setProductoVista}
-            setProveedorVista={setProveedorVista}
-            setClienteVista={setClienteVista}
-            setUsuarioVista={setUsuarioVista}
-            />
-            <Principal 
-              ventaVista={{ventaVista, setVentaVista}} 
-              compraVista={{compraVista, setCompraVista}}
-              productoVista= {{productoVista, setProductoVista}}
-              proveedorVista= {{proveedorVista, setProveedorVista}}
-              clienteVista= {{clienteVista, setClienteVista}}
-              usuarioVista= {{usuarioVista, setUsuarioVista}}/>
+          <MenuAplicacion />
+          <div style={estiloVentana}>
+            <Paper elevation={6} style={{marginInline: 'auto'}}>
+              <Rutas_principales/>
+            </Paper></div>
+          <Rutas_principales />
       </BrowserRouter>
   );
 }

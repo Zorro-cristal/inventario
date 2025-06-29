@@ -25,6 +25,7 @@ export default function Rutas_principales() {
           <Route index element={<TablaProveedores />}></Route>
           <Route path=":id" element={<EditarProveedor id_proveedor={1}/>} />
         </Route>
+        <Route path=":id" element={<Principal/>} />
       </Routes>
     );
 }
