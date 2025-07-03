@@ -3,8 +3,10 @@ import { camposProveedor, Proveedor } from "../../../models/proveedor";
 import Cargando from "../../../views/Cargando";
 import { Formulario } from "../../../views/Formulario";
 import { guardarProveedor, obtenerProveedor } from "../funciones/abm";
+import { useParams } from "react-router";
 
-export default function EditarProveedor({id_proveedor}: {id_proveedor: number}) {
+export default function EditarProveedor({setVista= undefined}: {setVista?: (value: boolean) => void}) {
+    const parametros = useParams();
     const [cargado, setCargado] = useState(true);
     const [proveedor, setProveedor] = useState<Proveedor>({
         id_proveedor: 0,
@@ -16,9 +18,9 @@ export default function EditarProveedor({id_proveedor}: {id_proveedor: number}) 
     const [titulo, setTitulo] = useState("Agregar nuevo proveedor");
 
     useEffect(() => {
-        if (id_proveedor != undefined && id_proveedor != 0) {
+        if (parametros.id != undefined && parseInt(parametros.id) != 0) {
             setTitulo("Modificar el proveedor");
-            obtenerProveedor(id_proveedor).then((data: Proveedor) => {
+            obtenerProveedor(parseInt(parametros.id)).then((data: Proveedor) => {
                 setProveedor(data);
                 setCargado(true);
             });
@@ -31,7 +33,13 @@ export default function EditarProveedor({id_proveedor}: {id_proveedor: number}) 
         return (
             <div>
                 <h1>{titulo}</h1>
-                <Formulario valores={proveedor} campos={camposProveedor} funcionSubmit={guardarProveedor} />
+                <Formulario valores={proveedor} campos={camposProveedor} funcionSubmit={guardarProveedor} funcionVolver={() => {
+                    if (setVista) {
+                        setVista(false);
+                    } else {
+                        window.history.back();
+                    }
+                    }}/>
             </div>
         );
     } else {

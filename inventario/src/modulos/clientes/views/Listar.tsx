@@ -1,9 +1,10 @@
-import { DataGrid, gridClasses } from "@mui/x-data-grid";
+import { DataGrid, gridClasses, GridRowSelectionModel } from "@mui/x-data-grid";
 import Cargando from "../../../views/Cargando";
 import { useEffect, useState } from "react";
 import { Cliente } from "../../../models/clientes";
+import { recuperarClientes } from "../controllers/recuperar";
 
-export default function TablaClientes() {
+export default function TablaClientes({setSeleccionar}: {setSeleccionar?: (rowSelectionModel: GridRowSelectionModel) => void | Promise<void>}) {
     const [cargando, setCargando] = useState(true);
     const [clientes, setClientes] = useState<Cliente[]>([]);
 
@@ -19,28 +20,7 @@ export default function TablaClientes() {
     ];
 
     function cargarListado() {
-        setClientes([
-            {
-                cedula: 12345678,
-                nombres: 'Juan',
-                apellidos: 'Pérez',
-                isEmpresa: false,
-                razon_social: null,
-                nombre_empresa: null,
-                ruc: 1234567890,
-                deuda: 0,
-            },
-            {
-                cedula: 87654321,
-                nombres: 'María',
-                apellidos: 'Gómez',
-                isEmpresa: false,
-                razon_social: null,
-                nombre_empresa: null,
-                ruc: 9876543210,
-                deuda: 1000,
-            }
-        ]);
+        setClientes(recuperarClientes());
         setCargando(false);
     }
 
@@ -54,6 +34,7 @@ export default function TablaClientes() {
             columns={columnas}
             columnVisibilityModel={{isEmpresa: false}}
             rows={clientes}
+            onRowSelectionModelChange= {setSeleccionar}
             getRowId={(row) => row.cedula} // Indica el campo id
             getRowSpacing={(params) => ({ top: params.isFirstVisible ? 0 : 5, bottom: params.isLastVisible ? 0 : 5 })} // Espacio entre filas
             sx={{

@@ -3,8 +3,10 @@ import { guardarUsuario, obtenerUsuario } from "../funciones/abm";
 import Cargando from "../../../views/Cargando";
 import { Formulario } from "../../../views/Formulario";
 import { camposUsuario, Usuario } from "../../../models/usuarios";
+import { useParams } from "react-router";
 
-export default function EditarUsuario({id_usuario} : {id_usuario: string}) {
+export default function EditarUsuario({setVista= undefined}: {setVista?: (value: boolean) => void}) {
+    const parametros = useParams();
     const [cargado, setCargado] = useState(true);
     const [usuario, setUsuario] = useState<Usuario>({
         alias: "",
@@ -14,9 +16,9 @@ export default function EditarUsuario({id_usuario} : {id_usuario: string}) {
     const [titulo, setTitulo] = useState("Agregar nuevo usuario");
 
     useEffect(() => {
-        if (id_usuario != undefined && id_usuario.trim().length == 0) {
+        if (parametros.id != undefined && parseInt(parametros.id) != 0) {
             setTitulo("Modificar el usuario");
-            obtenerUsuario(id_usuario).then((data: Usuario) => {
+            obtenerUsuario(parametros.id).then((data: Usuario) => {
                 setUsuario(data);
                 setCargado(true);
             });
@@ -28,7 +30,13 @@ export default function EditarUsuario({id_usuario} : {id_usuario: string}) {
     if (cargado) {
         return (<div>
             <h1>{titulo}</h1>
-            <Formulario valores={usuario} campos={camposUsuario} funcionSubmit={guardarUsuario} />
+            <Formulario valores={usuario} campos={camposUsuario} funcionSubmit={guardarUsuario} funcionVolver={() => {
+                if (setVista) {
+                    setVista(false);
+                } else {
+                    window.history.back();
+                }
+                }}/>
         </div>);
     } else {
         return (<Cargando />)

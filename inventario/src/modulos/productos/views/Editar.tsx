@@ -6,7 +6,7 @@ import { guardarproducto, obtener_producto } from "../funciones/abm";
 import { useEffect, useState } from "react";
 import Cargando from "../../../views/Cargando";
 
-export default function EditarProducto() {
+export default function EditarProducto({setVista}: {setVista?: (value: boolean) => void}) {
     const parametros = useParams();
     const [cargado, setCargado]= useState(false);
     const [producto, setProducto]= useState<Producto>({
@@ -14,7 +14,8 @@ export default function EditarProducto() {
         nombre_producto : "",
         descripcion_producto : "",
         cantidad_disponible : 0,
-        precio_venta : 0
+        precio_venta : 0,
+        iva: 0
     });
     const [titulo, setTitulo]= useState("Agregar nuevo producto");
 
@@ -33,7 +34,13 @@ export default function EditarProducto() {
     if (cargado) {
         return (<Paper elevation={3}>
             <h1>{titulo}</h1>
-            <Formulario valores={producto} campos={camposProducto} funcionSubmit={guardarproducto}/>
+            <Formulario valores={producto} campos={camposProducto} funcionSubmit={guardarproducto} funcionVolver={() => {
+                if (setVista) {
+                    setVista(false);
+                } else {
+                    window.history.back();
+                }
+                }}/>
         </Paper>);
     } else {
         return (<Cargando />);

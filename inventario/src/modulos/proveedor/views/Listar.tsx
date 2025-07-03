@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Proveedor } from "../../../models/proveedor";
 import Cargando from "../../../views/Cargando";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridRowSelectionModel } from "@mui/x-data-grid";
+import { recuperarProveedores } from "../controllers/recuperar";
 
-export default function TablaProveedores() {
+export default function TablaProveedores({setSeleccionar}: {setSeleccionar?: (rowSelectionModel: GridRowSelectionModel) => void | Promise<void>}) {
     const [cargando, setCargando] = useState(true);
     const [proveedores, setProveedores] = useState<Proveedor[]>([]);
 
@@ -16,22 +17,7 @@ export default function TablaProveedores() {
     ];
 
     function cargarListado() {
-        setProveedores([
-            {
-                id_proveedor: 1,
-                nombre: 'Proveedor 1',
-                telefono: '123456789',
-                direccion: 'Dirección del proveedor 1',
-                ruc: '1234567890',
-            },
-            {
-                id_proveedor: 2,
-                nombre: 'Proveedor 2',
-                telefono: '987654321',
-                direccion: 'Dirección del proveedor 2',
-                ruc: '0987654321',
-            }
-        ]);
+        setProveedores(recuperarProveedores());
         setCargando(false);
     }
 
@@ -44,6 +30,7 @@ export default function TablaProveedores() {
             <DataGrid
                 columns={columnas}
                 rows={proveedores}
+                onRowSelectionModelChange= {setSeleccionar}
                 getRowId={(row) => row.id_proveedor} // Indica el campo id
                 getRowSpacing={(params) => ({ top: params.isFirstVisible ? 0 : 5, bottom: params.isLastVisible ? 0 : 5 })} // Espacio entre filas
                 sx={{

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import Cargando from "../../../views/Cargando";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridRowSelectionModel } from "@mui/x-data-grid";
 import { Usuario } from "../../../models/usuarios";
+import { recuperarUsuarios } from "../controllers/recuperar";
 
-export default function TablaUsuarios() {
+export default function TablaUsuarios({setSeleccionar}: {setSeleccionar?: (rowSelectionModel: GridRowSelectionModel) => void | Promise<void>}) {
     const [cargando, setCargando] = useState(true);
     const [usuarios, setUsuarios] = useState<Usuario[]>([]);
 
@@ -14,18 +15,7 @@ export default function TablaUsuarios() {
     ];
 
     function cargarListado() {
-        setUsuarios([
-            {
-                alias: 'Zorro-cristal',
-                id_roleFK: 1,
-                contra: ""
-            },
-            {
-                alias: 'Otro-cristal',
-                id_roleFK: 2,
-                contra: ""
-            },
-        ]);
+        setUsuarios(recuperarUsuarios());
         setCargando(false);
     }
 
@@ -38,6 +28,7 @@ export default function TablaUsuarios() {
         <DataGrid
             columns={columnas}
             rows={usuarios}
+            onRowSelectionModelChange= {setSeleccionar}
             getRowId={(row) => row.alias} // Indica el campo id
             getRowSpacing={(params) => ({ top: params.isFirstVisible ? 0 : 5, bottom: params.isLastVisible ? 0 : 5 })} // Espacio entre filas
             sx={{

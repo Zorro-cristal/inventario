@@ -3,11 +3,14 @@ import { camposCliente, Cliente } from "../../../models/clientes";
 import { buscarCliente, guardarCliente } from "../funciones/abm";
 import { camposForm, Formulario } from "../../../views/Formulario";
 import { Paper } from "@mui/material";
+import Cargando from "../../../views/Cargando";
+import { useParams } from "react-router";
 
-export default function EditarCliente({id_cliente}: {id_cliente: number}) {
+export default function EditarCliente({setVista}: {setVista?: (value: boolean) => void}) {
+    const parametros = useParams();
     const [cargado, setCargado]= useState(false);
     const [cliente, setCliente]= useState<Cliente>({
-        cedula: id_cliente,
+        cedula: 0,
         isEmpresa: false,
         ruc: 0,
         deuda: 0,
@@ -17,9 +20,9 @@ export default function EditarCliente({id_cliente}: {id_cliente: number}) {
 
     useEffect(() => {
         let camposForm= [...camposFormCliente];
-        if (id_cliente != undefined && id_cliente != 0) {
+        if (parametros.id != undefined && parseInt(parametros.id) != 0) {
             setTitulo("Modificar el cliente");
-            buscarCliente(id_cliente).then((data: Cliente) => {
+            buscarCliente(parseInt(parametros.id)).then((data: Cliente) => {
                 setCliente(data);
                 camposForm= camposForm.filter((c: camposForm) => {
                     if (data.isEmpresa) {
@@ -40,9 +43,15 @@ export default function EditarCliente({id_cliente}: {id_cliente: number}) {
     if (cargado) {
         return (<Paper elevation={3}>
             <h1>{titulo}</h1>
-            <Formulario valores={cliente} campos={camposFormCliente} funcionSubmit={guardarCliente}/>
+            <Formulario valores={cliente} campos={camposFormCliente} funcionSubmit={guardarCliente} funcionVolver={() => {
+                if (setVista) {
+                    setVista(false);
+                } else {
+                    window.history.back();
+                }
+                }}/>
         </Paper>);
     } else {
-        return (<div><h1>Cargando...</h1></div>);
+        return (<Cargando />);
     }
 }
