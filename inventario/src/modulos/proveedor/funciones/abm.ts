@@ -7,12 +7,16 @@ export function guardarProveedor(evento: ChangeEvent<HTMLInputElement>): boolean
     return false;
 }
 
-export async function obtenerProveedor(id: number): Promise<Proveedor> {
-    return {
+export async function obtenerProveedor(id: number): Promise<Proveedor[]> {
+    let proveedores: Proveedor[];
+
+    let prov: Proveedor= {
         id_proveedor: id,
         nombre: "",
         telefono: "",
         direccion: "",
         ruc: ""
-    };
+    }
+    proveedores.push(prov);
+    return proveedores;
 }

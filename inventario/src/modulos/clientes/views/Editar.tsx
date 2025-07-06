@@ -6,7 +6,7 @@ import { Paper } from "@mui/material";
 import Cargando from "../../../views/Cargando";
 import { useParams } from "react-router";
 
-export default function EditarCliente({setVista}: {setVista?: (value: boolean) => void}) {
+export default function EditarCliente({id, setVista}: {id?: number, setVista?: (value: boolean) => void}) {
     const parametros = useParams();
     const [cargado, setCargado]= useState(false);
     const [cliente, setCliente]= useState<Cliente>({
@@ -20,9 +20,17 @@ export default function EditarCliente({setVista}: {setVista?: (value: boolean) =
 
     useEffect(() => {
         let camposForm= [...camposFormCliente];
+        let idCliente: number | undefined= undefined;
+
         if (parametros.id != undefined && parseInt(parametros.id) != 0) {
+            idCliente= parseInt(parametros.id);
+        } else if(id != undefined && id != 0) {
+            idCliente= id;
+        }
+
+        if (idCliente != undefined) {
             setTitulo("Modificar el cliente");
-            buscarCliente(parseInt(parametros.id)).then((data: Cliente) => {
+            buscarCliente(idCliente).then((data: Cliente) => {
                 setCliente(data);
                 camposForm= camposForm.filter((c: camposForm) => {
                     if (data.isEmpresa) {

@@ -7,7 +7,7 @@ export function guardarUsuario(evento: ChangeEvent<HTMLInputElement>): boolean {
     return false;
 }
 
-export async function obtenerUsuario(id: string): Promise<Usuario> {
+export async function obtenerUsuario(id: string): Promise<Usuario[]> {
     return {
         alias: id,
         id_roleFK: 1,

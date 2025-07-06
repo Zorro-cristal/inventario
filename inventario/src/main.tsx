@@ -1,8 +1,7 @@
-import { StrictMode, useState } from 'react';
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from "react-router";
 import './index.css';
-import { Principal } from './components/principal.tsx';
 import MenuAplicacion from './components/menu.tsx';
 import Rutas_principales from './rutas_principales.tsx';
 import { Paper } from '@mui/material';
@@ -37,7 +36,6 @@ function App() {
             <Paper elevation={6} style={{marginInline: 'auto'}}>
               <Rutas_principales/>
             </Paper></div>
-          <Rutas_principales />
       </BrowserRouter>
   );
 }

@@ -41,6 +41,9 @@ export default function TablaUsuarios({setSeleccionar}: {setSeleccionar?: (rowSe
                 ['& .MuiDataGrid-selectedRowCount']: {
                     color: "white"
                 },
+                '& .MuiDataGrid-cell': {
+                    color: '#000000', // Color del texto
+                },
             }}
         ></DataGrid>}
     </>)

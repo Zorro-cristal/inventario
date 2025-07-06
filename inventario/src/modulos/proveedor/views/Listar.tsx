@@ -43,6 +43,9 @@ export default function TablaProveedores({setSeleccionar}: {setSeleccionar?: (ro
                     ['& .MuiDataGrid-selectedRowCount']: {
                         color: "white"
                     },
+                    '& .MuiDataGrid-cell': {
+                        color: '#000000', // Color del texto
+                    },
                 }}
             ></DataGrid>}
     </>);

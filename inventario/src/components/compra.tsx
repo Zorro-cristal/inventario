@@ -1,14 +1,19 @@
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Paper, Grid2, TextField, Select, MenuItem, IconButton, Button } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import TablaProductos from "../../productos/views/Listar";
+import { Button, Grid2, IconButton, MenuItem, Modal, Paper, Select, TextField } from "@mui/material";
+import { DataGrid, GridRowSelectionModel } from "@mui/x-data-grid";
 import { useState } from "react";
-import { obtenerProveedor } from '../../proveedor/funciones/abm';
+import { Producto } from '../models/productos';
+import { obtener_producto } from '../modulos/productos/funciones/abm';
+import TablaProductos from "../modulos/productos/views/Listar";
+import { obtenerProveedor } from '../modulos/proveedor/funciones/abm';
+import EditarProveedor from '../modulos/proveedor/views/Editar';
+import EditarProducto from '../modulos/productos/views/Editar';
+import { Proveedor } from '../models/proveedor';
 
-export default function Compra({setCompraVista}: {setCompraVista: (value: boolean) => void}) {
+export default function Compra() {
     const fechaActual = new Date();
     const columnas = [
-        { field: 'id_producto', headerName: 'ID', flex: 0.1 },
+        { field: 'id_producto', headerName: 'id_proveedor', flex: 0.1 },
         { field: 'nombre_producto', headerName: 'Nombre', flex: 0.2 },
         { field: 'cantidad', headerName: 'Cantidad Disponible', flex: 0.1, editable: true },
         { field: 'precio', headerName: 'Precio unitario', flex: 0.2 },
@@ -31,10 +36,16 @@ export default function Compra({setCompraVista}: {setCompraVista: (value: boolea
         }}
     ];
 
-    const [nombreProveedor, setNombreProveedor]= useState("");
-    const [tituloBoton, setTituloBoton]= useState("Agregar provee");
-    const [productosCargados, setProductosCargados]= useState([
-        { id_producto: '', nombre_producto: "Totales", cantidad: '', precio: '', iva_5: 0, iva_10: 0, exenta: 0, subTotal: 0 }
+    // Controladores de vista
+    const [verEditarProveedor, setVerEditarProveedor] = useState(false);
+    const [verEditarProducto, setVerEditarProducto] = useState(false);
+
+    const [proveedor, setProveedor] = useState<Proveedor>();
+    const [seleccionProducto, setSeleccionProducto]= useState<GridRowSelectionModel>([]);
+    const [productosCargados, setProductosCargados]= useState<{
+        id_producto : string | number, nombre_producto: string, cantidad: number | null, precio: number | null, iva_5: number, iva_10: number, exenta: number, subTotal: number
+    }[]>([
+        { id_producto: '', nombre_producto: "Totales", cantidad: null, precio: null, iva_5: 0, iva_10: 0, exenta: 0, subTotal: 0 }
     ]);
 
     function buscarProveedorDesdeRuc(event: React.KeyboardEvent<HTMLDivElement>) {
@@ -42,12 +53,13 @@ export default function Compra({setCompraVista}: {setCompraVista: (value: boolea
         const cedula = parseInt((event.target as HTMLInputElement).value);
         obtenerProveedor(cedula).then((data) => {
             console.log(data);
-            setNombreProveedor(data.nombre);
-            setTituloBoton("Modificar cliente");
+            if (data) {
+                setProveedor(data[0])
+            }
         });
     }
 
-    function seleccionarProducto() {
+    async function seleccionarProducto() {
         let cargados= [... productosCargados];
         let total_iva_5= 0;
         let total_iva_10= 0;
@@ -55,6 +67,20 @@ export default function Compra({setCompraVista}: {setCompraVista: (value: boolea
         let total= 0;
         cargados.pop(); // Elimina el pie
         // Agrega un producto
+        const producto : Producto[]= await obtener_producto(parseInt(seleccionado[0].toString()));
+        console.log(producto);
+        if (producto.length == 1) {
+            cargados.push({
+                id_producto: producto[0].id_producto,
+                nombre_producto: producto[0].nombre_producto,
+                cantidad: 1,
+                precio: producto[0].precio_venta,
+                iva_5: producto[0].iva == 5 ? producto[0].precio_venta : 0,
+                iva_10: producto[0].iva == 10 ? producto[0].precio_venta : 0,
+                exenta: producto[0].iva == 0 ? producto[0].precio_venta : 0,
+                subTotal: producto[0].precio_venta
+            });
+        }
 
         // Calcula el monto
         cargados.forEach((producto) => {
@@ -65,9 +91,13 @@ export default function Compra({setCompraVista}: {setCompraVista: (value: boolea
         });
         // Agrega el pie
         cargados.push(
-            { id_producto: '', nombre_producto: "Totales", cantidad: '', precio: '', iva_5: total_iva_5, iva_10: total_iva_10, exenta: total_exenta, subTotal: total }
+            { id_producto: '', nombre_producto: "Totales", cantidad: null, precio: null, iva_5: total_iva_5, iva_10: total_iva_10, exenta: total_exenta, subTotal: total }
         );
         setProductosCargados(cargados);
+    }
+
+    function guardarCompra() {
+        
     }
 
     return (<>
@@ -94,8 +124,8 @@ export default function Compra({setCompraVista}: {setCompraVista: (value: boolea
             alignItems="center"
             marginTop={2}>
                 <TextField id="document_proveedor" label="Documento" variant="outlined" onKeyUp={buscarProveedorDesdeRuc} sx={{width: 100}}/>
-                <TextField id="nombre_proveedor" label="Nombre" variant="outlined" value={nombreProveedor} sx={{width: 400}}/>
-                <Button onClick={() => {}}>{tituloBoton}</Button>
+                <TextField id="nombre_proveedor" label="Nombre" variant="outlined" value={proveedor ? proveedor['nombre'] : ""} sx={{width: 400}}/>
+                <Button onClick={() => {}}>{proveedor ? "Agregar proveedor" : "Editar proveedor"}</Button>
         </Grid2></Paper>
         <Paper elevation={3}><Grid2
             container
@@ -104,7 +134,7 @@ export default function Compra({setCompraVista}: {setCompraVista: (value: boolea
             justifyContent="space-around"
             alignItems="center"
             marginTop={2}>
-                <TablaProductos funcionSeleccionar={seleccionarProducto}/>
+            <TablaProductos setSeleccionar={setSeleccionProducto}/>
         </Grid2></Paper>
         <>
             <h1>Productos cargados</h1>
@@ -122,8 +152,30 @@ export default function Compra({setCompraVista}: {setCompraVista: (value: boolea
             justifyContent="space-around"
             alignItems="center"
             marginTop={2}>
-            <Button variant="contained" color="success" onClick={() => {}}>Imprimir</Button>
-            <Button variant="contained" color="error" onClick={() => {setCompraVista(false);}}>Cancelar</Button>
+            <Button variant="contained" color="success" onClick={guardarCompra}>Imprimir</Button>
+            <Button variant="contained" color="error" onClick={() => {window.history.back();}}>Cancelar</Button>
         </Grid2>
+        <Modal
+            open={verEditarProveedor}
+            sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                overflowY: 'auto', // Habilita el scroll en el modal padre
+            }}
+            >
+            <EditarProveedor setVista={setVerEditarProveedor} id={proveedor ? proveedor['id_proveedor'] : 0} />
+        </Modal>
+        <Modal
+            open={verEditarProducto}
+            sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                overflowY: 'auto', // Habilita el scroll en el modal padre
+            }}
+            >
+            <EditarProducto setVista={setVerEditarProducto} id={seleccionProducto ? parseInt(seleccionProducto[0].toString()) : 0} />
+        </Modal>
     </>);
 }

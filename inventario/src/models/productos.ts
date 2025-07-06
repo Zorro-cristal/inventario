@@ -6,6 +6,7 @@ export interface Producto {
     descripcion_producto : string | null;
     cantidad_disponible : number;
     precio_venta : number;
+    iva: number;
 }
 
 export interface ingresos_productos {
@@ -22,5 +23,6 @@ export const camposProducto: Array<camposForm>= [
     {id: "nombre_producto", requerido: true, ayuda: "", tipo: "text", abrirDialog: null},
     {id: "descripcion_producto", requerido: false, ayuda: "", tipo: "text", abrirDialog: null},
     {id: "cantidad_disponible", requerido: true, ayuda: "", tipo: "number", abrirDialog: null},
-    {id: "precio_venta", requerido: true, ayuda: "", tipo: "number", abrirDialog: null}
+    {id: "precio_venta", requerido: true, ayuda: "", tipo: "number", abrirDialog: null},
+    {id: "iva", requerido: true, ayuda: "", tipo: "select", abrirDialog: null}
 ]

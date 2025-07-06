@@ -5,7 +5,7 @@ import { Formulario } from "../../../views/Formulario";
 import { camposUsuario, Usuario } from "../../../models/usuarios";
 import { useParams } from "react-router";
 
-export default function EditarUsuario({setVista= undefined}: {setVista?: (value: boolean) => void}) {
+export default function EditarUsuario({setVista, id}: {setVista?: (value: boolean) => void, id?: string}) {
     const parametros = useParams();
     const [cargado, setCargado] = useState(true);
     const [usuario, setUsuario] = useState<Usuario>({
@@ -16,10 +16,17 @@ export default function EditarUsuario({setVista= undefined}: {setVista?: (value:
     const [titulo, setTitulo] = useState("Agregar nuevo usuario");
 
     useEffect(() => {
+        let idUsuario: string | undefined= undefined;
         if (parametros.id != undefined && parseInt(parametros.id) != 0) {
+            idUsuario= parametros.id;
+        } else if (id && id != "") {
+            idUsuario= id;
+        }
+
+        if (idUsuario) {
             setTitulo("Modificar el usuario");
-            obtenerUsuario(parametros.id).then((data: Usuario) => {
-                setUsuario(data);
+            obtenerUsuario(idUsuario).then((data: Usuario[]) => {
+                setUsuario(data[0]);
                 setCargado(true);
             });
         } else {

@@ -13,10 +13,12 @@ export const Formulario= ({
     campos,
     funcionSubmit,
     valores,
+    funcionVolver
   }: {
     campos: Array<camposForm>;
     funcionSubmit: (event: ChangeEvent<HTMLInputElement>) => boolean;
     valores: unknown;
+    funcionVolver: () => void;
   }) => {
 
     // Estilo personalizado para el Input
@@ -126,11 +128,14 @@ export const Formulario= ({
                 alignItems="center"
                 marginTop={2}
             > 
-                <Grid2 size={{xs: 6}}> 
+                <Grid2 size={{xs: 3}}> 
                     <Button type="submit">Guardar</Button>
                 </Grid2>
-                <Grid2 size={{xs: 6}}>
+                <Grid2 size={{xs: 3}}>
                     <Button type="button" onClick={limpiarFormulario}>Limpiar</Button>
+                </Grid2>
+                <Grid2 size={{xs: 3}}>
+                    <Button type="button" onClick={funcionVolver}>Volver</Button>
                 </Grid2>
             </Grid2> 
         </Box>);

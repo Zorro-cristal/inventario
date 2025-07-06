@@ -42,6 +42,9 @@ export default function TablaProductos({setSeleccionar}: {setSeleccionar?: (rowS
                     ['& .MuiToolbar-root']: {
                         color: "white"
                     },
+                    '& .MuiDataGrid-cell': {
+                        color: '#000000', // Color del texto
+                    },
                     ['& .MuiDataGrid-selectedRowCount']: {
                         color: "white"
                     },

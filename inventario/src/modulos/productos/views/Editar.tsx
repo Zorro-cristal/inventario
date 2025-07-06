@@ -6,7 +6,7 @@ import { guardarproducto, obtener_producto } from "../funciones/abm";
 import { useEffect, useState } from "react";
 import Cargando from "../../../views/Cargando";
 
-export default function EditarProducto({setVista}: {setVista?: (value: boolean) => void}) {
+export default function EditarProducto({setVista, id}: {setVista?: (value: boolean) => void, id?: number}) {
     const parametros = useParams();
     const [cargado, setCargado]= useState(false);
     const [producto, setProducto]= useState<Producto>({
@@ -20,9 +20,16 @@ export default function EditarProducto({setVista}: {setVista?: (value: boolean) 
     const [titulo, setTitulo]= useState("Agregar nuevo producto");
 
     useEffect(() => {
+        let idProducto: number | undefined = undefined;
         if (parametros.id != undefined && parseInt(parametros.id) != 0) {
+            idProducto= parseInt(parametros.id);
+        } else if (id && id != 0) {
+            idProducto= id;
+        }
+
+        if (idProducto) {
             setTitulo("Modificar el producto");
-            obtener_producto(parseInt(parametros.id)).then((data: Producto) => {
+            obtener_producto(idProducto).then((data: Producto) => {
                 setProducto(data);
                 setCargado(true);
             });
