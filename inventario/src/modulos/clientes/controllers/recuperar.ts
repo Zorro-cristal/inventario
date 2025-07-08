@@ -1,6 +1,6 @@
 import { Cliente } from "../../../models/clientes";
 
-export function recuperarClientes(filtros: {clave: string, valor: string | number}[] | undefined= undefined): Cliente[] {
+export default function recuperarClientes(filtros: [string, string | number][] | undefined= undefined): Promise<Cliente[]> {
     let clientes: Cliente[] = [];
     const resultados= [
         {
@@ -30,5 +30,7 @@ export function recuperarClientes(filtros: {clave: string, valor: string | numbe
         clientes.push(client);
     });
 
-    return clientes;
+    return new Promise((resolve) => {
+        resolve(clientes);
+    });
 }

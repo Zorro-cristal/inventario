@@ -3,12 +3,12 @@ import { Button, Grid2, IconButton, MenuItem, Modal, Paper, Select, TextField } 
 import { DataGrid, GridRowSelectionModel } from "@mui/x-data-grid";
 import { useState } from "react";
 import { Producto } from '../models/productos';
-import { obtener_producto } from '../modulos/productos/funciones/abm';
-import TablaProductos from "../modulos/productos/views/Listar";
-import { obtenerProveedor } from '../modulos/proveedor/funciones/abm';
-import EditarProveedor from '../modulos/proveedor/views/Editar';
-import EditarProducto from '../modulos/productos/views/Editar';
 import { Proveedor } from '../models/proveedor';
+import { obtener_producto } from '../modulos/productos/controllers/guardarEditar';
+import EditarProducto from '../modulos/productos/views/Editar';
+import TablaProductos from "../modulos/productos/views/Listar";
+import { obtenerProveedor } from '../modulos/proveedor/controllers/guardarEditar';
+import EditarProveedor from '../modulos/proveedor/views/Editar';
 
 export default function Compra() {
     const fechaActual = new Date();

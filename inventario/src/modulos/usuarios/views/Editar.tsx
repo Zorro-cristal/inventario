@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { guardarUsuario, obtenerUsuario } from "../funciones/abm";
+import { guardarUsuario, obtenerUsuario } from "../controllers/guardarEditar";
 import Cargando from "../../../views/Cargando";
 import { Formulario } from "../../../views/Formulario";
 import { camposUsuario, Usuario } from "../../../models/usuarios";

@@ -1,10 +1,10 @@
 import { Paper } from "@mui/material";
-import { camposProducto, Producto } from "../../../models/productos";
-import { Formulario } from "../../../views/Formulario";
-import { useParams } from "react-router";
-import { guardarproducto, obtener_producto } from "../funciones/abm";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router";
+import { camposProducto, Producto } from "../../../models/productos";
 import Cargando from "../../../views/Cargando";
+import { Formulario } from "../../../views/Formulario";
+import { guardarproducto, obtener_producto } from "../controllers/guardarEditar";
 
 export default function EditarProducto({setVista, id}: {setVista?: (value: boolean) => void, id?: number}) {
     const parametros = useParams();

@@ -1,16 +1,11 @@
 import { Route, Routes } from "react-router";
-import ListadoClientes from "./components/listarClientes";
-import ListadoProductos from "./components/listarProducto";
-import ListadoProovedores from "./components/listarProveedores";
-import ListadoUsuarios from "./components/listarUsuarios";
 import { Principal } from "./components/principal";
-import Venta from "./components/venta";
+import { Compra, ListadoClientes, ListadoProductos, ListadoProovedores, ListadoUsuarios, Venta } from "./components";
 import EditarCliente from "./modulos/clientes/views/Editar";
 import EditarProducto from "./modulos/productos/views/Editar";
 import EditarProveedor from "./modulos/proveedor/views/Editar";
 import EditarUsuario from "./modulos/usuarios/views/Editar";
 import Factura from "./views/Factura";
-import Compra from "./components/compra";
 
 export default function Rutas_principales() {
     return (

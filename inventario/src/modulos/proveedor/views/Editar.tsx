@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import { camposProveedor, Proveedor } from "../../../models/proveedor";
 import Cargando from "../../../views/Cargando";
 import { Formulario } from "../../../views/Formulario";
-import { guardarProveedor, obtenerProveedor } from "../funciones/abm";
-import { useParams } from "react-router";
+import { guardarProveedor, obtenerProveedor } from "../controllers/guardarEditar";
 
 export default function EditarProveedor({setVista, id}: {setVista?: (value: boolean) => void, id?: number}) {
     const parametros = useParams();

@@ -2,7 +2,7 @@ import { DataGrid, gridClasses, GridRowSelectionModel } from "@mui/x-data-grid";
 import Cargando from "../../../views/Cargando";
 import { useEffect, useState } from "react";
 import { Cliente } from "../../../models/clientes";
-import { recuperarClientes } from "../controllers/recuperar";
+import recuperarClientes from "../controllers/recuperar";
 
 export default function TablaClientes({setSeleccionar}: {setSeleccionar?: (rowSelectionModel: GridRowSelectionModel) => void | Promise<void>}) {
     const [cargando, setCargando] = useState(true);
@@ -20,7 +20,9 @@ export default function TablaClientes({setSeleccionar}: {setSeleccionar?: (rowSe
     ];
 
     function cargarListado() {
-        setClientes(recuperarClientes());
+        recuperarClientes().then((data) => {
+            setClientes(data);
+        });
         setCargando(false);
     }
 

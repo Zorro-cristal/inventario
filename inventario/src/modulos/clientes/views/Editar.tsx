@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
-import { camposCliente, Cliente } from "../../../models/clientes";
-import { buscarCliente, guardarCliente } from "../funciones/abm";
-import { camposForm, Formulario } from "../../../views/Formulario";
 import { Paper } from "@mui/material";
-import Cargando from "../../../views/Cargando";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { camposCliente, Cliente } from "../../../models/clientes";
+import Cargando from "../../../views/Cargando";
+import { camposForm, Formulario } from "../../../views/Formulario";
+import recuperarClientes from "../controllers/recuperar";
+import guardarCliente from "../controllers/guardarEditar";
 
 export default function EditarCliente({id, setVista}: {id?: number, setVista?: (value: boolean) => void}) {
     const parametros = useParams();
@@ -15,7 +16,6 @@ export default function EditarCliente({id, setVista}: {id?: number, setVista?: (
         ruc: 0,
         deuda: 0,
     });
-    const [titulo, setTitulo]= useState("Agregar nuevo cliente");
     const [camposFormCliente, setCamposFormCliente]= useState(camposCliente);
 
     useEffect(() => {
@@ -29,17 +29,17 @@ export default function EditarCliente({id, setVista}: {id?: number, setVista?: (
         }
 
         if (idCliente != undefined) {
-            setTitulo("Modificar el cliente");
-            buscarCliente(idCliente).then((data: Cliente) => {
-                setCliente(data);
+            recuperarClientes([['id', idCliente]]).then((data: Cliente[]) => {
+                const cliente: Cliente= data[0];
+                setCliente(cliente);
                 camposForm= camposForm.filter((c: camposForm) => {
-                    if (data.isEmpresa) {
+                    if (cliente.isEmpresa) {
                         return !((c.id === "nombres") || (c.id === "apellidos"));
                     } else {
                         return !((c.id === "razon_social") || (c.id === "nombre_empresa"));
                     }
                 });
-                console.log(camposForm);
+                
                 setCamposFormCliente(camposForm);
                 setCargado(true);
             });
@@ -50,7 +50,7 @@ export default function EditarCliente({id, setVista}: {id?: number, setVista?: (
 
     if (cargado) {
         return (<Paper elevation={3}>
-            <h1>{titulo}</h1>
+            <h1>{cliente.cedula != 0 ? "Modificar el cliente." : "Agregar nuevo cliente"}</h1>
             <Formulario valores={cliente} campos={camposFormCliente} funcionSubmit={guardarCliente} funcionVolver={() => {
                 if (setVista) {
                     setVista(false);

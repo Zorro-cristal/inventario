@@ -1,10 +1,11 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Button, Grid2, IconButton, MenuItem, Modal, Paper, Select, TextField } from "@mui/material";
 import { DataGrid, GridRowSelectionModel } from "@mui/x-data-grid";
-import { use, useState } from "react";
-import { buscarCliente } from "../modulos/clientes/funciones/abm";
-import TablaProductos from "../modulos/productos/views/Listar";
+import { useState } from "react";
 import EditarCliente from '../modulos/clientes/views/Editar';
+import TablaProductos from "../modulos/productos/views/Listar";
+import { Cliente } from '../models/clientes';
+import recuperarClientes from '../modulos/clientes/controllers/recuperar';
 
 export default function Venta() {
     const [nombreCliente, setNombreCliente]= useState<string>("");
@@ -44,9 +45,10 @@ export default function Venta() {
         if (event.key !== "Enter") return;
         const cedula = parseInt((event.target as HTMLInputElement).value);
         setCedula(cedula);
-        buscarCliente(cedula).then((data) => {
+        recuperarClientes([['cedula', cedula]]).then((data) => {
             console.log(data);
-            setNombreCliente(data.nombres + " " + data.apellidos);
+            const cliente: Cliente= data[0];
+            setNombreCliente(cliente.nombres + " " + cliente.apellidos);
         });
     }
     
