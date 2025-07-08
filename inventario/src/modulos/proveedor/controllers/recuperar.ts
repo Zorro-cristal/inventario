@@ -1,6 +1,6 @@
 import { Proveedor } from "../../../models/proveedor";
 
-export function recuperarProveedores(filtros: {clave: string, valor: string | number}[] | undefined= undefined): Proveedor[] {
+export function recuperarProveedores(filtros: [string, string | number][] | undefined= undefined): Promise<Proveedor[]> {
     let proveedores: Proveedor[] = [];
     const resultados= [
         {
@@ -24,5 +24,7 @@ export function recuperarProveedores(filtros: {clave: string, valor: string | nu
         proveedores.push(prov);
     });
 
-    return proveedores;
+    return new Promise((resolve) => {
+        resolve(proveedores);
+    });
 }

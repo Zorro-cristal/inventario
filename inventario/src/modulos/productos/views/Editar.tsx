@@ -4,7 +4,8 @@ import { useParams } from "react-router";
 import { camposProducto, Producto } from "../../../models/productos";
 import Cargando from "../../../views/Cargando";
 import { Formulario } from "../../../views/Formulario";
-import { guardarproducto, obtener_producto } from "../controllers/guardarEditar";
+import { guardarproducto } from "../controllers/guardarEditar";
+import { recuperarProductos } from "../controllers/recuperar";
 
 export default function EditarProducto({setVista, id}: {setVista?: (value: boolean) => void, id?: number}) {
     const parametros = useParams();
@@ -29,8 +30,8 @@ export default function EditarProducto({setVista, id}: {setVista?: (value: boole
 
         if (idProducto) {
             setTitulo("Modificar el producto");
-            obtener_producto(idProducto).then((data: Producto) => {
-                setProducto(data);
+            recuperarProductos([['id', idProducto]]).then((data: Producto[]) => {
+                setProducto(data[0]);
                 setCargado(true);
             });
         } else {

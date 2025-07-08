@@ -1,11 +1,9 @@
 import { Grid2, Button } from "@mui/material";
 import TablaClientes from "../modulos/clientes/views/Listar";
-import EditarCliente from "../modulos/clientes/views/Editar";
 import { GridRowSelectionModel } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 
 export default function ListadoClientes() {
-    const [verEditarVentana, setVerEditarVentana] = useState(false);
     const [seleccionado, setSeleccionar]= useState<GridRowSelectionModel>([]);
     
     useEffect(() => {
@@ -14,29 +12,25 @@ export default function ListadoClientes() {
         }
     }, [seleccionado]);
 
-    if (verEditarVentana) {
-        return (<EditarCliente setVista={setVerEditarVentana}/>);
-    } else {
-        return (
-            <div>
-                <h1>Listado Clientes</h1>
-                <TablaClientes setSeleccionar={setSeleccionar}/>
-                <Grid2
-                    container
-                    spacing={2}
-                    direction="row"
-                    justifyContent="space-around"
-                    alignItems="center"
-                    marginTop={2}
-                > 
-                    <Grid2 size={{xs: 6}}> 
-                        <Button onClick={() => window.location.href="/cliente/0"}>Agregar cliente</Button>
-                    </Grid2>
-                    <Grid2 size={{xs: 6}}> 
-                        <Button onClick={() => window.history.back()}>Volver</Button>
-                    </Grid2>
-                </Grid2> 
-            </div>
-        );
-    }
+    return (
+        <div>
+            <h1>Listado Clientes</h1>
+            <TablaClientes setSeleccionar={setSeleccionar}/>
+            <Grid2
+                container
+                spacing={2}
+                direction="row"
+                justifyContent="space-around"
+                alignItems="center"
+                marginTop={2}
+            > 
+                <Grid2 size={{xs: 6}}> 
+                    <Button onClick={() => window.location.href="/cliente/0"}>Agregar cliente</Button>
+                </Grid2>
+                <Grid2 size={{xs: 6}}> 
+                    <Button onClick={() => window.history.back()}>Volver</Button>
+                </Grid2>
+            </Grid2>
+        </div>
+    );
 }

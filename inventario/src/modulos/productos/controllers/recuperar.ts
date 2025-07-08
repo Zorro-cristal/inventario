@@ -1,6 +1,6 @@
 import { Producto } from "../../../models/productos";
 
-export function recuperarProductos(filtros: {clave: string, valor: string | number}[] | undefined= undefined): Producto[] {
+export function recuperarProductos(filtros: [string, string | number][] | undefined= undefined): Promise<Producto[]> {
     let productos: Producto[] = [];
     const resultados= [
         {
@@ -26,5 +26,7 @@ export function recuperarProductos(filtros: {clave: string, valor: string | numb
         productos.push(prod);
     });
 
-    return productos;
+    return new Promise((resolve) => {
+        resolve(productos);
+    });
 }

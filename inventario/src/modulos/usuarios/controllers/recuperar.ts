@@ -1,6 +1,6 @@
 import { Usuario } from "../../../models/usuarios";
 
-export function recuperarUsuarios(filtros: {clave: string, valor: string | number}[] | undefined= undefined): Usuario[] {
+export function recuperarUsuarios(filtros: [string, string | number][] | undefined= undefined): Promise<Usuario[]> {
     let usuarios: Usuario[] = [];
     const resultados= [
         {
@@ -20,5 +20,7 @@ export function recuperarUsuarios(filtros: {clave: string, valor: string | numbe
         usuarios.push(usu);
     });
 
-    return usuarios;
+    return new Promise((resolve) => {
+        resolve(usuarios);
+    });
 }

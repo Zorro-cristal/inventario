@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { guardarUsuario, obtenerUsuario } from "../controllers/guardarEditar";
+import { guardarUsuario } from "../controllers/guardarEditar";
 import Cargando from "../../../views/Cargando";
 import { Formulario } from "../../../views/Formulario";
 import { camposUsuario, Usuario } from "../../../models/usuarios";
 import { useParams } from "react-router";
+import { recuperarUsuarios } from "../controllers/recuperar";
 
 export default function EditarUsuario({setVista, id}: {setVista?: (value: boolean) => void, id?: string}) {
     const parametros = useParams();
@@ -13,7 +14,6 @@ export default function EditarUsuario({setVista, id}: {setVista?: (value: boolea
         id_roleFK: 0,
         contra: ""
     });
-    const [titulo, setTitulo] = useState("Agregar nuevo usuario");
 
     useEffect(() => {
         let idUsuario: string | undefined= undefined;
@@ -24,8 +24,7 @@ export default function EditarUsuario({setVista, id}: {setVista?: (value: boolea
         }
 
         if (idUsuario) {
-            setTitulo("Modificar el usuario");
-            obtenerUsuario(idUsuario).then((data: Usuario[]) => {
+            recuperarUsuarios([['id', idUsuario]]).then((data: Usuario[]) => {
                 setUsuario(data[0]);
                 setCargado(true);
             });
@@ -36,7 +35,7 @@ export default function EditarUsuario({setVista, id}: {setVista?: (value: boolea
 
     if (cargado) {
         return (<div>
-            <h1>{titulo}</h1>
+            <h1>{usuario.alias === "" ? "Agregar nuevo usuario." : "Modificar el usuario."}</h1>
             <Formulario valores={usuario} campos={camposUsuario} funcionSubmit={guardarUsuario} funcionVolver={() => {
                 if (setVista) {
                     setVista(false);

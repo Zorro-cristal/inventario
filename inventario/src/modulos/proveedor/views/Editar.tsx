@@ -3,7 +3,8 @@ import { useParams } from "react-router";
 import { camposProveedor, Proveedor } from "../../../models/proveedor";
 import Cargando from "../../../views/Cargando";
 import { Formulario } from "../../../views/Formulario";
-import { guardarProveedor, obtenerProveedor } from "../controllers/guardarEditar";
+import { guardarProveedor } from "../controllers/guardarEditar";
+import { recuperarProveedores } from "../controllers/recuperar";
 
 export default function EditarProveedor({setVista, id}: {setVista?: (value: boolean) => void, id?: number}) {
     const parametros = useParams();
@@ -27,7 +28,7 @@ export default function EditarProveedor({setVista, id}: {setVista?: (value: bool
 
         if (idProveedor) {
             setTitulo("Modificar el proveedor");
-            obtenerProveedor(idProveedor).then((data: Proveedor[]) => {
+            recuperarProveedores([['id', idProveedor]]).then((data: Proveedor[]) => {
                 setProveedor(data[0]);
                 setCargado(true);
             });

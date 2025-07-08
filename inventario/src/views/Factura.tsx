@@ -2,10 +2,10 @@ import { Text, View, Document, Page, StyleSheet } from '@react-pdf/renderer';
 import { Usuario } from '../models/usuarios';
 import { Cliente } from '../models/clientes';
 import { informacion_empresa } from '../main';
-import { recuperarClientes } from '../modulos/clientes/controllers/recuperar';
 import { recuperarUsuarios } from '../modulos/usuarios/controllers/recuperar';
+import recuperarClientes from '../modulos/clientes/controllers/recuperar';
 
-export default function Factura({
+export default async function Factura({
     //tamanho_hoja: PageSize = "A4", 
     num_factura
 }: {num_factura: string}) {
@@ -217,8 +217,8 @@ export default function Factura({
         );
     }
 
-    const usuario: Usuario= recuperarUsuarios()[0];
-    const cliente: Cliente= recuperarClientes()[0];
+    const usuario: Usuario= (await recuperarUsuarios())[0];
+    const cliente: Cliente= (await recuperarClientes())[0];
     return (
         <InvoicePDF data={{
             emisor: usuario, // Aquí debes pasar los datos del emisor

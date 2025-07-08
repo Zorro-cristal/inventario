@@ -4,11 +4,11 @@ import { DataGrid, GridRowSelectionModel } from "@mui/x-data-grid";
 import { useState } from "react";
 import { Producto } from '../models/productos';
 import { Proveedor } from '../models/proveedor';
-import { obtener_producto } from '../modulos/productos/controllers/guardarEditar';
 import EditarProducto from '../modulos/productos/views/Editar';
 import TablaProductos from "../modulos/productos/views/Listar";
-import { obtenerProveedor } from '../modulos/proveedor/controllers/guardarEditar';
 import EditarProveedor from '../modulos/proveedor/views/Editar';
+import { recuperarProveedores } from '../modulos/proveedor/controllers/recuperar';
+import { recuperarProductos } from '../modulos/productos/controllers/recuperar';
 
 export default function Compra() {
     const fechaActual = new Date();
@@ -51,7 +51,7 @@ export default function Compra() {
     function buscarProveedorDesdeRuc(event: React.KeyboardEvent<HTMLDivElement>) {
         if (event.key !== "Enter") return;
         const cedula = parseInt((event.target as HTMLInputElement).value);
-        obtenerProveedor(cedula).then((data) => {
+        recuperarProveedores([['cedula', cedula]]).then((data) => {
             console.log(data);
             if (data) {
                 setProveedor(data[0])
@@ -67,7 +67,7 @@ export default function Compra() {
         let total= 0;
         cargados.pop(); // Elimina el pie
         // Agrega un producto
-        const producto : Producto[]= await obtener_producto(parseInt(seleccionado[0].toString()));
+        const producto : Producto[]= await recuperarProductos([['id', parseInt(seleccionProducto[0].toString())]]);
         console.log(producto);
         if (producto.length == 1) {
             cargados.push({
