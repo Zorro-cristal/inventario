@@ -65,6 +65,7 @@ export default function MenuAplicacion() {
                         <MenuItem onClick={() => {window.location.href= "/cliente";mostrarOcultarMenu("gestionar", null);}}>Clientes</MenuItem>
                         <MenuItem onClick={() => {window.location.href= "/proveedor";mostrarOcultarMenu("gestionar", null);}}>Proveedores</MenuItem>
                         <MenuItem onClick={() => {window.location.href= "/usuario";mostrarOcultarMenu("gestionar", null);}}>Usuarios</MenuItem>
+                        <MenuItem onClick={() => {window.location.href= "/rol";mostrarOcultarMenu("gestionar", null);}}>Roles/Permisos</MenuItem>
                     </Menu>
                     <Button variant="contained" color="primary" onClick={() => {window.location.href= "/ayuda";}}>Ayuda</Button>
                 </Grid2>

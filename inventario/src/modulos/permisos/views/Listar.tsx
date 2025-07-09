@@ -4,7 +4,7 @@ import { recuperarPermiso } from "../controllers/recuperar";
 import { DataGrid, gridClasses, GridRowSelectionModel } from "@mui/x-data-grid";
 import Cargando from "../../../views/Cargando";
 
-export default function TablaPermisos({setSeleccionar}: {setSeleccionar?: (rowSelectionModel: GridRowSelectionModel) => void | Promise<void>}) {
+export default function TablaPermisos({setSeleccionar, filtros}: {setSeleccionar?: (rowSelectionModel: GridRowSelectionModel) => void | Promise<void>, filtros?: [string, string | number][]}) {
     const [cargando, setCargando] = useState(true);
     const [permisos, setPermisos] = useState<Permiso[]>([]);
 
@@ -15,7 +15,7 @@ export default function TablaPermisos({setSeleccionar}: {setSeleccionar?: (rowSe
     ]
 
     function cargarListado() {
-        recuperarPermiso().then((data) => {
+        recuperarPermiso(filtros).then((data) => {
             setPermisos(data);
         });
         setCargando(false);

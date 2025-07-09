@@ -1,11 +1,13 @@
 import { Route, Routes } from "react-router";
 import { Principal } from "./components/principal";
-import { Compra, ListadoClientes, ListadoProductos, ListadoProovedores, ListadoUsuarios, Venta } from "./components";
+import { Compra, ListadoClientes, ListadoProductos, ListadoProovedores, ListadoRoles, ListadoUsuarios, Venta } from "./components";
 import EditarCliente from "./modulos/clientes/views/Editar";
 import EditarProducto from "./modulos/productos/views/Editar";
 import EditarProveedor from "./modulos/proveedor/views/Editar";
 import EditarUsuario from "./modulos/usuarios/views/Editar";
 import Factura from "./views/Factura";
+import EditarRol from "./modulos/roles/views/Editar";
+import EditarPermiso from "./modulos/permisos/views/Editar";
 
 export default function Rutas_principales() {
     return (
@@ -26,6 +28,14 @@ export default function Rutas_principales() {
         <Route path="/usuario">
           <Route index element={<ListadoUsuarios />} />
           <Route path=":id" element={<EditarUsuario/>} />
+        </Route>
+        <Route path="/rol">
+          <Route index element={<ListadoRoles />} />
+          <Route path=":id" element={<EditarRol/>} />
+        </Route>
+        <Route path="/permiso">
+          <Route index element={<ListadoUsuarios />} />
+          <Route path=":id" element={<EditarPermiso/>} />
         </Route>
         <Route path="/venta" element={<Venta/>} />
         <Route path="/compra" element={<Compra/>} />
