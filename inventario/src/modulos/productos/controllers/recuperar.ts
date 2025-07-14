@@ -8,16 +8,24 @@ export function recuperarProductos(filtros: [string, string | number][] | undefi
             nombre_producto: 'Producto 1',
             descripcion_producto: 'Descripción del producto 1',
             cantidad_disponible: 50,
-            precio_venta: 120.5,
-            iva: 5
+            iva: 5,
+            estado: 'activo',
+            categoria: {
+                id: 2,
+                nombre: "categoria 2"
+            }
         },
         {
             id_producto: 3,
             nombre_producto: 'Producto 2',
             descripcion_producto: 'Descripción del producto 2',
             cantidad_disponible: 20,
-            precio_venta: 85.0,
-            iva: 10
+            estado: 'activo',
+            iva: 10,
+            categoria: {
+                id: 1,
+                nombre: "categoria 1"
+            }
         }
     ];
 

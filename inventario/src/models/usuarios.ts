@@ -3,7 +3,9 @@ import { camposForm } from "../views/Formulario";
 export interface Usuario {
     alias : string;
     id_roleFK : number;
+    estado : bigint
     contra : string;
+    rol?: Rol
 };
 
 export const camposUsuario: Array<camposForm>= [
@@ -16,6 +18,8 @@ export const camposUsuario: Array<camposForm>= [
 export interface Rol {
     id_role : number;
     nombre : string;
+    estado : bigint
+    permisos: Permiso[];
 };
 
 export const camposRol: Array<camposForm>= [
@@ -26,6 +30,7 @@ export const camposRol: Array<camposForm>= [
 export interface Permiso {
     id_permiso : number;
     nombre : string;
+    estado : bigint
     id_roleFK : number;
 };
 
@@ -34,3 +39,8 @@ export const camposPermiso: Array<camposForm>= [
     {id: "nombre", requerido: true, ayuda: "", tipo:"text", abrirDialog: null},
     {id: "id_roleFK", requerido: true, ayuda: "", tipo:"select", abrirDialog: null},
 ];
+
+export interface Modulo {
+    id: number;
+    nombre: string;
+}

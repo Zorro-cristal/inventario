@@ -2,27 +2,51 @@ import { Cliente } from "../../../models/clientes";
 
 export default function recuperarClientes(filtros: [string, string | number][] | undefined= undefined): Promise<Cliente[]> {
     let clientes: Cliente[] = [];
-    const resultados= [
+    const resultados: Cliente[]= [
         {
-            cedula: 12345678,
-            nombres: 'Juan',
-            apellidos: 'Pérez',
+            id: 1,
             isEmpresa: false,
-            razon_social: null,
-            nombre_empresa: null,
-            ruc: 1234567890,
             deuda: 0,
+            direccion: "Calle1",
+            telefono: "59598310916",
+            ciudad: "Villarrica",
+            pais: "PY",
+            estado: "activo",
+            persona: {
+                nombres: "Alejandro",
+                apellidos: "Alvarez",
+                ci: 4360067,
+                ruc: 0
+            },
+            empresa: {
+                id: 1,
+                nombre: "empresa",
+                razon_social: "empresa S.A.",
+                ruc: "43600067-1"
+            }
         },
         {
-            cedula: 87654321,
-            nombres: 'María',
-            apellidos: 'Gómez',
+            id: 2,
             isEmpresa: false,
-            razon_social: null,
-            nombre_empresa: null,
-            ruc: 9876543210,
-            deuda: 1000,
-        }
+            deuda: 0,
+            direccion: "Calle1",
+            telefono: "59598310916",
+            ciudad: "Villarrica",
+            pais: "PY",
+            estado: "activo",
+            persona: {
+                nombres: "Alejandro",
+                apellidos: "Alvarez",
+                ci: 4360067,
+                ruc: 0
+            },
+            empresa: {
+                id: 1,
+                nombre: "empresa",
+                razon_social: "empresa S.A.",
+                ruc: "43600067-1"
+            }
+        },
     ];
 
     resultados.forEach((p) => {

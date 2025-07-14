@@ -1,23 +1,36 @@
 import { DataGrid, gridClasses, GridRowSelectionModel } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
-import { Producto } from "../../../models/productos";
 import Cargando from "../../../views/Cargando";
 import { recuperarProductos } from "../controllers/recuperar";
 
 export default function TablaProductos({setSeleccionar}: {setSeleccionar?: (rowSelectionModel: GridRowSelectionModel) => void | Promise<void>}) {
     const [cargando, setCargando]= useState(true);
-    const [productos, setProductos]= useState<Producto[]>([]);
+    const [productos, setProductos]= useState([]);
 
     const columnas = [
         { field: 'id_producto', headerName: 'ID', flex: 0.1 },
         { field: 'nombre_producto', headerName: 'Nombre', flex: 0.2 },
-        { field: 'descripcion_producto', headerName: 'Descripción', flex: 0.3 },
+        { field: 'categoria', headerName: 'Categoria', flex: 0.1 },
         { field: 'cantidad_disponible', headerName: 'Cantidad Disponible', flex: 0.1 },
-        { field: 'precio_venta', headerName: 'Precio de Venta', flex: 0.2 },
+        { field: 'iva', headerName: 'IVA', flex: 0.1 },
+        { field: 'estado', headerName: 'Estado', flex: 0.1 },
     ];
 
     function cargarListado() {
-        setProductos(recuperarProductos());
+        recuperarProductos().then((data) => {
+            let prods= [];
+            data.forEach(p => {
+                prods.push({
+                    'id_producto': p.id_producto,
+                    'cantidad_disponible': p.cantidad_disponible,
+                    'nombre_producto': p.nombre_producto,
+                    'estado': p.estado,
+                    'iva': p.iva,
+                    'categoria': p.categoria?.nombre
+                });
+            });
+            setProductos(prods);
+        });
         setCargando(false);
     }
     
