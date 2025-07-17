@@ -88,7 +88,7 @@ export default function Venta() {
         };
     }
 
-    return (<>
+    return (<Box sx={{ margin: 2 }}>
             <h1>Venta</h1>
                 <Paper elevation={3}><Grid2
                     container
@@ -161,6 +161,6 @@ export default function Venta() {
                 >
                 <EditarCliente setVista={setVerEditarCliente} id={cedula} />
             </Modal>
-        </>
+        </Box>
     );
 }

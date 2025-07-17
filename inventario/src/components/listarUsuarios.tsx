@@ -12,7 +12,7 @@ export default function ListadoUsuarios() {
         }
     }, [seleccionado]);
 
-    return (<Box>
+    return (<Box sx={{ margin: 2 }}>
         <h1>Listado de Usuarios</h1>
         <TablaUsuarios setSeleccionar={setSeleccionar}/>
         <Grid2
@@ -23,10 +23,13 @@ export default function ListadoUsuarios() {
             alignItems="center"
             marginTop={2}
         > 
-            <Grid2 size={{xs: 6}}> 
+            <Grid2 size={{xs: 3}}> 
                 <Button onClick={() => window.location.href="/usuario/0"}>Agregar usuario</Button>
             </Grid2>
-            <Grid2 size={{xs: 6}}> 
+            <Grid2 size={{xs: 3}}> 
+                <Button onClick={() => window.location.href="/rol"}>Listado de roles</Button>
+            </Grid2>
+            <Grid2 size={{xs: 3}}> 
                 <Button onClick={() => window.history.back()}>Volver</Button>
             </Grid2>
         </Grid2>

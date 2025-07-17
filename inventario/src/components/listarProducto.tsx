@@ -13,7 +13,7 @@ export default function ListadoProductos() {
     }, [seleccionado]);
 
     return (
-        <Box>
+        <Box sx={{ margin: 2 }}>
             <h1>Listado Productos</h1>
             <TablaProductos setSeleccionar={setSeleccionar}/>
             <Grid2

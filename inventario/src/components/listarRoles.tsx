@@ -16,12 +16,12 @@ export default function ListadoRoles() {
         // Obtener los datos del rol
         if (seleccionadoRol.length > 0) {
             recuperarRoles([['id_role', seleccionadoRol[0]]]).then((data) => {
-                setRol(data[0]);
+                setRol(data[seleccionadoRol[0]]);
             });
         }
     }, [seleccionadoRol]);
 
-    return (<Box>
+    return (<Box sx={{ margin: 2 }}>
         <h1>Listado de Roles</h1>
         <TablaRoles setSeleccionar={setSeleccionarRol} />
         <Grid2
@@ -51,7 +51,7 @@ export default function ListadoRoles() {
                 overflowY: 'auto',
             }}
         >
-            <ListadoPersmisos rol={rol} setVerEditarPermisos={setVerEditarPermisos}/>
+            <ListadoPersmisos key={rol ? rol.id_role : 'nuevo'} rol={rol} setVerEditarPermisos={setVerEditarPermisos}/>
         </Modal>
     </Box>);
 }

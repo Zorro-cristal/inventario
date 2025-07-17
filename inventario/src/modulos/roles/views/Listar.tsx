@@ -10,11 +10,14 @@ export default function TablaRoles({setSeleccionar}: {setSeleccionar?: (rowSelec
 
     const columnas = [
         { field: 'id_role', headerName: 'Id', flex: 0.1 },
-        { field: 'nombres', headerName: 'Nombres', flex: 0.2 }
+        { field: 'nombre', headerName: 'Nombres', flex: 0.2 },
+        { field: 'estado', headerName: 'Estado', flex: 0.1 },
+        { field: 'descripcion', headerName: 'Descripcion', flex: 0.2 },
     ]
 
     function cargarListado() {
         recuperarRoles().then((data) => {
+            console.log(data);
             setRoles(data);
         });
         setCargando(false);

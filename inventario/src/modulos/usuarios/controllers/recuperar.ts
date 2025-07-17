@@ -5,12 +5,20 @@ export function recuperarUsuarios(filtros: [string, string | number][] | undefin
     const resultados= [
         {
             alias: 'Zorro-cristal',
-            id_roleFK: 1,
+            rol: {
+                id: 1,
+                nombre: "Administrador",
+                estado: 'Activo'
+            },
             contra: ""
         },
         {
             alias: 'Otro-cristal',
-            id_roleFK: 2,
+            rol: {
+                id: 1,
+                nombre: "Administrador",
+                estado: 'Activo'
+            },
             contra: ""
         },
     ];

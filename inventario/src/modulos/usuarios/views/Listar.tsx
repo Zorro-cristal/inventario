@@ -6,16 +6,27 @@ import { recuperarUsuarios } from "../controllers/recuperar";
 
 export default function TablaUsuarios({setSeleccionar}: {setSeleccionar?: (rowSelectionModel: GridRowSelectionModel) => void | Promise<void>}) {
     const [cargando, setCargando] = useState(true);
-    const [usuarios, setUsuarios] = useState<Usuario[]>([]);
+    const [usuarios, setUsuarios] = useState([]);
 
     const columnas = [
         {field: 'alias', headerName: 'Alias', flex: 0.2},
-        {field: 'role_id', headerName: 'Rol', flex: 0.1},
-        {field: 'contra', headerName: 'Contra', flex: 0.1, visibility: false},
+        {field: 'rol', headerName: 'Rol', flex: 0.1},
+        {field: 'estado', headerName: 'Estado', flex: 0.1}
     ];
 
     function cargarListado() {
-        setUsuarios(recuperarUsuarios());
+        recuperarUsuarios().then((data) => {
+            let list= [];
+            data.forEach((d) => {
+                const user: Usuario= d;
+                list.push({
+                    alias: user.alias,
+                    rol: user.rol?.nombre,
+                    estado: user.estado
+                });
+            });
+            setUsuarios(list);
+        });
         setCargando(false);
     }
 

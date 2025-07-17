@@ -6,17 +6,17 @@ export function recuperarPermiso(filtros: [string, string | number][] | undefine
         {
             id_permiso: 1,
             nombre: 'administrador',
-            id_roleFK : 0
+            id_roleFK : 1
         },
         {
-            id_permiso: 1,
+            id_permiso: 2,
             nombre: 'gerente',
-            id_roleFK : 0
+            id_roleFK : 1
         },
         {
-            id_permiso: 1,
+            id_permiso: 3,
             nombre: 'vendedor',
-            id_roleFK : 0
+            id_roleFK : 1
         },
     ];
 

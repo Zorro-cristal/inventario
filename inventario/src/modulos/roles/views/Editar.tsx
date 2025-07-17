@@ -12,12 +12,12 @@ export default function EditarRol({id, setVista}: {id?: number, setVista?: (valu
     const [cargado, setCargado]= useState(false);
     const [rol, setRol]= useState<Rol>({
         id_role: 0,
-        nombre: ""
+        nombre: "",
+        estado: 'Activo',
     });
     const [camposFormRol, setCamposFormRol]= useState(camposRol);
 
     useEffect(() => {
-        let camposForm= [...camposFormRol];
         let idRol: number | undefined = undefined;
 
         if (parametros.id != undefined && parseInt(parametros.id) != 0) {
@@ -25,14 +25,14 @@ export default function EditarRol({id, setVista}: {id?: number, setVista?: (valu
         } else if(id != undefined && id != 0) {
             idRol= id;
         }
-
+console.log('idRol', idRol);
         if (idRol) {
             recuperarRoles().then((data: Rol[]) => {
                 setRol(data[0]);
                 setCargado(true);
             });
         } else {
-            setCargado(false);
+            setCargado(true);
         }
     }, []);
 

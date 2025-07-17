@@ -1,5 +1,5 @@
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Button, Grid2, IconButton, MenuItem, Modal, Paper, Select, TextField } from "@mui/material";
+import { Button, Grid2, IconButton, MenuItem, Modal, Paper, Select, TextField, Box } from "@mui/material";
 import { DataGrid, GridRowSelectionModel } from "@mui/x-data-grid";
 import { useState } from "react";
 import { Producto } from '../models/productos';
@@ -100,7 +100,7 @@ export default function Compra() {
         
     }
 
-    return (<>
+    return (<Box sx={{ margin: 2 }}>
         <h1>Compra</h1>
         <Paper elevation={3}><Grid2
             container
@@ -177,5 +177,5 @@ export default function Compra() {
             >
             <EditarProducto setVista={setVerEditarProducto} id={seleccionProducto ? parseInt(seleccionProducto[0].toString()) : 0} />
         </Modal>
-    </>);
+    </Box>);
 }

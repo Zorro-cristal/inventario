@@ -1,4 +1,4 @@
-import { Box, Button, Grid2 } from "@mui/material";
+import { Paper, Button, Grid2 } from "@mui/material";
 import TablaPermisos from "../modulos/permisos/views/Listar";
 import { useState } from "react";
 import { Rol } from "../models/usuarios";
@@ -8,7 +8,14 @@ export default function ListadoPersmisos({rol, setVerEditarPermisos}: {rol: Rol 
     const [seleccionadoPermiso, setSeleccionarPermiso]= useState<GridRowSelectionModel>([]);
 
     return (
-        <Box>
+        <Paper sx={{
+            padding: { xs: 2, md: 4 },
+            margin: 2,
+            width: { xs: '90vw', md: '70vw' },
+            maxWidth: '900px',
+            maxHeight: '90vh',
+            overflowY: 'auto',
+        }}>
             <h1>Listado de Permisos asociados a {rol?.nombre}</h1>
             <TablaPermisos setSeleccionar={setSeleccionarPermiso} filtros={
                 rol && rol.id_role !== 0 ? [['id_role', rol.id_role]] : undefined
@@ -28,6 +35,6 @@ export default function ListadoPersmisos({rol, setVerEditarPermisos}: {rol: Rol 
                     <Button onClick={() => setVerEditarPermisos(false)}>Volver</Button>
                 </Grid2>
             </Grid2>
-        </Box>
+        </Paper>
     );
 }

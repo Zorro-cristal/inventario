@@ -5,15 +5,31 @@ export function recuperarRoles(filtros: [string, string | number][] | undefined=
     const resultados= [
         {
             id_role: 1,
-            nombre: 'administrador'
+            nombre: 'administrador',
+            estado: 'activo',
+            permisos: [
+                {
+                    id_permiso: 1,
+                    nombre: "editarCliente",
+                    estado: 'Activo'
+                },
+                {
+                    id_permiso: 2,
+                    nombre: "listarCliente",
+                    estado: 'Activo'
+                }
+            ]
         },
         {
-            id_role: 1,
-            nombre: 'gerente'
+            id_role: 2,
+            nombre: 'gerente',
+            estado: 'activo',
+            descripcion: 'Gerente de la empresa',
         },
         {
-            id_role: 1,
-            nombre: 'vendedor'
+            id_role: 3,
+            nombre: 'vendedor',
+            estado: 'activo',
         },
     ];
 

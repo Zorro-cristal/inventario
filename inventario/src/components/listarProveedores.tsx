@@ -1,4 +1,4 @@
-import { Grid2, Button } from "@mui/material";
+import { Grid2, Button, Box } from "@mui/material";
 import TablaProveedores from "../modulos/proveedor/views/Listar";
 import { useEffect, useState } from "react";
 import { GridRowSelectionModel } from "@mui/x-data-grid";
@@ -13,7 +13,7 @@ export default function ListadoProovedores() {
     }, [seleccionado]);
     
     return (
-        <div>
+        <Box sx={{ margin: 2 }}>
             <h1>Listado Proveedores</h1>
             <TablaProveedores setSeleccionar={setSeleccionar}/>
             <Grid2
@@ -31,6 +31,6 @@ export default function ListadoProovedores() {
                     <Button onClick={() => window.history.back()}>Volver</Button>
                 </Grid2>
             </Grid2>
-        </div>
+        </Box>
     );
 }

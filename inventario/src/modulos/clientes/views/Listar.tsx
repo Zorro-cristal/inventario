@@ -27,6 +27,7 @@ export default function TablaClientes({setSeleccionar}: {setSeleccionar?: (rowSe
                     'nombreCompleto': (e.isEmpresa ? (e.empresa?.nombre) : (e.persona?.nombres + " " + e.persona?.apellidos)),
                     'deuda': e.deuda,
                     'ruc': (e.isEmpresa ? (e.empresa?.ruc) : (e.persona?.ci+"-"+e.persona?.ruc)),
+                    'estado': e.estado
                 });
             });
             setClientes(client);

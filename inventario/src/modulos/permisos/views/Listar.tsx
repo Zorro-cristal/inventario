@@ -9,9 +9,11 @@ export default function TablaPermisos({setSeleccionar, filtros}: {setSeleccionar
     const [permisos, setPermisos] = useState<Permiso[]>([]);
 
     const columnas = [
-        { field: 'id_permiso', headerName: 'Id', flex: 0.2 },
+        { field: 'id_permiso', headerName: 'Id', flex: 0.1 },
         { field: 'nombre', headerName: 'Nombre', flex: 0.2 },
-        { field: 'id_roleFK', headerName: 'Rol', flex: 0.2 },
+        { field: 'id_roleFK', headerName: 'Rol', flex: 0.1 },
+        { field: 'descripcion', headerName: 'Descripcion', flex: 0.2 },
+        { field: 'estado', headerName: 'Estado', flex: 0.1 },
     ]
 
     function cargarListado() {
