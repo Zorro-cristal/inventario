@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { guardarUsuario } from "../controllers/guardarEditar";
 import Cargando from "../../../views/Cargando";
-import { Formulario } from "../../../views/Formulario";
+import { Formulario, opcionesEstado } from "../../../views/Formulario";
 import { camposUsuario, Usuario } from "../../../models/usuarios";
 import { useParams } from "react-router";
 import { recuperarUsuarios } from "../controllers/recuperar";
@@ -11,8 +11,8 @@ export default function EditarUsuario({setVista, id}: {setVista?: (value: boolea
     const [cargado, setCargado] = useState(true);
     const [usuario, setUsuario] = useState<Usuario>({
         alias: "",
-        id_roleFK: 0,
-        contra: ""
+        contra: "",
+        estado: 'Activo',
     });
 
     useEffect(() => {
@@ -36,7 +36,7 @@ export default function EditarUsuario({setVista, id}: {setVista?: (value: boolea
     if (cargado) {
         return (<div>
             <h1>{usuario.alias === "" ? "Agregar nuevo usuario." : "Modificar el usuario."}</h1>
-            <Formulario valores={usuario} campos={camposUsuario} funcionSubmit={guardarUsuario} funcionVolver={() => {
+            <Formulario valores={usuario} campos={camposUsuario} opciones={{estado: opcionesEstado}} funcionSubmit={guardarUsuario} funcionVolver={() => {
                 if (setVista) {
                     setVista(false);
                 } else {

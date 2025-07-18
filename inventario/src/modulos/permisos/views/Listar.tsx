@@ -7,14 +7,30 @@ import Cargando from "../../../views/Cargando";
 export default function TablaPermisos({setSeleccionar, filtros}: {setSeleccionar?: (rowSelectionModel: GridRowSelectionModel) => void | Promise<void>, filtros?: [string, string | number][]}) {
     const [cargando, setCargando] = useState(true);
     const [permisos, setPermisos] = useState<Permiso[]>([]);
+    
+    const idRole = filtros?.find(filtro => filtro[0] === 'id_role')?.[1];console.log(idRole)
 
     const columnas = [
-        { field: 'id_permiso', headerName: 'Id', flex: 0.1 },
+        { field: 'id_permiso', headerName: 'Id', flex: 0.1,  width: 50 },
         { field: 'nombre', headerName: 'Nombre', flex: 0.2 },
-        { field: 'id_roleFK', headerName: 'Rol', flex: 0.1 },
         { field: 'descripcion', headerName: 'Descripcion', flex: 0.2 },
-        { field: 'estado', headerName: 'Estado', flex: 0.1 },
-    ]
+        {
+            field: 'id_roleFK',
+            headerName: 'Asignado',
+            flex: 0.1,
+            renderCell: (params) => (
+                <input
+                    type="checkbox"
+                    checked={params.value == idRole}
+                    onChange={(e) => {
+                        if (params.row.id_permiso) {
+                            console.log("Implementacion de cambio pendiente",params.row.id_permiso, e.target.checked);
+                        }
+                    }}
+                />
+            ),
+        }
+    ];
 
     function cargarListado() {
         recuperarPermiso(filtros).then((data) => {

@@ -13,11 +13,16 @@ export default function ListadoRoles() {
     const [rol, setRol] = useState<Rol>();
     
     useEffect(() => {
+        console.log(seleccionadoRol);
         // Obtener los datos del rol
         if (seleccionadoRol.length > 0) {
             recuperarRoles([['id_role', seleccionadoRol[0]]]).then((data) => {
-                setRol(data[seleccionadoRol[0]]);
+                if (data && data.length > 0) {
+                    setRol(data[0]);
+                }
             });
+        } else {
+            setRol(undefined);
         }
     }, [seleccionadoRol]);
 

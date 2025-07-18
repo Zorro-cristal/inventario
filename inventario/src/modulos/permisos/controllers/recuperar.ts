@@ -2,21 +2,24 @@ import { Permiso } from "../../../models/usuarios";
 
 export function recuperarPermiso(filtros: [string, string | number][] | undefined= undefined): Promise<Permiso[]> {
     let permisos: Permiso[] = [];
-    const resultados= [
+    const resultados: Permiso[]= [
         {
             id_permiso: 1,
             nombre: 'administrador',
+            estado: 'Activo',
             id_roleFK : 1
         },
         {
             id_permiso: 2,
             nombre: 'gerente',
+            estado: 'Activo',
             id_roleFK : 1
         },
         {
             id_permiso: 3,
             nombre: 'vendedor',
-            id_roleFK : 1
+            estado: 'Activo',
+            id_roleFK : 2
         },
     ];
 

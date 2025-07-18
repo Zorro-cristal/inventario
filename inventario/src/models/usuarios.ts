@@ -1,4 +1,4 @@
-import { camposForm } from "../views/Formulario";
+import { camposForm, opcionesEstado } from "../views/Formulario";
 
 export interface Usuario {
     alias : string;
@@ -9,9 +9,10 @@ export interface Usuario {
 
 export const camposUsuario: Array<camposForm>= [
     {id: "alias", requerido: true, ayuda: "nombre de usuario que debe ser unico", tipo: "text", abrirDialog: null},
-    {id: "id_roleFK", requerido: true, ayuda: "", tipo:"select", abrirDialog: null},
+    {id: "id_roleFK", requerido: true, ayuda: "", tipo:"select", abrirDialog: null, titulo: "Role"},
     {id: "contra", requerido: true, ayuda: "", tipo: "password", abrirDialog: null},
-    {id: "contra2", requerido: true, ayuda: "", tipo: "password", abrirDialog: null}
+    {id: "contra2", requerido: true, ayuda: "", tipo: "password", abrirDialog: null},
+    {id: "estado", requerido: true, ayuda: "", tipo: "select", abrirDialog: null, opciones: opcionesEstado}
 ];
 
 export interface Rol {
