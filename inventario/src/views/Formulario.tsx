@@ -1,19 +1,23 @@
-import { Box, Button, Checkbox, FormControl, FormHelperText, Grid2, Input, InputLabel, styled } from "@mui/material";
+import { Box, Button, Checkbox, FormControl, FormHelperText, Grid2, Input, InputLabel, MenuItem, Select, styled } from "@mui/material";
 import React, { ChangeEvent, useEffect, useState } from 'react';
 
 export interface camposForm {
     id: string;
     requerido: boolean;
     ayuda: string;
-    tipo: string
+    tipo: string;
+    opciones?: unknown;
+    titulo?: string;
     abrirDialog: (() => boolean) | null;
 }
+
+export const opcionesEstado = ['Activo', 'Inactivo'];
 
 export const Formulario= ({
     campos,
     funcionSubmit,
     valores,
-    funcionVolver
+    funcionVolver,
   }: {
     campos: Array<camposForm>;
     funcionSubmit: (event: ChangeEvent<HTMLInputElement>) => boolean;
@@ -41,13 +45,13 @@ export const Formulario= ({
     
     // Inicializa el estado con valores vacíos para cada campo
     const initialFormState = campos.reduce((acc, campo) => {
-        acc[campo.id] = valores[campo.id]; // Asigna un valor vacío a cada campo
+        acc[campo.id] = valores[campo.id];
         return acc;
     }, {});
 
     // Función para limpiar el formulario
     const limpiarFormulario = () => {
-        setFormData(initialFormState); // Restablece el estado a los valores iniciales
+        setFormData(initialFormState);
     };    
     
     const [formData, setFormData] = useState(initialFormState);
@@ -76,27 +80,47 @@ export const Formulario= ({
         let id_campo: string;
         for (let i = 0; i < campos.length; i++) {
             id_campo= campos[i].id;
-            if (campos[i].tipo == "boolean") {
-                componenteAgregar.push(<Grid2 size= {{xs: 5}}><FormControl margin="dense" key={id_campo+'div'}>
-                    <input type="hidden" name={id_campo} id={id_campo} onChange={handleChange}/>
-                    <Checkbox name={id_campo} id={id_campo} onChange={handleChange} checked={formData[id_campo]}/>
-                    <Button variant="outlined" onClick={campos[i].abrirDialog}>Seleccionar {id_campo}</Button>
-                </FormControl></Grid2>);
-            } else if (campos[i].tipo == "object") {
-                componenteAgregar.push(<div style={{maxWidth: '95%'}}><FormControl margin="dense" key={id_campo+'div'}>
-                    <InputLabel htmlFor={id_campo}>{id_campo.replace("_", " ")}</InputLabel>
-                    <Input type={campos[i].tipo} name={id_campo} id={id_campo} onChange={handleChange} value={formData[id_campo]}/>
-                    <FormHelperText>{campos[i].ayuda}</FormHelperText>
-                </FormControl></div>);
-            } else {
-                const estilo= {maxWidth: campos[i].tipo=="text" ? '95%' : '45%'};
-                let titulo= campos[i].id.replace("_", " ");
+            const estilo= {maxWidth: campos[i].tipo=="text" ? '95%' : '45%'};
+
+            let titulo= campos[i].titulo;
+            if (titulo === undefined || titulo === "") {
+                titulo= campos[i].id.replace("_", " ");
                 titulo= titulo.charAt(0).toUpperCase() + titulo.slice(1); // Capitaliza la primera letra
-                componenteAgregar.push(<div style={estilo}><FormControl margin="dense" key={id_campo+'div'}>
-                    <InputLabel htmlFor={campos[i].id}>{titulo}</InputLabel>
-                    <FilledInput type={campos[i].tipo} name={id_campo} id={id_campo} onChange={handleChange} value={formData[id_campo]} fullWidth= {campos[i].tipo=="text" ? true : false}/>
-                    <FormHelperText>{campos[i].ayuda}</FormHelperText>
-                </FormControl></div>);
+            }
+            
+            switch (campos[i].tipo) {
+                case "boolean":
+                    componenteAgregar.push(<Grid2 size= {{xs: 5}}><FormControl margin="dense" key={id_campo+'div'}>
+                        <InputLabel htmlFor={id_campo}>{titulo}</InputLabel>
+                        <input type="hidden" name={id_campo} id={id_campo} onChange={handleChange}/>
+                        <Checkbox name={id_campo} id={id_campo} onChange={handleChange} checked={formData[id_campo]}/>
+                        <Button variant="outlined" onClick={campos[i].abrirDialog}>Seleccionar {id_campo}</Button>
+                    </FormControl></Grid2>);
+                    break;
+                case "object":
+                    componenteAgregar.push(<div style={{maxWidth: '95%'}}><FormControl margin="dense" key={id_campo+'div'}>
+                        <InputLabel htmlFor={id_campo}>{titulo}</InputLabel>
+                        <Input type={campos[i].tipo} name={id_campo} id={id_campo} onChange={handleChange} value={formData[id_campo]}/>
+                        <FormHelperText>{campos[i].ayuda}</FormHelperText>
+                    </FormControl></div>);
+                    break;
+                case "select":
+                    componenteAgregar.push(<Grid2 size= {{xs: 5}}><FormControl variant="standard" key={id_campo+'div'}>
+                        <InputLabel htmlFor={id_campo}>{titulo}</InputLabel>
+                        <Select value={formData[id_campo]} name={id_campo} id={id_campo} fullWidth>
+                            {Array.from(campos[i]!.opciones! || []).map((opcion, index) => (
+                                <MenuItem value={opcion} key={id_campo+'-'+index}>{opcion}</MenuItem>
+                            ))}
+                        </Select>
+                        </FormControl></Grid2>);
+                    break;
+                default:
+                    componenteAgregar.push(<div style={estilo}><FormControl margin="dense" key={id_campo+'div'}>
+                        <InputLabel htmlFor={campos[i].id}>{titulo}</InputLabel>
+                        <FilledInput type={campos[i].tipo} name={id_campo} id={id_campo} onChange={handleChange} value={formData[id_campo]} fullWidth= {campos[i].tipo=="text" ? true : false}/>
+                        <FormHelperText>{campos[i].ayuda}</FormHelperText>
+                    </FormControl></div>);
+                    break;
             }
         };
         setCamposComponent(componenteAgregar); // Actualiza el estado con los campos generados
